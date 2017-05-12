@@ -22,7 +22,7 @@ class App extends React.Component<any, any> {
                         <Idol />
                         <Idol />
                         <Idol />
-			<Idol />
+                        <Idol />
                     </Subunit>
                     <p className="center">
                         <button className="pure-button button-primary">oh god</button>
