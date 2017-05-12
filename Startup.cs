@@ -64,6 +64,10 @@ namespace ohheck.help
                     name: "api",
                     template: "api/{controller=Home}/{action=Index}/{id?}");
 
+                routes.MapRoute(
+                    name: "account",
+                    template: "Account/{action=Index}/{id?}");
+
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index"});
