@@ -14,7 +14,15 @@ module.exports = {
     module: {
         rules: [
             { test: /\.tsx?$/, use: { loader: 'babel-loader', options: { cacheDirectory: true } }, exclude: /node_modules/ },
-            { test: /\.tsx?$/, use: 'awesome-typescript-loader?silent=true', exclude: /node_modules/ }
+            { test: /\.tsx?$/, use: 'awesome-typescript-loader?silent=true', exclude: /node_modules/ },
+            {
+                test: /\.(scss|css)$/, 
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' },
+                    { loader: 'sass-loader' }
+                ]
+            }
         ]
     },
     resolve: {

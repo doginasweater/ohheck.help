@@ -1,0 +1,38 @@
+@import 'variables';
+@import 'buttons';
+
+body {
+    margin-top: 20px;
+    background: linear-gradient(45deg, $primary-color, $secondary-color);
+}
+
+html, button, input, select, textarea,
+    .pure-g [class *= "pure-u"] {
+        font-family: 'Helvetica', 'Arial', sans-serif;
+    }
+
+.main {
+    max-width: 1280px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
+    height: 1080px;
+}
+
+.pull-right {
+    float: right;
+}
+
+.small {
+    font-size: .7em;
+}
+
+.center {
+    text-align: center;
+
+    .pure-button {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
