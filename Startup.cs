@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace ohheck.help
 {
@@ -40,23 +41,32 @@ namespace ohheck.help
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseDevelopmentCertificateErrorPage(Configuration);
+
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true,
+                    ReactHotModuleReplacement = true
+                });
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseRewriter(new RewriteOptions().AddIISUrlRewrite(env.ContentRootFileProvider, "urlRewrite.config"));
             }
 
             app.UseStaticFiles();
-
-            app.UseRewriter(new RewriteOptions().AddIISUrlRewrite(env.ContentRootFileProvider, "urlRewrite.config"));
 
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "api",
+                    template: "api/{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Home", action = "Index"});
             });
         }
     }

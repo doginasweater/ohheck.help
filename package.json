@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "name": "ohheck.help",
+  "private": true,
+  "dependencies": {
+    "@types/react": "^15.0.24",
+    "@types/react-dom": "^15.5.0",
+    "@types/react-router": "^4.0.9",
+    "@types/react-router-dom": "^4.0.4",
+    "@types/webpack": "^2.2.15",
+    "@types/webpack-env": "^1.13.0",
+    "aspnet-webpack": "^1.0.29",
+    "aspnet-webpack-react": "^1.0.5",
+    "awesome-typescript-loader": "^3.1.3",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.3.2",
+    "webpack": "^2.5.1",
+    "webpack-hot-middleware": "^2.18.0",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
