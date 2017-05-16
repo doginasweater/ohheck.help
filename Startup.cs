@@ -11,8 +11,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using ohheck.help.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ohheck.help
 {
@@ -28,6 +31,11 @@ namespace ohheck.help
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //System.Diagnostics.Debug.WriteLine(Configuration.GetConnectionString("hecking"));
+
+            services.AddDbContext<HeckingContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("hecking")));
+            
             services.AddIdentityServiceAuthentication();
 
             services.AddMvc();
@@ -61,12 +69,17 @@ namespace ohheck.help
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "api",
-                    template: "api/{controller=Home}/{action=Index}/{id?}");
+                    name: "admin",
+                    template: "admin/{action}/{id?}",
+                    defaults: new { controller = "Admin", Action = "Index"});
 
                 routes.MapRoute(
                     name: "account",
                     template: "Account/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
