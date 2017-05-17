@@ -58,6 +58,9 @@ namespace ohheck.help.Controllers {
 
     public async Task<IActionResult> Setup() {
       var url = "api/cards/?idol_sub_unit=CYaRon!";
+      client.BaseAddress = new Uri("http://schoolido.lu/");
+      client.DefaultRequestHeaders.Accept.Clear();
+      client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
       do {
         var response = await client.GetAsync(url);
@@ -73,8 +76,8 @@ namespace ohheck.help.Controllers {
               gameid = card.game_id,
               rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
               attribute = (ohheck.help.Models.Data.Attribute)Enum.Parse(typeof(ohheck.help.Models.Data.Attribute), card.attribute),
-              imageurl = card.english_card_image ?? card.card_image,
-              idolized_imageurl = card.english_card_idolized_image ?? card.card_idolized_image,
+              imageurl = card.card_image,
+              idolized_imageurl = card.card_idolized_image,
               ispromo = card.is_promo,
               created = DateTime.Now,
               createdby = "kevin",
