@@ -10,11 +10,13 @@ class App extends React.Component<any, any> {
     constructor() {
         super();
 
-        this.state = {};
+        this.state = {
+            chosen: {}
+        };
     }
 
-    componentDidMount() {
-        fetch("/admin/cards")
+    componentDidMount = () => {
+        fetch("/api/cards")
             .then(response => {
                 return response.json();
             })
@@ -25,14 +27,55 @@ class App extends React.Component<any, any> {
             });
     }
 
+    handleClick = id => {
+        this.setState({
+            chosen: {
+                ...this.state.chosen,
+                [id]: !this.state.chosen[id]
+            }
+        });
+    }
+
+    submit = () => {
+        console.log('submitting', this.state.chosen);
+        
+        fetch('/api/submit', {
+            method: 'POST',
+            body: JSON.stringify(this.state.chosen),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            //redirect or something
+        });
+    }
+
     renderList = list => {
         return list.map((item, index) => {
-            return <Idol 
-                imageurl={item.imageurl} 
-                idolized_imageurl={item.idolized_imageurl} 
-                rarity={item.rarity} 
-                attribute={item.attribute} 
-                key={index} />
+            return (
+                <span key={index}>
+                    <Idol
+                        imageurl={item.imageurl}
+                        rarity={item.rarity}
+                        attribute={item.attribute}
+                        selected={this.state.chosen[item.id]}
+                        handleClick={() => this.handleClick(item.id)} 
+                        name={item.id} />
+                    <Idol
+                        imageurl={item.idolized_imageurl}
+                        rarity={item.rarity}
+                        attribute={item.attribute}
+                        selected={this.state.chosen[`${item.id}-idol`]} 
+                        handleClick={() => this.handleClick(`${item.id}-idol`)} 
+                        name={`${item.id}-idol`} />
+                </span>
+            );
         });
     }
 
@@ -41,7 +84,7 @@ class App extends React.Component<any, any> {
 
         return (
             <div className="main pure-g">
-                <div className="pure-u-sm-1">
+                <div className="pure-u-1">
                     <h1>Oh Heck!</h1>
                     <p>
                         we're aki and chrissu and we need you to help us help you
@@ -50,11 +93,12 @@ class App extends React.Component<any, any> {
                         {stuff}
                     </div>
                     <p className="center">
-                        <button className="pure-button button-primary">oh god</button>
-                        <button className="pure-button button-secondary">hecking</button>
+                        <button className="pure-button button-primary" onClick={this.submit}>
+                            submit!
+                        </button>
                     </p>
                 </div>
-                <footer className="pure-u-sm-1">
+                <footer className="pure-u-1">
                     <div className="pull-right small">
                         &copy; 2017 - Oh Heck Enterprises
                     </div>

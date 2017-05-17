@@ -122,15 +122,5 @@ namespace ohheck.help.Controllers {
 
       return Json(new { message = "success" });
     }
-
-    public IActionResult Subunits() => Json(_db.Subunits.ToList());
-    
-    public IActionResult Cards() => Json(_db.Cards.Select(x => new {
-      imageurl = x.imageurl,
-      idolized_imageurl = x.idolized_imageurl,
-      attribute = x.attribute.ToString(),
-      rarity = x.rarity.ToString()
-    })
-    .ToList());
   }
 }

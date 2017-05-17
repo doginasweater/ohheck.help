@@ -50,11 +50,11 @@ namespace ohheck.help
                 app.UseDatabaseErrorPage();
                 app.UseDevelopmentCertificateErrorPage(Configuration);
 
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                app.UseWebpackDevMiddleware(/*new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true,
                     ReactHotModuleReplacement = true
-                });
+                }*/);
             }
             else
             {
