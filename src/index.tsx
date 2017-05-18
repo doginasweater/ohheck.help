@@ -27,6 +27,7 @@ class App extends React.Component<any, any> {
                     <footer className="pure-u-1">
                         <div className="pull-right small">
                             &copy; 2017 - Oh Heck Enterprises. site by <a target="_blank" href="https://github.com/myopicmage/ohheck.help">a dog in a sweater</a>.
+                            idol data provided by <a href="http://schoolido.lu" target="_blank">schoolido.lu</a>
                     </div>
                     </footer>
                 </div>

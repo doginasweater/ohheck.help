@@ -20,6 +20,8 @@ namespace ohheck.help.Controllers
 
         public IActionResult Cards() => Json(_db.Cards
             .Where(x => !string.IsNullOrEmpty(x.imageurl))
+            .OrderBy(x => x.gameid)
+            .ThenBy(x => x.isidol)
             .Select(x => new
             {
                 imageurl = x.imageurl,
@@ -36,6 +38,7 @@ namespace ohheck.help.Controllers
                 comments = response.comments,
                 submitter = response.submitter,
                 survey = _db.Surveys.SingleOrDefault(x => x.id == response.surveyid),
+                nextgroup = response.nextgroup,
                 created = DateTime.Now,
                 createdby = string.IsNullOrEmpty(response.submitter) ? "anonymous" : response.submitter,
                 modified = DateTime.Now,

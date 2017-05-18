@@ -172,7 +172,8 @@ namespace ohheck.help.Controllers
                     submitter = x.submitter,
                     comments = x.comments,
                     cards = string.Join(", ", x.cardresponses.Select(y => y.card.gameid)),
-                    submitted = x.created.ToShortDateString()
+                    submitted = x.created.ToShortDateString(),
+                    nextgroup = x.nextgroup
                 });
 
             return Json(responses);

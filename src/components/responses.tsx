@@ -36,6 +36,9 @@ export default class Responses extends React.Component<any, any> {
                     {item.comments}
                 </td>
                 <td>
+                    {item.nextgroup}
+                </td>
+                <td>
                     {item.cards}
                 </td>
             </tr>
@@ -54,6 +57,7 @@ export default class Responses extends React.Component<any, any> {
                             <th>Submitted</th>
                             <th>Submitter</th>
                             <th>Comments</th>
+                            <th>Next Group</th>
                             <th>Cards</th>
                         </tr>
                     </thead>

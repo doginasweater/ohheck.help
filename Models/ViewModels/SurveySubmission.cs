@@ -11,5 +11,6 @@ namespace ohheck.help.Models.ViewModels
         public Dictionary<int, bool> chosen { get; set; }
         public string comments { get; set; }
         public string submitter { get; set; }
+        public string nextgroup { get; set; }
     }
 }

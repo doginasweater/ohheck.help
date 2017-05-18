@@ -16,7 +16,7 @@ export default class Home extends React.Component<any, any> {
                 <p>
                     We're collecting votes on the best and worst outfits of Love Live! 
                     School Idol Festival. Please choose cards that, in your opinion, 
-                    have especially good or bad looks. Please *only look at the outfit and fashion*, 
+                    have especially good or bad looks. Please <b>only look at the outfit and fashion</b>, 
                     rather than at other things like the pose, background, and facial expression.
                 </p>
                 <p>
