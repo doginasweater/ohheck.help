@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ohheck.help.Migrations
 {
-    public partial class responses : Migration
+    public partial class splitoutidols : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -135,8 +135,8 @@ namespace ohheck.help.Migrations
                     createdby = table.Column<string>(nullable: true),
                     gameid = table.Column<int>(nullable: false),
                     idolid = table.Column<int>(nullable: true),
-                    idolized_imageurl = table.Column<string>(nullable: true),
                     imageurl = table.Column<string>(nullable: true),
+                    isidol = table.Column<bool>(nullable: false),
                     ispromo = table.Column<bool>(nullable: false),
                     modified = table.Column<DateTime>(nullable: false),
                     modifiedby = table.Column<string>(nullable: true),

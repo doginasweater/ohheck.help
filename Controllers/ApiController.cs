@@ -1,35 +1,63 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ohheck.help.Models;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Microsoft.Extensions.Logging;
-using ohheck.help.Models.ApiModels;
-using Newtonsoft.Json;
 using ohheck.help.Models.Data;
+using ohheck.help.Models.ViewModels;
+using System.Threading.Tasks;
+using System;
 
-namespace ohheck.help.Controllers {
-  public class ApiController : Controller {
-    private readonly HeckingContext _db; 
+namespace ohheck.help.Controllers
+{
+    public class ApiController : Controller
+    {
+        private readonly HeckingContext _db;
 
-    public ApiController(HeckingContext ctx) {
-      _db = ctx;
+        public ApiController(HeckingContext ctx)
+        {
+            _db = ctx;
+        }
+
+        public IActionResult Subunits() => Json(_db.Subunits.ToList());
+
+        public IActionResult Cards() => Json(_db.Cards
+            .Where(x => !string.IsNullOrEmpty(x.imageurl))
+            .Select(x => new
+            {
+                imageurl = x.imageurl,
+                attribute = x.attribute.ToString(),
+                rarity = x.rarity.ToString(),
+                id = x.id
+            })
+            .ToList());
+
+        public async Task<IActionResult> Submit([FromBody] SurveySubmission response)
+        {
+            var submission = new SurveyResponse
+            {
+                comments = response.comments,
+                submitter = response.submitter,
+                survey = _db.Surveys.SingleOrDefault(x => x.id == response.surveyid),
+                created = DateTime.Now,
+                createdby = string.IsNullOrEmpty(response.submitter) ? "anonymous" : response.submitter,
+                modified = DateTime.Now,
+                modifiedby = string.IsNullOrEmpty(response.submitter) ? "anonymous" : response.submitter
+            };
+
+            _db.Responses.Add(submission);
+
+            await _db.SaveChangesAsync();
+
+            submission.cardresponses = response.chosen
+                .Where(x => x.Value == true)
+                .Select(x => new CardResponse
+                {
+                    cardid = x.Key,
+                    responseid = submission.id
+                })
+                .ToList();
+
+            await _db.SaveChangesAsync();
+
+            return Json(new { success = true });
+        }
     }
-
-    public IActionResult Subunits() => Json(_db.Subunits.ToList());
-    
-    public IActionResult Cards() => Json(_db.Cards.Select(x => new {
-        imageurl = x.imageurl,
-        idolized_imageurl = x.idolized_imageurl,
-        attribute = x.attribute.ToString(),
-        rarity = x.rarity.ToString(),
-        id = x.id
-      })
-      .ToList());
-  }
 }

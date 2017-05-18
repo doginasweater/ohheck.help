@@ -6,6 +6,9 @@
     <UserSecretsId>aspnet-ohheck.help-8FB9333D-DF6D-4822-84DA-BAE42613F77D</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="src\components\survey.tsx" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="ohheck.help.db" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
@@ -22,5 +25,8 @@
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0-preview1-final" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0-preview1-final" />
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0-preview1-final" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\components\survey.tsx" />
   </ItemGroup>
 </Project>

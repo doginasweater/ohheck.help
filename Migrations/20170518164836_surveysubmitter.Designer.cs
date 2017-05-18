@@ -9,9 +9,10 @@ using System;
 namespace ohheck.help.Migrations
 {
     [DbContext(typeof(HeckingContext))]
-    partial class HeckingContextModelSnapshot : ModelSnapshot
+    [Migration("20170518164836_surveysubmitter")]
+    partial class surveysubmitter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-preview1-24937");

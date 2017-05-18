@@ -9,8 +9,8 @@ using System;
 namespace ohheck.help.Migrations
 {
     [DbContext(typeof(HeckingContext))]
-    [Migration("20170516202729_responses")]
-    partial class responses
+    [Migration("20170518161943_splitoutidols")]
+    partial class splitoutidols
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,9 @@ namespace ohheck.help.Migrations
 
                     b.Property<int?>("idolid");
 
-                    b.Property<string>("idolized_imageurl");
-
                     b.Property<string>("imageurl");
+
+                    b.Property<bool>("isidol");
 
                     b.Property<bool>("ispromo");
 

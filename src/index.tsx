@@ -1,109 +1,36 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import Subunit from './components/subunit';
-import Idol from './components/idol';
-import 'whatwg-fetch';
+import Home from './components/home';
+import Admin from './components/admin';
+import Thanks from './components/thanks';
+import PrivateRoute from './components/privateroute';
 import './scss/app.scss';
 
 class App extends React.Component<any, any> {
-    constructor() {
-        super();
-
-        this.state = {
-            chosen: {}
-        };
-    }
-
-    componentDidMount = () => {
-        fetch("/api/cards")
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.setState({
-                    cards: data
-                });
-            });
-    }
-
-    handleClick = id => {
-        this.setState({
-            chosen: {
-                ...this.state.chosen,
-                [id]: !this.state.chosen[id]
-            }
-        });
-    }
-
-    submit = () => {
-        console.log('submitting', this.state.chosen);
-        
-        fetch('/api/submit', {
-            method: 'POST',
-            body: JSON.stringify(this.state.chosen),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then(data => {
-            //redirect or something
-        });
-    }
-
-    renderList = list => {
-        return list.map((item, index) => {
-            return (
-                <span key={index}>
-                    <Idol
-                        imageurl={item.imageurl}
-                        rarity={item.rarity}
-                        attribute={item.attribute}
-                        selected={this.state.chosen[item.id]}
-                        handleClick={() => this.handleClick(item.id)} 
-                        name={item.id} />
-                    <Idol
-                        imageurl={item.idolized_imageurl}
-                        rarity={item.rarity}
-                        attribute={item.attribute}
-                        selected={this.state.chosen[`${item.id}-idol`]} 
-                        handleClick={() => this.handleClick(`${item.id}-idol`)} 
-                        name={`${item.id}-idol`} />
-                </span>
-            );
-        });
-    }
-
     render() {
-        const stuff = this.state.cards ? this.renderList(this.state.cards) : <p>Nothing to see here</p>;
-
         return (
-            <div className="main pure-g">
-                <div className="pure-u-1">
-                    <h1>Oh Heck!</h1>
-                    <p>
-                        we're aki and chrissu and we need you to help us help you
-                    </p>
-                    <div>
-                        {stuff}
+            <Router>
+                <div className="main pure-g">
+                    <div className="pure-u-1">
+                        <div className="pull-right">
+                            <a href="https://twitter.com/akikkyu" target="_blank">aki's twitter</a> |&nbsp;
+                        <a href="https://akikkyu.tumblr.com" target="_blank">aki's tumblr</a> | &nbsp;
+                        <a href="https://twitter.com/chrissuwa" target="_blank">chrissu's twitter</a> | &nbsp;
+                        <a href="https://nemui-mo.tumblr.com" target="_blank">chrissu's tumblr</a> | &nbsp;
+                        <a href="https://youtube.com/c/OhHeck" target="_blank">youtube channel!</a>
+                        </div>
                     </div>
-                    <p className="center">
-                        <button className="pure-button button-primary" onClick={this.submit}>
-                            submit!
-                        </button>
-                    </p>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/thanks" component={Thanks} />
+                    <Route path="/dashboard" component={Admin} />
+                    <footer className="pure-u-1">
+                        <div className="pull-right small">
+                            &copy; 2017 - Oh Heck Enterprises. site by <a target="_blank" href="https://github.com/myopicmage/ohheck.help">a dog in a sweater</a>.
+                    </div>
+                    </footer>
                 </div>
-                <footer className="pure-u-1">
-                    <div className="pull-right small">
-                        &copy; 2017 - Oh Heck Enterprises
-                    </div>
-                </footer>
-            </div>
+            </Router>
         );
     }
 }

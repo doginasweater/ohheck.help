@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Extensions;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
 using Microsoft.AspNetCore.Diagnostics.Identity.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using ohheck.help.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace ohheck.help
 {
@@ -31,14 +26,19 @@ namespace ohheck.help
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //System.Diagnostics.Debug.WriteLine(Configuration.GetConnectionString("hecking"));
-
             services.AddDbContext<HeckingContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("hecking")));
             
             services.AddIdentityServiceAuthentication();
 
             services.AddMvc();
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("http://schoolido.lu/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            services.AddSingleton(client);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +75,8 @@ namespace ohheck.help
 
                 routes.MapRoute(
                     name: "account",
-                    template: "Account/{action=Index}/{id?}");
+                    template: "account/{action}/{id?}",
+                    defaults: new { controller = "Account", Action = "Login" });
 
                 routes.MapRoute(
                     name: "default",
