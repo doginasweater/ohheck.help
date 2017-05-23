@@ -20,10 +20,10 @@ export default class Home extends React.Component<any, any> {
                     rather than at other things like the pose, background, and facial expression.
                 </p>
                 <p>
-                    You can choose as many as you like on this form, but try to be selective.
+                    You can <b>choose as many as you like</b> on this form, but try to be selective.
                 </p>
                 <p>
-                    You can't specify whether you think the card is good or bad, and that is by 
+                    <b>You can't specify whether you think the card is good or bad</b>, and that is by 
                     design. Just choose ones you'd like us to discuss c:
                 </p>
                 <p>

@@ -64,7 +64,7 @@ namespace ohheck.help.Identity.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return Redirect("/");
                 }
                 if (result.RequiresTwoFactor)
                 {

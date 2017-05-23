@@ -28,7 +28,7 @@ namespace ohheck.help
         {
             services.AddDbContext<HeckingContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("hecking")));
-            
+
             services.AddIdentityServiceAuthentication();
 
             services.AddMvc();
@@ -59,8 +59,9 @@ namespace ohheck.help
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseRewriter(new RewriteOptions().AddIISUrlRewrite(env.ContentRootFileProvider, "urlRewrite.config"));
             }
+
+            app.UseRewriter(new RewriteOptions().AddIISUrlRewrite(env.ContentRootFileProvider, "urlRewrite.config"));
 
             app.UseStaticFiles();
 
@@ -71,7 +72,7 @@ namespace ohheck.help
                 routes.MapRoute(
                     name: "admin",
                     template: "admin/{action}/{id?}",
-                    defaults: new { controller = "Admin", Action = "Index"});
+                    defaults: new { controller = "Admin", Action = "Index" });
 
                 routes.MapRoute(
                     name: "account",
@@ -84,7 +85,7 @@ namespace ohheck.help
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index"});
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }
