@@ -3,13 +3,8 @@ using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.TestHost;
-using ohheck.help.Models.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore;
 
 namespace ohheck.help.tests
 {
@@ -25,12 +20,10 @@ namespace ohheck.help.tests
             var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(solutionRelativeTargetProjectParentDir, startupAssembly);
 
-            var builder = new WebHostBuilder()
+            var builder = WebHost
+                .CreateDefaultBuilder(new string[] { })
                 .UseContentRoot(contentRoot)
-                .ConfigureServices(InitializeServices)
-                .UseEnvironment("development")
-                .UseUrls("https://localhost:43434")
-                .UseStartup(typeof(TStartup));
+                .UseStartup<Startup>();
 
             _server = new TestServer(builder);
 
@@ -39,24 +32,11 @@ namespace ohheck.help.tests
         }
 
         public HttpClient Client { get; }
-        
+
         public void Dispose()
         {
             Client.Dispose();
             _server.Dispose();
-        }
-
-        protected virtual void InitializeServices(IServiceCollection services)
-        {
-            var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
-
-            var manager = new ApplicationPartManager();
-            manager.ApplicationParts.Add(new AssemblyPart(startupAssembly));
-
-            manager.FeatureProviders.Add(new ControllerFeatureProvider());
-            manager.FeatureProviders.Add(new ViewComponentFeatureProvider());
-
-            services.AddSingleton(manager);
         }
 
         private static string GetProjectPath(string solutionRelativePath, Assembly startupAssembly)

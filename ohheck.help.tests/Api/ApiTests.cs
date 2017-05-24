@@ -11,39 +11,33 @@ namespace ohheck.help.tests
     public class ApiTests : IClassFixture<Fixture<Startup>>
     {
         private readonly HttpClient _client;
+        private readonly HttpClientHandler _handler;
 
         public ApiTests(Fixture<Startup> fixture)
         {
-            _client = fixture.Client;
+            _handler = new HttpClientHandler();
+            _handler.ServerCertificateCustomValidationCallback += (a, b, c, d) => true;
 
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, errors) => true;
+            _client = new HttpClient(_handler);
+            _client.BaseAddress = new Uri("https://localhost:43434");
+            //_client = fixture.Client;
         }
 
         [Fact]
         public async Task ServerDoesNotThrow500()
         {
-            try
-            {
-                var resp = await _client.GetAsync("/");
+            // this does not work
+            var resp = await _client.GetAsync("/");
 
-                if (!resp.IsSuccessStatusCode)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Failure: {resp.StatusCode} {resp.ReasonPhrase} {resp.RequestMessage}");
-                }
+            var respstr = await resp.Content.ReadAsStringAsync();
 
-                Assert.True(resp.IsSuccessStatusCode);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Something went wrong: {ex.Message}");
-
-                throw;
-            }
+            Assert.True(resp.IsSuccessStatusCode);
         }
 
         [Fact]
         public async Task CardsReturn()
         {
+            // this one does???
             var cards = await _client.GetAsync("/api/cards");
 
             Assert.True(cards.IsSuccessStatusCode);
