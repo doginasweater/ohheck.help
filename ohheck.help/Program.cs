@@ -12,13 +12,16 @@ namespace ohheck.help
 {
     public class Program
     {
-        public static void Main(string[] args) {
-            BuildWebHost(args).Run();
-        }
-
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static void Main(string[] args)
+        {
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:55555")
                 .Build();
+
+            host.Run();
+        }
     }
 }

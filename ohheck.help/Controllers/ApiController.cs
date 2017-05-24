@@ -18,19 +18,20 @@ namespace ohheck.help.Controllers
 
         public IActionResult Subunits() => Json(_db.Subunits.ToList());
 
-        public IActionResult Cards() => Json(_db.Cards
-            .Where(x => x.imageurl != null && x.imageurl != "")
-            .OrderBy(x => x.gameid)
-            .ThenBy(x => x.isidol)
-            .ToList()
-            .Select(x => new
-            {
-                imageurl = x.imageurl,
-                attribute = x.attribute.ToString(),
-                rarity = x.rarity.ToString(),
-                id = x.id
-            })
-            .ToList());
+        public IActionResult Cards() =>
+            Json(_db.Cards
+                .Where(x => x.imageurl != null && x.imageurl != "")
+                .OrderBy(x => x.gameid)
+                .ThenBy(x => x.isidol)
+                .ToList()
+                .Select(x => new
+                {
+                    imageurl = x.imageurl,
+                    attribute = x.attribute.ToString(),
+                    rarity = x.rarity.ToString(),
+                    id = x.id
+                })
+                .ToList());
 
         public async Task<IActionResult> Submit([FromBody] SurveySubmission response)
         {

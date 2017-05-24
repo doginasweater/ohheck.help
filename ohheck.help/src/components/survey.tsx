@@ -16,15 +16,15 @@ export default class Survey extends React.Component<any, any> {
     }
 
     componentDidMount = () => {
-        fetch("/api/cards")
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                this.setState({
-                    cards: data
-                });
+        fetch("/api/cards", { })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            this.setState({
+                cards: data
             });
+        });
     }
 
     handleClick = id => {
