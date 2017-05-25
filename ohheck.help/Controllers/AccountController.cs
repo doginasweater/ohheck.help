@@ -59,7 +59,6 @@ namespace ohheck.help.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -74,24 +73,25 @@ namespace ohheck.help.Controllers
                 {
                     _logger.LogInformation(1, "User logged in.");
 
-                    return Redirect("~/dashboard");
+                    return Json(true);
                 }
 
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
 
-                    return View("Lockout");
+                    return Json(false);
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+
+                    return Json(false);
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return Json(false);
         }
 
         //

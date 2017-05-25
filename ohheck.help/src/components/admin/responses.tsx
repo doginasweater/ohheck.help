@@ -10,17 +10,19 @@ export default class Responses extends React.Component<any, any> {
     }
 
     componentDidMount = () => {
-        fetch('/admin/responses')
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then(data => {
-                this.setState({
-                    responses: data
-                });
+        fetch('/admin/responses', {
+            credentials: 'include'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            this.setState({
+                responses: data
             });
+        });
     }
 
     renderList = list =>

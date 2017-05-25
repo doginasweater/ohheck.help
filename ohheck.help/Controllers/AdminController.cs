@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ohheck.help.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ILogger _logger;
@@ -202,5 +203,6 @@ namespace ohheck.help.Controllers
             return Json(molded);
         }
 
+        public IActionResult AllSurveys() => Json(_db.Surveys.ToList());
     }
 }

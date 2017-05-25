@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using ohheck.help.Models;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.Extensions.Logging;
 
 namespace ohheck.help
 {
@@ -48,6 +49,13 @@ namespace ohheck.help
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Cookies.ApplicationCookie.CookieHttpOnly = false;
+                options.Cookies.ApplicationCookie.SlidingExpiration = true;
+                options.User.RequireUniqueEmail = true;
+            });
+
             services.AddMvc();
 
             var client = new HttpClient();
@@ -59,8 +67,10 @@ namespace ohheck.help
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

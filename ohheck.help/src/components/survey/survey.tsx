@@ -15,7 +15,7 @@ export default class Survey extends React.Component<any, any> {
         };
     }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         fetch("/api/cards", { })
         .then(response => {
             return response.json();
@@ -44,8 +44,6 @@ export default class Survey extends React.Component<any, any> {
 
     submit = event => {
         event.preventDefault();
-
-        console.log('submitting', this.state.chosen);
 
         fetch('/api/submit', {
             method: 'POST',

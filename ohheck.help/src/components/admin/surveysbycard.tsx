@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Link, Route } from 'react-router-dom';
-import Idol from './idol';
+import Idol from '../survey/idol';
 
 export default class SurveysByCard extends React.Component<any, any> {
     constructor(props) {
@@ -10,17 +10,19 @@ export default class SurveysByCard extends React.Component<any, any> {
     }
 
     componentDidMount = () => {
-        fetch('/admin/surveysbycard')
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then(data => {
-                this.setState({
-                    responses: data
-                });
+        fetch('/admin/surveysbycard', {
+            credentials: 'include'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            this.setState({
+                responses: data
             });
+        });
     }
 
     renderList = list => list.map((item, index) =>
