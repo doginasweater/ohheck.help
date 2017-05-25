@@ -59,10 +59,8 @@ namespace ohheck.help.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -73,25 +71,25 @@ namespace ohheck.help.Controllers
                 {
                     _logger.LogInformation(1, "User logged in.");
 
-                    return Json(true);
+                    return Json(new { success = true });
                 }
 
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
 
-                    return Json(false);
+                    return Json(new { success = false, message = "User account locked out" });
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
 
-                    return Json(false);
+                    return Json(new { success = false, message = "Incorrect password" });
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return Json(false);
+            return Json(new { success = false, message = "Something big went wrong." });
         }
 
         //
@@ -144,6 +142,15 @@ namespace ohheck.help.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        /*[AllowAnonymous]
+        public async Task<IActionResult> Make()
+        {
+            var user = new ApplicationUser { UserName = "steven", Email = "stevencsweat@gmail.com" };
+            var result = await _userManager.CreateAsync(user, "Password1!");
+
+            return Json(result.Succeeded);
+        }*/
 
         //
         // POST: /Account/Logout

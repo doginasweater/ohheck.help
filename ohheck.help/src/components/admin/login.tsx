@@ -7,7 +7,8 @@ export default class Login extends React.Component<any, any> {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            message: ''
         };
     }
 
@@ -32,18 +33,24 @@ export default class Login extends React.Component<any, any> {
             }
         })
         .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
+            return response.json();
         })
-        .then(data => {
-            this.props.authenticate();
+        .then((data: any) => {
+            if (data.success) {
+                this.props.authenticate();
+            } else {
+                this.setState({
+                    username: '',
+                    password: '',
+                    message: data.message
+                });
+            }
         });
     }
 
     render() {
         return (
-            <div>
+            <div className="pure-u-1">
                 <form className="pure-form pure-form-stacked">
                     <fieldset>
                         <legend>Login</legend>
@@ -55,6 +62,11 @@ export default class Login extends React.Component<any, any> {
                         <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
 
                         <button className="pure-button" onClick={this.submit}>Login</button>
+                        {this.state.message &&
+                            <div style={{ 'margin-top': '20px' }}>
+                                <b>Error</b>: {this.state.message}
+                            </div>
+                        }
                     </fieldset>
                 </form>
             </div>

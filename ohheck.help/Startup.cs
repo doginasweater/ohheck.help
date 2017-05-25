@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using ohheck.help.Models;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Logging;
+using ohheck.help.Services;
 
 namespace ohheck.help
 {
@@ -55,6 +56,9 @@ namespace ohheck.help
                 options.Cookies.ApplicationCookie.SlidingExpiration = true;
                 options.User.RequireUniqueEmail = true;
             });
+
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddMvc();
 

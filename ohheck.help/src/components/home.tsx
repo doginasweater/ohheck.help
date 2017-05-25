@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import Survey from './survey';
+import Survey from './survey/survey';
 
 export default class Home extends React.Component<any, any> {
     constructor() {
