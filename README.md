@@ -5,11 +5,11 @@ A site for surveys for my two favourite youtubers, [aki and chrissu](https://you
 
 ## Build instructions:
 
-1) install [.net core 2.0 preview 1](https://www.microsoft.com/net/core/preview)
+1) install .net core 1.1
 2) clone the repository
 3) `cd` into folder
 4) `dotnet restore`
 5) `npm install`
 6) `dotnet run`
 
-**Please note**: this is running off of preview software, and will be undergoing many changes as they release new versions of .net core. This started out as a passion project but has turned into something a little more serious.
+**Please note**: the test project is currently not working because integration testing under .net core is *weird*.
