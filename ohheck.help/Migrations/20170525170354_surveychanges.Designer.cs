@@ -8,9 +8,10 @@ using ohheck.help.Models.Data;
 namespace ohheck.help.Migrations
 {
     [DbContext(typeof(HeckingContext))]
-    partial class HeckingContextModelSnapshot : ModelSnapshot
+    [Migration("20170525170354_surveychanges")]
+    partial class surveychanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -30,8 +31,6 @@ namespace ohheck.help.Migrations
                     b.Property<string>("modifiedby");
 
                     b.Property<int?>("questionid");
-
-                    b.Property<int>("sortorder");
 
                     b.Property<string>("text");
 
@@ -213,8 +212,6 @@ namespace ohheck.help.Migrations
                     b.Property<DateTime>("modified");
 
                     b.Property<string>("modifiedby");
-
-                    b.Property<bool>("required");
 
                     b.Property<int>("sortorder");
 

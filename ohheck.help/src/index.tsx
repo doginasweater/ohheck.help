@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Home from './components/home';
 import Admin from './components/admin/admin';
 import Thanks from './components/survey/thanks';
-import PrivateRoute from './components/privateroute';
+import Survey from './components/survey/form';
 import './scss/app.scss';
 
 class App extends React.Component<any, any> {
@@ -25,6 +25,7 @@ class App extends React.Component<any, any> {
                     <Route exact path="/" component={Home} />
                     <Route path="/thanks" component={Thanks} />
                     <Route path="/dashboard" component={Admin} />
+                    <Route path="/survey/:id" component={Survey} />
 
                     <footer className="pure-u-1">
                         <div className="pull-right small">

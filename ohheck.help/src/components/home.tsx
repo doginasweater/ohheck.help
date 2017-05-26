@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import Survey from './survey/survey';
+import Form from './survey/form';
 
 export default class Home extends React.Component<any, any> {
     constructor() {
@@ -35,7 +35,7 @@ export default class Home extends React.Component<any, any> {
                     Please look forward to it c;
                 </p>
                 <div>
-                    <Survey />
+                    <Form />
                 </div>
             </div>
         );

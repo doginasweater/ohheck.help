@@ -20,10 +20,11 @@ namespace ohheck.help.tests
             var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(solutionRelativeTargetProjectParentDir, startupAssembly);
 
-            var builder = WebHost
-                .CreateDefaultBuilder(new string[] { })
-                .UseContentRoot(contentRoot)
-                .UseStartup<Startup>();
+            var builder = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:55555");
 
             _server = new TestServer(builder);
 
@@ -43,7 +44,7 @@ namespace ohheck.help.tests
         {
             var projectName = startupAssembly.GetName().Name;
 
-            var applicationBasePath = Environment.CurrentDirectory;
+            var applicationBasePath = Directory.GetCurrentDirectory();
 
             var directoryInfo = new DirectoryInfo(applicationBasePath);
 

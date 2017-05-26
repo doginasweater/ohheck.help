@@ -1,9 +1,11 @@
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ohheck.help.Models;
 using ohheck.help.Models.Data;
 using ohheck.help.Models.ViewModels;
-using System.Threading.Tasks;
-using System;
 
 namespace ohheck.help.Controllers
 {
@@ -16,53 +18,89 @@ namespace ohheck.help.Controllers
             _db = ctx;
         }
 
-        public IActionResult Subunits() => Json(_db.Subunits.ToList());
+        public SurveyViewModel Survey(string id) =>
+            _db.Surveys
+                .Include(x => x.questions)
+                .ThenInclude(x => x.answers)
+                .ThenInclude(x => x.answercards)
+                .ThenInclude(x => x.card)
+                .SingleOrDefault(x => x.slug == id.ToLower())
+                .Prettify(false);
 
-        public IActionResult Cards() =>
-            Json(_db.Cards
-                .Where(x => x.imageurl != null && x.imageurl != "")
-                .OrderBy(x => x.gameid)
-                .ThenBy(x => x.isidol)
-                .ToList()
-                .Select(x => new
-                {
-                    imageurl = x.imageurl,
-                    attribute = x.attribute.ToString(),
-                    rarity = x.rarity.ToString(),
-                    id = x.id
-                })
-                .ToList());
-
-        public async Task<IActionResult> Submit([FromBody] SurveySubmission response)
+        public async Task<Result> Submit([FromBody] SurveySubmission response)
         {
-            var submission = new SurveyResponse
-            {
-                comments = response.comments,
-                submitter = response.submitter,
-                survey = _db.Surveys.SingleOrDefault(x => x.id == response.surveyid),
-                nextgroup = response.nextgroup,
-                created = DateTime.Now,
-                createdby = string.IsNullOrEmpty(response.submitter) ? "anonymous" : response.submitter,
-                modified = DateTime.Now,
-                modifiedby = string.IsNullOrEmpty(response.submitter) ? "anonymous" : response.submitter
-            };
+            var survey = await _db.Surveys
+                .Include(x => x.questions)
+                .ThenInclude(x => x.answers)
+                .ThenInclude(x => x.answercards)
+                .ThenInclude(x => x.card)
+                .SingleOrDefaultAsync(x => x.id == response.surveyid);
 
-            _db.Responses.Add(submission);
-
-            await _db.SaveChangesAsync();
-
-            submission.cardresponses = response.chosen
-                .Where(x => x.Value == true)
-                .Select(x => new CardResponse
+            var choices = survey.questions
+                .Select(x =>
                 {
-                    cardid = x.Key,
-                    responseid = submission.id
+                    var c = new Choice
+                    {
+                        question = x,
+                        type = x.type,
+                        created = DateTime.Now,
+                        createdby = "web",
+                        modified = DateTime.Now,
+                        modifiedby = "web"
+                    };
+
+                    var q_and_a = response.choices.SingleOrDefault(y => y.Key == x.id);
+
+                    switch (x.type)
+                    {
+                        case AnswerType.MultiLineText:
+                        case AnswerType.SingleLineText:
+                            c.text = q_and_a.Value;
+                            break;
+                        case AnswerType.SelectBox:
+                            int.TryParse(q_and_a.Value, out int result);
+
+                            c.answer = _db.Answers.SingleOrDefault(y => y.id == result);
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                    return c;
                 })
                 .ToList();
 
+            var submission = new Submission
+            {
+                survey = survey,
+                created = DateTime.Now,
+                createdby = "web",
+                modified = DateTime.Now,
+                modifiedby = "web",
+                answers = choices
+            };
+
+            _db.Submissions.Add(submission);
+
             await _db.SaveChangesAsync();
 
-            return Json(new { success = true });
+            var choiceid = submission.answers.SingleOrDefault(x => x.type == AnswerType.Cards);
+
+            var cards = response.cards
+                .Where(x => x.Value == true)
+                .Select(x => new CardChoice
+                {
+                    cardid = x.Key,
+                    choiceid = choiceid.id
+                })
+                .ToList();
+
+            choiceid.cardchoices = cards;
+
+            await _db.SaveChangesAsync();
+
+            return Result.Success();
         }
     }
 }

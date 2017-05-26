@@ -1,13 +1,15 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using ohheck.help.Models.Data;
 using ohheck.help.Models.ApiModels;
 using Newtonsoft.Json;
-using ohheck.help.Models.Data;
-using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace ohheck.help.Controllers
 {
@@ -166,43 +168,56 @@ namespace ohheck.help.Controllers
 
         public IActionResult Responses()
         {
-            var responses = _db.Responses
-                .Where(x => x.survey.id == 1)
-                .Select(x => new
-                {
-                    submitter = x.submitter,
-                    comments = x.comments,
-                    cards = string.Join(", ", x.cardresponses.Select(y => y.card.gameid)),
-                    submitted = x.created.ToString(),
-                    nextgroup = x.nextgroup
-                })
-                .ToList();
+            //var responses = _db.Submissions
+            //    .Where(x => x.survey.id == 1)
+            //    .Select(x => new
+            //    {
+            //        submitter = x.submitter,
+            //        comments = x.comments,
+            //        cards = string.Join(", ", x.cardresponses.Select(y => y.card.gameid)),
+            //        submitted = x.created.ToString(),
+            //        nextgroup = x.nextgroup
+            //    })
+            //    .ToList();
 
-            return Json(responses);
+            return Json(new { });
         }
 
         public IActionResult SurveysByCard()
         {
-            var responses = from cr in _db.CardResponses
-                            join r in _db.Responses on cr.responseid equals r.id
-                            where r.survey.id == 1
-                            select cr.card;
+            //var responses = from cr in _db.CardResponses
+            //                join r in _db.Responses on cr.responseid equals r.id
+            //                where r.survey.id == 1
+            //                select cr.card;
 
-            var molded = responses
-                .GroupBy(x => x.id)
-                .Select(x => new
-                {
-                    count = x.Count(),
-                    imageurl = x.FirstOrDefault().imageurl,
-                    attribute = x.FirstOrDefault().attribute.ToString(),
-                    rarity = x.FirstOrDefault().rarity.ToString(),
-                    id = x.FirstOrDefault().id
-                })
-                .OrderByDescending(x => x.count);
+            //var molded = responses
+            //    .GroupBy(x => x.id)
+            //    .Select(x => new
+            //    {
+            //        count = x.Count(),
+            //        imageurl = x.FirstOrDefault().imageurl,
+            //        attribute = x.FirstOrDefault().attribute.ToString(),
+            //        rarity = x.FirstOrDefault().rarity.ToString(),
+            //        id = x.FirstOrDefault().id
+            //    })
+            //    .OrderByDescending(x => x.count);
 
-            return Json(molded);
+            return Json(new { });
         }
 
-        public IActionResult AllSurveys() => Json(_db.Surveys.ToList());
+        public List<SurveyViewModel> AllSurveys() => _db.Surveys.Select(x => x.Prettify()).ToList();
+
+        public SurveyViewModel Survey(int id)
+        {
+            var survey = _db.Surveys
+                .Include(x => x.questions)
+                .ThenInclude(x => x.answers)
+                .ThenInclude(x => x.answercards)
+                .ThenInclude(x => x.card)
+                .SingleOrDefault(x => x.id == id)
+                .Prettify();
+
+            return survey;
+        }
     }
 }

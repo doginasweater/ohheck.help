@@ -10,8 +10,8 @@ export default class Responses extends React.Component<any, any> {
     }
 
     componentDidMount = () => {
-        fetch('/admin/responses', {
-            credentials: 'include'
+        fetch(`/admin/responses/${this.props.match.id}`, {
+            credentials: 'same-origin'
         })
         .then(response => {
             if (response.ok) {

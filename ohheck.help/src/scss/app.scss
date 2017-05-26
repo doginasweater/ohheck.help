@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'buttons';
+@import 'custom';
 
 html {
     min-height: 100%;
@@ -16,37 +17,10 @@ html, button, input, select, textarea,
         font-weight: 200;
     }
 
-.main {
-    max-width: 1280px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 20px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
+a:hover {
+    text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-style: italic;
-    text-transform: uppercase;
-    font-weight: 400;
-}
-
-.pull-right {
-    float: right;
-}
-
-.small {
-    font-size: .8em;
-}
-
-.center {
-    text-align: center;
-
-    .pure-button {
-        margin-left: 5px;
-        margin-right: 5px;
-    }
-}
-
-.some-space {
-    margin-bottom: 20px;
+a:visited {
+    color: #0000EE;
 }

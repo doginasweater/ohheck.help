@@ -12,6 +12,7 @@ using ohheck.help.Models;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Logging;
 using ohheck.help.Services;
+using Newtonsoft.Json;
 
 namespace ohheck.help
 {
@@ -60,7 +61,11 @@ namespace ohheck.help
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            });
 
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://schoolido.lu/");
