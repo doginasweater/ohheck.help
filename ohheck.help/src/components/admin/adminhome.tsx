@@ -36,15 +36,20 @@ export default class AdminHome extends React.Component<any, any> {
         });
     }
 
+    createMarkup = item => {
+        return {
+            __html: item
+        };
+    }
+
     renderBody = () => {
         if (this.state.surveys.length > 0) {
             return this.state.surveys.map((item: Survey, index: number) => 
                 <tr key={index}>
                     <td>{item.name}</td>
                     <td>{item.title}</td>
-                    <td>{item.active === true ? "Yes" : "No"}</td>
+                    <td>{item.active ? "Yes" : "No"}</td>
                     <td>{item.slug}</td>
-                    <td>{item.comments}</td>
                     <td>
                         <Link to={`/dashboard/responses/${item.id}`}>
                             Responses
@@ -69,7 +74,6 @@ export default class AdminHome extends React.Component<any, any> {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
                 </tr>
             );
         }
@@ -87,7 +91,6 @@ export default class AdminHome extends React.Component<any, any> {
                             <th>Title</th>
                             <th>Active</th>
                             <th>Slug</th>
-                            <th>Comments</th>
                             <th>Responses</th>
                             <th>Actions</th>
                         </tr>

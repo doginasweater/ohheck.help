@@ -4,6 +4,7 @@ import Subunit from './subunit';
 import Idol from './idol';
 import { Survey } from '../../types/admin';
 import Questions from '../questions';
+import { Link } from 'react-router-dom';
 
 interface FormState {
     survey: Survey;
@@ -100,6 +101,17 @@ export default class Form extends React.Component<any, FormState> {
             );
         }
 
+        if (!this.state.survey.active) {
+            return (
+                <div className="pure-u-1">
+                    <h1>{this.state.survey.title}</h1>
+                    <div>
+                        Sorry! This survey is not active. Do you want to try going <Link to="/">home</Link>?
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div className="pure-u-1">
                 <h1>{this.state.survey.title}</h1>
@@ -110,7 +122,7 @@ export default class Form extends React.Component<any, FormState> {
                         ispublic={true}
                         handleClick={this.handleClick}
                         handleChange={this.handleChange}
-                        choices={this.state.choices} 
+                        choices={this.state.choices}
                         cards={this.state.cards} />
                     <p className="center">
                         <button className="pure-button button-primary" onSubmit={this.submit} onClick={this.submit}>

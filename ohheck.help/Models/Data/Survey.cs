@@ -24,7 +24,7 @@ namespace ohheck.help.Models.Data
                 modifiedby = modifiedby,
                 name = name,
                 title = title,
-                active = active ? "Yes" : "No",
+                active = active,
                 comments = comments,
                 slug = slug,
                 questions = questions?.Select(x => x.Prettify())?.OrderBy(x => x.sortorder),
@@ -37,7 +37,7 @@ namespace ohheck.help.Models.Data
                 id = id,
                 name = name,
                 title = title,
-                active = active ? "Yes" : "No",
+                active = active,
                 comments = comments,
                 slug = slug,
                 questions = questions?.Select(x => x.Prettify(false))?.OrderBy(x => x.sortorder),
@@ -49,7 +49,7 @@ namespace ohheck.help.Models.Data
     {
         public string name { get; set; }
         public string title { get; set; }
-        public string active { get; set; }
+        public bool active { get; set; }
         public string comments { get; set; }
         public string slug { get; set; }
         public IEnumerable<QuestionViewModel> questions { get; set; }

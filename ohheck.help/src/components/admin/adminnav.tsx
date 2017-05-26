@@ -9,7 +9,7 @@ export default () => <ul className="no-indent">
     </li>
     <li className="divider" />
     <li>
-        <Link to="/dashboard/newsurvey">
+        <Link to="/dashboard/survey">
             New Survey
         </Link>
     </li>
