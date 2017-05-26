@@ -254,3 +254,4 @@ paket-files/
 db/
 .vscode/
 *.db
+bundle.js
