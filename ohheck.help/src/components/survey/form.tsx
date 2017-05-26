@@ -63,15 +63,13 @@ export default class Form extends React.Component<any, FormState> {
     }
 
     submit = event => {
+        event.preventDefault();
+
         const toSubmit = {
             surveyid: this.state.survey.id,
             choices: this.state.choices,
             cards: this.state.cards
         };
-
-        console.log('to subnit', toSubmit);
-
-        event.preventDefault();
 
         fetch('/api/submit', {
             method: 'POST',

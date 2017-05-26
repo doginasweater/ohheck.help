@@ -56,9 +56,6 @@ export default class NewSurvey extends React.Component<any, NewSurveyState> {
 
         qs[index] = question;
 
-        console.log('question', question);
-        console.log('index', index);
-
         this.setState({
             questions: qs
         });
