@@ -244,10 +244,13 @@ namespace ohheck.help.Controllers
                 .ThenInclude(x => x.cards)
                 .SingleOrDefaultAsync(x => x.id == id);
 
-        public async Task<List<Card>> Cards() =>
+        public async Task<List<Card>> Cards(int skip, int take) =>
             await _db.Cards
+                .Where(x => !string.IsNullOrEmpty(x.imageurl))
                 .Include(x => x.idol)
                 .ThenInclude(x => x.cards)
+                .Skip(skip)
+                .Take(take)
                 .ToListAsync();
 
         public async Task<Card> Card(int id) =>
