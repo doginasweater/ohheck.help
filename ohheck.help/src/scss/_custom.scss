@@ -36,6 +36,16 @@ h1, h2, h3, h4, h5, h6 {
 .no-indent {
     padding: 0;
     list-style-type: none;
+
+    li {
+        vertical-align: text-top;
+        line-height: 1;
+        display: block;
+
+        a {
+            vertical-align: text-top;
+        }
+    }
 }
 
 .divider {
@@ -60,4 +70,21 @@ ol.horizontal {
     div {
         margin: 10px 0 10px 0;
     }
+}
+
+.idol-box{
+    padding: 10px;
+    
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+    
+    a:visited {
+        color: #000;
+    }
+}
+
+.idol-box:hover {
+    background-color: rgba(128, 128, 128, 0.1);
 }

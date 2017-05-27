@@ -76,10 +76,14 @@ export default class NewQuestion extends React.Component<any, any> {
                         {this.renderQuestion()}
                     </div>
                     <div className="pure-u-1-4">
-                        {/*<button className="pure-button button-primary">Preview</button>*/}
-                        <button onClick={this.props.deleteQuestion} className="pure-button button-secondary" id={this.props.question.id}>
-                            Delete me
-                        </button>
+                        <div className="pure-u-1">
+                            Sort Order: {this.props.question.id}
+                        </div>
+                        <div className="pure-u-1">
+                            <button onClick={this.props.deleteQuestion} className="pure-button button-secondary" id={this.props.question.id}>
+                                <i className="material-icons md-18">delete</i> Delete me
+                            </button>
+                        </div>
                     </div>
                 </div>
             );

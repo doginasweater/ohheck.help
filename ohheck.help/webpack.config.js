@@ -6,6 +6,9 @@ module.exports = {
     entry: {
         main: ['./src/index.tsx']
     },
+    resolve: {
+        extensions: [ '.js', '.jsx', '.ts', '.tsx' ]
+    },
     output: {
         path: `${__dirname}/wwwroot/js`,
         publicPath: '/js/',
@@ -13,8 +16,8 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.tsx?$/, use: { loader: 'babel-loader', options: { cacheDirectory: true } }, exclude: /node_modules/ },
-            { test: /\.tsx?$/, use: 'awesome-typescript-loader?silent=true', exclude: /node_modules/ },
+            { test: /\.ts(x?)?$/, include: /src/, use: { loader: 'babel-loader', options: { cacheDirectory: true } } },
+            { test: /\.tsx?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
             {
                 test: /\.(scss|css)$/, 
                 use: [
@@ -24,9 +27,6 @@ module.exports = {
                 ]
             }
         ]
-    },
-    resolve: {
-        extensions: [".tsx", ".ts", ".js", ".jsx"]
     },
     devtool: 'inline-source-map',
     plugins: [new CheckerPlugin()]

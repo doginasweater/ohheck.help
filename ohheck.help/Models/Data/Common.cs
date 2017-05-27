@@ -1,17 +1,20 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ohheck.help.Models.Data
 {
-    public class Common
+    public abstract class Common
     {
         public int id { get; set; }
+
         public DateTime created { get; set; }
         public string createdby { get; set; }
+
         public DateTime modified { get; set; }
         public string modifiedby { get; set; }
     }
 
-    public class CommonViewModel
+    public abstract class CommonViewModel
     {
         public int id { get; set; }
         public string created { get; set; }

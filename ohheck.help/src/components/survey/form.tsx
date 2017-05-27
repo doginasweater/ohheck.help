@@ -6,6 +6,8 @@ import { Survey } from '../../types/admin';
 import Questions from '../questions';
 import { Link } from 'react-router-dom';
 
+let ReactMarkdown: any = require('react-markdown');
+
 interface FormState {
     survey: Survey;
     loading: boolean;
@@ -25,7 +27,7 @@ export default class Form extends React.Component<any, FormState> {
         };
     }
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         fetch(`/api/survey/${this.props.match.params.id}`)
             .then(response => {
                 return response.json();
@@ -36,12 +38,6 @@ export default class Form extends React.Component<any, FormState> {
                     loading: false
                 });
             });
-    }
-
-    createMarkup = () => {
-        return {
-            __html: this.state.survey.comments
-        };
     }
 
     handleClick = id => {
@@ -113,7 +109,7 @@ export default class Form extends React.Component<any, FormState> {
         return (
             <div className="pure-u-1">
                 <h1>{this.state.survey.title}</h1>
-                <div dangerouslySetInnerHTML={this.createMarkup()} />
+                <ReactMarkdown escapeHtml={true} source={this.state.survey.comments} />
                 <form name="survey" className="pure-form pure-form-stacked">
                     <Questions
                         questions={this.state.survey.questions}

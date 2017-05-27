@@ -1,17 +1,6 @@
 ﻿import * as React from 'react';
 import { Link, Route } from 'react-router-dom';
-
-import AdminHome from './adminhome';
-import AdminNav from './adminnav';
-import Responses from './responses';
-import SurveysByCard from './surveysbycard';
-import Login from './login';
-import Groups from './groups';
-import Subunits from './subunits';
-import Idols from './idols';
-import AllCards from './allcards';
-import SurveyView from './surveyview';
-import NewSurvey from './newsurvey';
+import * as a from '.';
 
 export default class Admin extends React.Component<any, any> {
     constructor(props) {
@@ -33,7 +22,7 @@ export default class Admin extends React.Component<any, any> {
             return (
                 <div className="pure-u-1">
                     <h1>Oh Heck! Admin</h1>
-                    <Login authenticate={this.auth} />;
+                    <a.Login authenticate={this.auth} />;
                 </div>
             );
         } else {
@@ -42,24 +31,31 @@ export default class Admin extends React.Component<any, any> {
                     <h1>Oh Heck! Admin</h1>
                     <div className="pure-u-1-4">
                         <h3>menu</h3>
-                        <AdminNav />
+                        <a.AdminNav />
                     </div>
                     <div className="pure-u-3-4">
-                        <Route exact path="/dashboard" component={AdminHome} />
+                        <Route exact path="/dashboard" component={a.AdminHome} />
 
-                        <Route path="/dashboard/responses/:id" component={Responses} />
+                        <Route path="/dashboard/responses/:id" component={a.Responses} />
                         <Route exact path="/dashboard/responses" render={() => <h3>Please go back and select a survey.</h3>} />
 
-                        <Route path="/dashboard/bycard/:id" component={SurveysByCard} />
+                        <Route path="/dashboard/bycard/:id" component={a.SurveysByCard} />
                         <Route exact path="/dashboard/bycard" render={() => <h3>Please go back and select a survey.</h3>} />
 
-                        <Route path="/dashboard/groups" component={Groups} />
-                        <Route path="/dashboard/subunits" component={Subunits} />
-                        <Route path="/dashboard/idols" component={Idols} />
-                        <Route path="/dashboard/cards" component={AllCards} />
+                        <Route path="/dashboard/groups/:id" component={a.SingleGroup} />
+                        <Route exact path="/dashboard/groups" component={a.Groups} />
 
-                        <Route path="/dashboard/survey/:id" component={SurveyView} />
-                        <Route exact path="/dashboard/survey" component={NewSurvey} />
+                        <Route path="/dashboard/subunits/:id" component={a.SingleSubunit} />
+                        <Route exact path="/dashboard/subunits" component={a.Subunits} />
+
+                        <Route path="/dashboard/idols/:id" component={a.SingleIdol} />
+                        <Route exact path="/dashboard/idols" component={a.Idols} />
+
+                        <Route path="/dashboard/cards/:id" component={a.SingleCard} />
+                        <Route exact path="/dashboard/cards" component={a.AllCards} />
+
+                        <Route path="/dashboard/survey/:id" component={a.SurveyView} />
+                        <Route exact path="/dashboard/survey" component={a.NewSurvey} />
                     </div>
                 </div>
             );

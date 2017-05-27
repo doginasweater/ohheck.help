@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import Login from './login';
 import 'whatwg-fetch';
 import { Survey } from '../../types/admin';
+import Icon from '../icon';
 
 export default class AdminHome extends React.Component<any, any> {
     constructor(props) {
@@ -36,19 +37,13 @@ export default class AdminHome extends React.Component<any, any> {
         });
     }
 
-    createMarkup = item => {
-        return {
-            __html: item
-        };
-    }
-
     renderBody = () => {
         if (this.state.surveys.length > 0) {
             return this.state.surveys.map((item: Survey, index: number) => 
                 <tr key={index}>
                     <td>{item.name}</td>
                     <td>{item.title}</td>
-                    <td>{item.active ? "Yes" : "No"}</td>
+                    <td>{item.active ? <Icon icon="check" /> : <Icon icon="highlight_off" />}</td>
                     <td>{item.slug}</td>
                     <td>
                         <Link to={`/dashboard/responses/${item.id}`}>

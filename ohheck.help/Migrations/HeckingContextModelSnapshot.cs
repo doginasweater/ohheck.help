@@ -25,7 +25,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -80,7 +81,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<bool>("ispromo");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -119,7 +121,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -162,7 +165,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -184,7 +188,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<int?>("groupid");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -210,7 +215,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -240,7 +246,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -266,7 +273,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 
@@ -292,7 +300,8 @@ namespace ohheck.help.Migrations
 
                     b.Property<string>("createdby");
 
-                    b.Property<DateTime>("modified");
+                    b.Property<DateTime>("modified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("modifiedby");
 

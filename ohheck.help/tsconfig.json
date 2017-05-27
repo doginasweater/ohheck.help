@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "sourceMap": true,
-    "noImplicitAny": false,
-    "target": "es6",
-    "jsx": "react",
     "moduleResolution": "node",
-    "allowJs": true,
+    "target": "es6",
+    "jsx": "preserve",
+    "sourceMap": true,
+    "skipDefaultLibCheck": true,
     "experimentalDecorators": true,
     "lib": [ "es6", "dom" ],
-    "types": [ "webpack-env" ],
-    "skipDefaultLibCheck": true
+    "types": [ "webpack-env" ]
   },
   "include": [
     "src"

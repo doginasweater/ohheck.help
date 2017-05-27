@@ -18,7 +18,7 @@ namespace ohheck.help
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:55555")
+                .UseUrls("http://*:55555")
                 .Build();
 
             host.Run();

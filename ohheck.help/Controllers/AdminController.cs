@@ -2,14 +2,15 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using ohheck.help.Models;
 using ohheck.help.Models.Data;
 using ohheck.help.Models.ApiModels;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace ohheck.help.Controllers
 {
@@ -25,9 +26,10 @@ namespace ohheck.help.Controllers
             _logger = factory.CreateLogger<AdminController>();
             _db = ctx;
             client = _client;
+            _db.user = User?.Identity?.Name ?? "admin panel";
         }
 
-        public async Task<IActionResult> SetupDb()
+        public async Task<Result> SetupDb()
         {
             var url = "api/cacheddata/";
 
@@ -40,11 +42,7 @@ namespace ohheck.help.Controllers
 
                 var units = obj.cards_info.sub_units.Select(x => new Subunit
                 {
-                    name = x,
-                    created = DateTime.Now,
-                    createdby = "kevin",
-                    modified = DateTime.Now,
-                    modifiedby = "kevin"
+                    name = x
                 });
 
                 foreach (var su in units)
@@ -56,24 +54,20 @@ namespace ohheck.help.Controllers
                 {
                     id = 1,
                     name = "first survey",
-                    slug = "cyaron",
-                    created = DateTime.Now,
-                    modified = DateTime.Now,
-                    modifiedby = "kevin",
-                    createdby = "kevin"
+                    slug = "cyaron"
                 });
 
                 var result = await _db.SaveChangesAsync();
 
-                return Json(new { result });
+                return Result.Success();
             }
 
-            return Json(new { response });
+            return Result.Failure(response.ReasonPhrase);
         }
 
-        public async Task<IActionResult> Setup()
+        public async Task<Result> Setup()
         {
-            var url = "api/cards/?idol_sub_unit=CYaRon!";
+            var url = "api/cards/";
 
             do
             {
@@ -83,10 +77,16 @@ namespace ohheck.help.Controllers
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     var respObj = JsonConvert.DeserializeObject<ApiResponse>(content);
+
                     url = respObj.next;
 
                     foreach (var card in respObj.results)
                     {
+                        if (_db.Cards.Any(x => x.apiid == card.id))
+                        {
+                            continue;
+                        }
+
                         var c = new Card
                         {
                             apiid = card.id,
@@ -95,11 +95,7 @@ namespace ohheck.help.Controllers
                             attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
                             imageurl = card.card_image,
                             ispromo = card.is_promo,
-                            isidol = false,
-                            created = DateTime.Now,
-                            createdby = "kevin",
-                            modified = DateTime.Now,
-                            modifiedby = "kevin",
+                            isidol = false
                         };
 
                         var c2 = new Card
@@ -110,11 +106,7 @@ namespace ohheck.help.Controllers
                             attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
                             imageurl = card.card_idolized_image,
                             ispromo = card.is_promo,
-                            isidol = true,
-                            created = DateTime.Now,
-                            createdby = "kevin",
-                            modified = DateTime.Now,
-                            modifiedby = "kevin"
+                            isidol = true
                         };
 
                         var idol = _db.Idols.FirstOrDefault(x => x.name == card.idol.name);
@@ -127,23 +119,15 @@ namespace ohheck.help.Controllers
                             {
                                 g = new Group
                                 {
-                                    name = card.idol.main_unit,
-                                    created = DateTime.Now,
-                                    createdby = "kevin",
-                                    modified = DateTime.Now,
-                                    modifiedby = "kevin"
+                                    name = card.idol.main_unit
                                 };
                             }
 
-                            idol = new Models.Data.Idol
+                            idol = new Idol
                             {
                                 name = card.idol.name,
-                                subunit = _db.Subunits.FirstOrDefault(x => x.name == card.idol.sub_unit),
-                                group = g,
-                                created = DateTime.Now,
-                                createdby = "kevin",
-                                modified = DateTime.Now,
-                                modifiedby = "kevin"
+                                subunit = _db.Subunits.Include(x => x.idols).FirstOrDefault(x => x.name == card.idol.sub_unit),
+                                group = g
                             };
                         }
 
@@ -152,9 +136,9 @@ namespace ohheck.help.Controllers
 
                         _db.Cards.Add(c);
                         _db.Cards.Add(c2);
-                    }
 
-                    _db.SaveChanges();
+                        _db.SaveChanges();
+                    }
                 }
                 else
                 {
@@ -163,7 +147,7 @@ namespace ohheck.help.Controllers
                 }
             } while (url != null);
 
-            return Json(new { message = "success" });
+            return Result.Success();
         }
 
         public IActionResult Responses()
@@ -207,9 +191,8 @@ namespace ohheck.help.Controllers
 
         public List<SurveyViewModel> AllSurveys() => _db.Surveys.Select(x => x.Prettify()).ToList();
 
-        public SurveyViewModel Survey(int id)
-        {
-            var survey = _db.Surveys
+        public SurveyViewModel Survey(int id) =>
+            _db.Surveys
                 .Include(x => x.questions)
                 .ThenInclude(x => x.answers)
                 .ThenInclude(x => x.answercards)
@@ -217,7 +200,60 @@ namespace ohheck.help.Controllers
                 .SingleOrDefault(x => x.id == id)
                 .Prettify();
 
-            return survey;
-        }
+        public async Task<List<Group>> Groups() =>
+            await _db.Groups
+                .Include(x => x.subunits)
+                .Include(x => x.idols)
+                .ThenInclude(x => x.cards)
+                .Include(x => x.idols)
+                .ThenInclude(x => x.subunit)
+                .ToListAsync();
+
+        public async Task<Group> Group(int id) =>
+            await _db.Groups
+                .Include(x => x.subunits)
+                .Include(x => x.idols)
+                .ThenInclude(x => x.cards)
+                .SingleOrDefaultAsync(x => x.id == id);
+
+        public async Task<List<Idol>> Idols() =>
+            await _db.Idols
+                .Include(x => x.cards)
+                .Include(x => x.group)
+                .Include(x => x.subunit)
+                .OrderBy(x => x.group.name)
+                .ThenBy(x => x.subunit.name)
+                .ToListAsync();
+
+        public async Task<Idol> Idol(int id) =>
+            await _db.Idols
+                .Include(x => x.cards)
+                .Include(x => x.group)
+                .Include(x => x.subunit)
+                .SingleOrDefaultAsync(x => x.id == id);
+
+        public async Task<List<Subunit>> Subunits() =>
+            await _db.Subunits
+                .Include(x => x.idols)
+                .ThenInclude(x => x.cards)
+                .ToListAsync();
+
+        public async Task<Subunit> Subunit(int id) =>
+            await _db.Subunits
+                .Include(x => x.idols)
+                .ThenInclude(x => x.cards)
+                .SingleOrDefaultAsync(x => x.id == id);
+
+        public async Task<List<Card>> Cards() =>
+            await _db.Cards
+                .Include(x => x.idol)
+                .ThenInclude(x => x.cards)
+                .ToListAsync();
+
+        public async Task<Card> Card(int id) =>
+            await _db.Cards
+                .Include(x => x.idol)
+                .ThenInclude(x => x.cards)
+                .SingleOrDefaultAsync(x => x.id == id);
     }
 }

@@ -16,6 +16,7 @@ namespace ohheck.help.Controllers
         public ApiController(HeckingContext ctx)
         {
             _db = ctx;
+            _db.user = User?.Identity?.Name ?? "web";
         }
 
         public SurveyViewModel Survey(string id) =>
@@ -42,11 +43,7 @@ namespace ohheck.help.Controllers
                     var c = new Choice
                     {
                         question = x,
-                        type = x.type,
-                        created = DateTime.Now,
-                        createdby = "web",
-                        modified = DateTime.Now,
-                        modifiedby = "web"
+                        type = x.type
                     };
 
                     var q_and_a = response.choices.SingleOrDefault(y => y.Key == x.id);
@@ -74,10 +71,6 @@ namespace ohheck.help.Controllers
             var submission = new Submission
             {
                 survey = survey,
-                created = DateTime.Now,
-                createdby = "web",
-                modified = DateTime.Now,
-                modifiedby = "web",
                 answers = choices
             };
 

@@ -3,11 +3,14 @@ import { Survey, Question } from '../../types/admin';
 import 'whatwg-fetch';
 import Questions from '../questions';
 
+let ReactMarkdown: any = require('react-markdown');
+
 interface SurveyViewState {
     survey: Survey;
     loading: boolean;
     choices: any;
     cards: any;
+    editable: boolean;
 }
 
 export default class SurveyView extends React.Component<any, SurveyViewState> {
@@ -18,7 +21,8 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
             survey: new Survey({}),
             loading: true,
             choices: {},
-            cards: {}
+            cards: {},
+            editable: false
         };
     }
 
@@ -65,6 +69,14 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         });
     }
 
+    toggleEdit = event => {
+        event.preventDefault();
+
+        this.setState({
+            editable: !this.state.editable
+        });
+    }
+
     render() {
         if (this.state.loading) {
             return (
@@ -76,13 +88,20 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
 
         return (
             <div>
-                <h3>{survey.name}</h3>
+                <div className="pure-u-1-2">
+                    <h3>{survey.name}</h3>
+                </div>
+                <div className="pure-u-1-2">
+                    <button onClick={this.toggleEdit} className="pure-button button-primary pull-right">
+                        Edit Survey
+                    </button>
+                </div>
                 <div className="breathing-room">
                     <div className="pure-u-1-2">
-                        <b>Title</b>: {survey.title}
+                        <b>Title</b>: <span contentEditable={this.state.editable}>{survey.title}</span>
                     </div>
                     <div className="pure-u-1-3">
-                        <b>Slug (url)</b>: {survey.slug}
+                        <b>Slug (url)</b>: <span contentEditable={this.state.editable}>{survey.slug}</span>
                     </div>
                     <div className="pure-u-1-3">
                         <b>Currently Active</b>: {survey.active ? "Yes" : "No"}
@@ -95,7 +114,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
                     </div>
                     <div className="pure-u-1">
                         <b>Comments</b>:
-                        <div dangerouslySetInnerHTML={this.createMarkup()} />
+                        <ReactMarkdown escapeHtml={true} source={survey.comments} />
                     </div>
                     <div className="pure-u-1">
                         <form className="pure-form pure-form-stacked">
