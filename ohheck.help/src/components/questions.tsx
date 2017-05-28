@@ -1,10 +1,8 @@
 ﻿import * as React from 'react';
 import { Survey, Question } from '../types/admin';
-import SingleLineText from './survey/singlelinetext';
-import MultilineText from './survey/multilinetext';
-import SelectBox from './survey/selectbox';
-import Cards from './admin/cards';
-import PublicCards from './survey/publiccards';
+import { SingleLineText, MultilineText, SelectBox, PublicCards } from './survey';
+import { Cards } from './admin';
+
 
 interface QuestionsProps {
     questions: Question[];

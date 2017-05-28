@@ -43,6 +43,13 @@ export default () => <ul className="no-indent">
     </li>
     <li className="divider" />
     <li>
+        <Icon icon="settings" />
+        <Link to="/dashboard/settings">
+            Settings
+        </Link>
+    </li>
+    <li className="divider" />
+    <li>
         <Icon icon="close" />
         <a href="/account/logout">
             Logout

@@ -5,6 +5,7 @@ import Idol from './idol';
 import { Survey } from '../../types/admin';
 import Questions from '../questions';
 import { Link } from 'react-router-dom';
+import Icon from '../icon';
 
 let ReactMarkdown: any = require('react-markdown');
 
@@ -120,7 +121,7 @@ export default class Form extends React.Component<any, FormState> {
                         cards={this.state.cards} />
                     <p className="center">
                         <button className="pure-button button-primary" onSubmit={this.submit} onClick={this.submit}>
-                            submit!
+                            <Icon icon="done" /> submit!
                         </button>
                     </p>
                 </form>

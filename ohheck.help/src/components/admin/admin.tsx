@@ -56,6 +56,8 @@ export default class Admin extends React.Component<any, any> {
 
                         <Route path="/dashboard/survey/:id" component={a.SurveyView} />
                         <Route exact path="/dashboard/survey" component={a.NewSurvey} />
+
+                        <Route path="/dashboard/settings" component={a.Settings} />
                     </div>
                 </div>
             );

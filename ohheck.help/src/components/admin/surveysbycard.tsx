@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Link, Route } from 'react-router-dom';
-import Idol from '../survey/idol';
+import { Idol } from '../survey';
 
 export default class SurveysByCard extends React.Component<any, any> {
     constructor(props) {

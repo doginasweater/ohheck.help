@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Card } from '../../types/card';
-import Idol from './idol';
+import { Idol } from '.';
 
 export default class PublicCards extends React.Component<any, any> {
     constructor(props) {

@@ -13,6 +13,9 @@ import SingleGroup from './singlegroup';
 import SingleSubunit from './singlesubunit';
 import SingleIdol from './singleidol';
 import SingleCard from './singlecard';
+import Cards from './cards';
+import Settings from './settings';
+import Editor from './editor';
 
 export {
     AdminHome,
@@ -29,5 +32,8 @@ export {
     SingleGroup,
     SingleSubunit,
     SingleIdol,
-    SingleCard
+    SingleCard,
+    Cards,
+    Settings,
+    Editor
 };

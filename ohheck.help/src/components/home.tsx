@@ -7,8 +7,6 @@ export default class Home extends React.Component<any, any> {
     }
 
     render() {
-        return (
-            <Redirect to={{ pathname: '/survey/cyaron'}} />
-        );
+        return <Redirect to={{ pathname: '/survey/cyaron' }} />;
     }
 }

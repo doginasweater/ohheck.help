@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import { Card } from '../../types/card';
 import 'whatwg-fetch';
 
-export default class AllCards extends React.Component<any, any> {
+interface AllCardsState {
+    loading: boolean;
+    cards: Card[];
+    page: number;
+    take: number;
+}
+
+export default class AllCards extends React.Component<any, AllCardsState> {
     constructor(props) {
         super(props);
 

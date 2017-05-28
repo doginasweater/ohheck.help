@@ -150,24 +150,41 @@ namespace ohheck.help.Controllers
             return Result.Success();
         }
 
-        public IActionResult Responses()
+        public async Task<IActionResult> Responses(int id)
         {
-            //var responses = _db.Submissions
-            //    .Where(x => x.survey.id == 1)
-            //    .Select(x => new
-            //    {
-            //        submitter = x.submitter,
-            //        comments = x.comments,
-            //        cards = string.Join(", ", x.cardresponses.Select(y => y.card.gameid)),
-            //        submitted = x.created.ToString(),
-            //        nextgroup = x.nextgroup
-            //    })
-            //    .ToList();
+            var submissions = await _db.Submissions
+                .Include(x => x.survey)
+                .Include(x => x.answers)
+                .ThenInclude(x => x.question)
+                .Include(x => x.answers)
+                .ThenInclude(x => x.answer)
+                .Include(x => x.answers)
+                .ThenInclude(x => x.cardchoices)
+                .ThenInclude(x => x.card)
+                .Include(x => x.answers)
+                .ThenInclude(x => x.choiceanswers)
+                .ThenInclude(x => x.answer)
+                .Where(x => x.survey.id == id)
+                .Where(x => x.answers.Any())
+                .Select(x => new
+                {
+                    submissionid = x.id,
+                    answers = x.answers .Select(y => new
+                    {
+                        answer = y.answer.text,
+                        question = y.question.text,
+                        text = y.text,
+                        type = y.type,
+                        cards = string.Join(", ", y.cardchoices.Select(z => z.cardid)),
+                        selections = y.choiceanswers.Select(z => z.answer)
+                    })
+                })
+                .ToListAsync();
 
-            return Json(new { });
+            return Json(submissions);
         }
 
-        public IActionResult SurveysByCard()
+        public IActionResult SurveysByCard(int surveyid)
         {
             //var responses = from cr in _db.CardResponses
             //                join r in _db.Responses on cr.responseid equals r.id
