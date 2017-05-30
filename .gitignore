@@ -255,3 +255,4 @@ db/
 .vscode/
 *.db
 bundle.js
+vendor.js
