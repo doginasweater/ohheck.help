@@ -11,16 +11,10 @@ namespace ohheck.help.tests
     public class ApiTests : IClassFixture<Fixture<Startup>>
     {
         private readonly HttpClient _client;
-        private readonly HttpClientHandler _handler;
 
         public ApiTests(Fixture<Startup> fixture)
         {
-            _handler = new HttpClientHandler();
-            _handler.ServerCertificateCustomValidationCallback += (a, b, c, d) => true;
-
-            _client = new HttpClient(_handler);
-            _client.BaseAddress = new Uri("https://localhost:43434");
-            //_client = fixture.Client;
+            _client = fixture.Client;
         }
 
         [Fact]
@@ -38,7 +32,9 @@ namespace ohheck.help.tests
         public async Task CardsReturn()
         {
             // this one does???
-            var cards = await _client.GetAsync("/api/cards");
+            var cards = await _client.GetAsync("/api/survey/cyaron");
+
+            var respstr = await cards.Content.ReadAsStringAsync();
 
             Assert.True(cards.IsSuccessStatusCode);
         }

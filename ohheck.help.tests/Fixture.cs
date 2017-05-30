@@ -3,8 +3,12 @@ using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace ohheck.help.tests
 {
@@ -21,15 +25,16 @@ namespace ohheck.help.tests
             var contentRoot = GetProjectPath(solutionRelativeTargetProjectParentDir, startupAssembly);
 
             var builder = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseContentRoot(contentRoot)
+                .ConfigureServices(InitializeServices)
+                .UseEnvironment("Development")
                 .UseStartup<Startup>()
                 .UseUrls("http://localhost:55555");
 
             _server = new TestServer(builder);
 
             Client = _server.CreateClient();
-            Client.BaseAddress = new Uri("https://localhost:43434");
+            Client.BaseAddress = new Uri("http://localhost:55555");
         }
 
         public HttpClient Client { get; }
@@ -40,11 +45,25 @@ namespace ohheck.help.tests
             _server.Dispose();
         }
 
+        protected virtual void InitializeServices(IServiceCollection services)
+        {
+            var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
+
+            // Inject a custom application part manager. Overrides AddMvcCore() because that uses TryAdd().
+            var manager = new ApplicationPartManager();
+            manager.ApplicationParts.Add(new AssemblyPart(startupAssembly));
+
+            manager.FeatureProviders.Add(new ControllerFeatureProvider());
+            manager.FeatureProviders.Add(new ViewComponentFeatureProvider());
+
+            services.AddSingleton(manager);
+        }
+
         private static string GetProjectPath(string solutionRelativePath, Assembly startupAssembly)
         {
             var projectName = startupAssembly.GetName().Name;
 
-            var applicationBasePath = Directory.GetCurrentDirectory();
+            var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath; 
 
             var directoryInfo = new DirectoryInfo(applicationBasePath);
 

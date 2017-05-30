@@ -50,6 +50,8 @@ namespace ohheck.help.Models.Data
                 cards = answercards?
                     .Select(x => x.card)?
                     .Where(x => x.imageurl != null && x.imageurl != "")?
+                    .OrderBy(x => x.gameid)
+                    .ThenBy(x => x.isidol)
                     .Select(x => x.Prettify(false))
             };
     }

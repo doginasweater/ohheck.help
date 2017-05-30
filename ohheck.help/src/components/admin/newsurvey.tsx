@@ -102,7 +102,7 @@ export default class NewSurvey extends React.Component<any, NewSurveyState> {
                             <label htmlFor="slug">
                                 Now, give it a slug. This is the url that will load the survey.
                             This must be all lowercase and contain no spaces. Try using the subunit or group name. This box
-                            <b>will not</b> accept anything but lowercase letters, numbers, or - characters.
+                            <b>will not</b> accept anything but lowercase letters, numbers, or hyphens.
                         </label>
                             <input type="text" name="slug" value={this.state.slug} onChange={this.handleSlug} />
                         </div>

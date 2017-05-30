@@ -7,6 +7,7 @@ namespace ohheck.help.Models.Data
 {
     public class Choice : Common
     {
+        public int submissionid { get; set; }
         public virtual Question question { get; set; }
         public AnswerType type { get; set; }
 

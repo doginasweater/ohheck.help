@@ -71,79 +71,69 @@ namespace ohheck.help.Controllers
 
             do
             {
-                var response = await client.GetAsync(url);
+                var response = await client.GetStringAsync(url);
+                var respObj = JsonConvert.DeserializeObject<ApiResponse>(response);
 
-                if (response.IsSuccessStatusCode)
+                url = respObj.next;
+
+                foreach (var card in respObj.results)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var respObj = JsonConvert.DeserializeObject<ApiResponse>(content);
-
-                    url = respObj.next;
-
-                    foreach (var card in respObj.results)
+                    if (_db.Cards.Any(x => x.apiid == card.id))
                     {
-                        if (_db.Cards.Any(x => x.apiid == card.id))
+                        continue;
+                    }
+
+                    var c = new Card
+                    {
+                        apiid = card.id,
+                        gameid = card.game_id,
+                        rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
+                        attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
+                        imageurl = card.card_image,
+                        ispromo = card.is_promo,
+                        isidol = false
+                    };
+
+                    var c2 = new Card
+                    {
+                        apiid = card.id,
+                        gameid = card.game_id,
+                        rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
+                        attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
+                        imageurl = card.card_idolized_image,
+                        ispromo = card.is_promo,
+                        isidol = true
+                    };
+
+                    var idol = _db.Idols.FirstOrDefault(x => x.name == card.idol.name);
+
+                    if (idol == null)
+                    {
+                        var g = _db.Groups.FirstOrDefault(x => x.name == card.idol.main_unit);
+
+                        if (g == null)
                         {
-                            continue;
-                        }
-
-                        var c = new Card
-                        {
-                            apiid = card.id,
-                            gameid = card.game_id,
-                            rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
-                            attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
-                            imageurl = card.card_image,
-                            ispromo = card.is_promo,
-                            isidol = false
-                        };
-
-                        var c2 = new Card
-                        {
-                            apiid = card.id,
-                            gameid = card.game_id,
-                            rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
-                            attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
-                            imageurl = card.card_idolized_image,
-                            ispromo = card.is_promo,
-                            isidol = true
-                        };
-
-                        var idol = _db.Idols.FirstOrDefault(x => x.name == card.idol.name);
-
-                        if (idol == null)
-                        {
-                            var g = _db.Groups.FirstOrDefault(x => x.name == card.idol.main_unit);
-
-                            if (g == null)
+                            g = new Group
                             {
-                                g = new Group
-                                {
-                                    name = card.idol.main_unit
-                                };
-                            }
-
-                            idol = new Idol
-                            {
-                                name = card.idol.name,
-                                subunit = _db.Subunits.Include(x => x.idols).FirstOrDefault(x => x.name == card.idol.sub_unit),
-                                group = g
+                                name = card.idol.main_unit
                             };
                         }
 
-                        c.idol = idol;
-                        c2.idol = idol;
-
-                        _db.Cards.Add(c);
-                        _db.Cards.Add(c2);
-
-                        _db.SaveChanges();
+                        idol = new Idol
+                        {
+                            name = card.idol.name,
+                            subunit = _db.Subunits.Include(x => x.idols).FirstOrDefault(x => x.name == card.idol.sub_unit),
+                            group = g
+                        };
                     }
-                }
-                else
-                {
-                    _logger.LogInformation(response.ReasonPhrase);
-                    break;
+
+                    c.idol = idol;
+                    c2.idol = idol;
+
+                    _db.Cards.Add(c);
+                    _db.Cards.Add(c2);
+
+                    _db.SaveChanges();
                 }
             } while (url != null);
 
@@ -153,57 +143,45 @@ namespace ohheck.help.Controllers
         public async Task<IActionResult> Responses(int id)
         {
             var submissions = await _db.Submissions
-                .Include(x => x.survey)
                 .Include(x => x.answers)
-                .ThenInclude(x => x.question)
+                    .ThenInclude(x => x.question)
                 .Include(x => x.answers)
-                .ThenInclude(x => x.answer)
+                    .ThenInclude(x => x.answer)
                 .Include(x => x.answers)
-                .ThenInclude(x => x.cardchoices)
-                .ThenInclude(x => x.card)
+                    .ThenInclude(x => x.cardchoices)
+                    .ThenInclude(x => x.card)
                 .Include(x => x.answers)
-                .ThenInclude(x => x.choiceanswers)
-                .ThenInclude(x => x.answer)
-                .Where(x => x.survey.id == id)
+                    .ThenInclude(x => x.choiceanswers)
+                    .ThenInclude(x => x.answer)
+                .Where(x => x.surveyid == id)
                 .Where(x => x.answers.Any())
-                .Select(x => new
-                {
-                    submissionid = x.id,
-                    answers = x.answers .Select(y => new
+                .Select(x => x.answers
+                    .OrderBy(y => y.question.sortorder)
+                    .Select(y => new
                     {
+                        question = y.question.sortorder,
                         answer = y.answer.text,
-                        question = y.question.text,
                         text = y.text,
-                        type = y.type,
-                        cards = string.Join(", ", y.cardchoices.Select(z => z.cardid)),
+                        cards = string.Join(", ", y.cardchoices.Select(z => z.card.gameid)),
                         selections = y.choiceanswers.Select(z => z.answer)
                     })
-                })
+                    .GroupBy(y => y.question)
+                )
                 .ToListAsync();
 
             return Json(submissions);
         }
 
-        public IActionResult SurveysByCard(int surveyid)
+        public async Task<List<Submission>> SurveysByCard(int id)
         {
-            //var responses = from cr in _db.CardResponses
-            //                join r in _db.Responses on cr.responseid equals r.id
-            //                where r.survey.id == 1
-            //                select cr.card;
+            var answers = await _db.Submissions
+                .Include(x => x.answers)
+                .ThenInclude(x => x.cardchoices)
+                .ThenInclude(x => x.card)
+                .Where(x => x.surveyid == id)
+                .ToListAsync();
 
-            //var molded = responses
-            //    .GroupBy(x => x.id)
-            //    .Select(x => new
-            //    {
-            //        count = x.Count(),
-            //        imageurl = x.FirstOrDefault().imageurl,
-            //        attribute = x.FirstOrDefault().attribute.ToString(),
-            //        rarity = x.FirstOrDefault().rarity.ToString(),
-            //        id = x.FirstOrDefault().id
-            //    })
-            //    .OrderByDescending(x => x.count);
-
-            return Json(new { });
+            return answers;
         }
 
         public List<SurveyViewModel> AllSurveys() => _db.Surveys.Select(x => x.Prettify()).ToList();

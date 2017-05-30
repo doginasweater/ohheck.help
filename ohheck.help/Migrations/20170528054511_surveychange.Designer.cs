@@ -8,9 +8,10 @@ using ohheck.help.Models.Data;
 namespace ohheck.help.Migrations
 {
     [DbContext(typeof(HeckingContext))]
-    partial class HeckingContextModelSnapshot : ModelSnapshot
+    [Migration("20170528054511_surveychange")]
+    partial class surveychange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -111,6 +112,8 @@ namespace ohheck.help.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("Submissionid");
+
                     b.Property<int?>("answerid");
 
                     b.Property<DateTime>("created");
@@ -123,19 +126,17 @@ namespace ohheck.help.Migrations
 
                     b.Property<int?>("questionid");
 
-                    b.Property<int>("submissionid");
-
                     b.Property<string>("text");
 
                     b.Property<int>("type");
 
                     b.HasKey("id");
 
+                    b.HasIndex("Submissionid");
+
                     b.HasIndex("answerid");
 
                     b.HasIndex("questionid");
-
-                    b.HasIndex("submissionid");
 
                     b.ToTable("Choices");
                 });
@@ -349,6 +350,10 @@ namespace ohheck.help.Migrations
 
             modelBuilder.Entity("ohheck.help.Models.Data.Choice", b =>
                 {
+                    b.HasOne("ohheck.help.Models.Data.Submission")
+                        .WithMany("answers")
+                        .HasForeignKey("Submissionid");
+
                     b.HasOne("ohheck.help.Models.Data.Answer", "answer")
                         .WithMany()
                         .HasForeignKey("answerid");
@@ -356,11 +361,6 @@ namespace ohheck.help.Migrations
                     b.HasOne("ohheck.help.Models.Data.Question", "question")
                         .WithMany()
                         .HasForeignKey("questionid");
-
-                    b.HasOne("ohheck.help.Models.Data.Submission")
-                        .WithMany("answers")
-                        .HasForeignKey("submissionid")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ohheck.help.Models.Data.ChoiceAnswer", b =>

@@ -143,14 +143,14 @@ namespace ohheck.help.Controllers
             return View(model);
         }
 
-        /*[AllowAnonymous]
-        public async Task<IActionResult> Make()
+        [AllowAnonymous]
+        public async Task<IActionResult> Make(string u, string email, string password)
         {
-            var user = new ApplicationUser { UserName = "steven", Email = "stevencsweat@gmail.com" };
-            var result = await _userManager.CreateAsync(user, "Password1!");
+            var user = new ApplicationUser { UserName = u, Email = email };
+            var result = await _userManager.CreateAsync(user, password);
 
             return Json(result.Succeeded);
-        }*/
+        }
 
         //
         // POST: /Account/Logout

@@ -70,7 +70,7 @@ namespace ohheck.help.Controllers
 
             var submission = new Submission
             {
-                survey = survey,
+                surveyid = survey.id,
                 answers = choices
             };
 
