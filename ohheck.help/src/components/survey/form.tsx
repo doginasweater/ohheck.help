@@ -79,11 +79,7 @@ export default class Form extends React.Component<any, FormState> {
 
         fetch('/api/submit', {
             method: 'POST',
-            body: JSON.stringify({
-                surveyid: this.state.survey.id,
-                choices: this.state.choices,
-                cards: this.state.cards
-            }),
+            body: JSON.stringify(toSubmit),
             headers: {
                 'Content-Type': 'application/json'
             }
