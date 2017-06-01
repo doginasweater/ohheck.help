@@ -6,48 +6,26 @@ import { Survey } from '../../types/admin';
 import Questions from '../questions';
 import { Link } from 'react-router-dom';
 import Icon from '../icon';
+import { connect } from 'react-redux';
+import { fetchSurvey } from '../../actions/survey';
 
 let ReactMarkdown: any = require('react-markdown');
 
-interface FormState {
-    survey: Survey;
-    loading: boolean;
-    choices: any;
-    cards: any;
-    error: boolean;
-    message: string;
-}
-
-export default class Form extends React.Component<any, FormState> {
-    constructor(props) {
-        super(props);
+@connect(state => ({form: state.survey}))
+export default class Form extends React.Component<any, any> {
+    constructor() {
+        super();
 
         this.state = {
-            survey: new Survey({}),
-            loading: true,
             choices: {},
             cards: {},
-            error: false,
-            message: ''
         };
     }
 
-    componentDidMount() {
-        fetch(`/api/survey/${this.props.match.params.id}`)
-            .then(response => {
-                return response.json();
-            }).then(data => {
-                this.setState({
-                    survey: new Survey(data),
-                    loading: false
-                });
-            }).catch(error => {
-                this.setState({
-                    error: true,
-                    message: '',
-                    loading: false
-                });
-            });
+    componentDidMount = () => {
+        const { dispatch } = this.props;
+
+        dispatch(fetchSurvey(this.props.match.params.id));
     }
 
     handleClick = id => {
@@ -72,7 +50,7 @@ export default class Form extends React.Component<any, FormState> {
         event.preventDefault();
 
         const toSubmit = {
-            surveyid: this.state.survey.id,
+            surveyid: this.props.form.survey.id,
             choices: this.state.choices,
             cards: this.state.cards
         };
@@ -93,7 +71,7 @@ export default class Form extends React.Component<any, FormState> {
     }
 
     render() {
-        if (this.state.loading) {
+        if (this.props.loading) {
             return (
                 <div className="pure-u-1">
                     loading...
@@ -101,7 +79,7 @@ export default class Form extends React.Component<any, FormState> {
             );
         }
 
-        if (this.state.error) {
+        if (!this.props.form.survey || this.props.error) {
             return (
                 <div className="pure-u-1">
                     Oh no! There was an error loading the survey :(
@@ -109,10 +87,12 @@ export default class Form extends React.Component<any, FormState> {
             )
         }
 
-        if (!this.state.survey.active) {
+        const { survey } = this.props.form;
+
+        if (survey && !survey.active) {
             return (
                 <div className="pure-u-1">
-                    <h1>{this.state.survey.title}</h1>
+                    <h1>{survey.title}</h1>
                     <div>
                         Sorry! This survey is not active. Do you want to try going <Link to="/">home</Link>?
                     </div>
@@ -122,11 +102,11 @@ export default class Form extends React.Component<any, FormState> {
 
         return (
             <div className="pure-u-1">
-                <h1>{this.state.survey.title}</h1>
-                <ReactMarkdown escapeHtml={true} source={this.state.survey.comments} />
+                <h1>{survey.title}</h1>
+                <ReactMarkdown escapeHtml={true} source={survey.comments} />
                 <form name="survey" className="pure-form pure-form-stacked">
                     <Questions
-                        questions={this.state.survey.questions}
+                        questions={survey.questions}
                         ispublic={true}
                         handleClick={this.handleClick}
                         handleChange={this.handleChange}

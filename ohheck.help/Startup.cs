@@ -88,7 +88,7 @@ namespace ohheck.help
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true,
-                    ReactHotModuleReplacement = true,
+                    ReactHotModuleReplacement = true
                 });
             }
             else

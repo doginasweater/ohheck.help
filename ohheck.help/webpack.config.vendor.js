@@ -17,8 +17,13 @@ module.exports = (env) => {
                 'whatwg-fetch',
                 'react',
                 'react-dom',
+                'react-redux',
                 'react-router-dom',
-                'react-markdown'
+                'react-markdown',
+                'redux',
+                'redux-devtools-extension',
+                'redux-observable',
+                'rxjs'
             ],
         },
         output: {
