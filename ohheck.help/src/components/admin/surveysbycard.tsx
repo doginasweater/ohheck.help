@@ -9,7 +9,7 @@ export default class SurveysByCard extends React.Component<any, any> {
         this.state = {};
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch('/admin/surveysbycard', {
             credentials: 'include'
         })

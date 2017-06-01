@@ -26,23 +26,21 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch(`/admin/survey/${this.props.match.params.id}`, {
             credentials: 'same-origin'
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then(json => {
-                let data = new Survey(json);
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(json => {
+            let data = new Survey(json);
 
-                this.setState({
-                    survey: data,
-                    loading: false
-                });
+            this.setState({
+                survey: data,
+                loading: false
             });
+        });
     }
 
     createMarkup = () => {

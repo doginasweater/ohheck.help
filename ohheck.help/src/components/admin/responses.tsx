@@ -9,7 +9,7 @@ export default class Responses extends React.Component<any, any> {
         this.state = { };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch(`/admin/responses/${this.props.match.id}`, {
             credentials: 'same-origin'
         })

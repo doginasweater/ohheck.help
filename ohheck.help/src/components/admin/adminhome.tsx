@@ -14,7 +14,7 @@ export default class AdminHome extends React.Component<any, any> {
         };
     }
 
-    componentWillMount = () => {
+    componentWillMount() {
         fetch('/admin/allsurveys', {
             credentials: 'same-origin'
         })

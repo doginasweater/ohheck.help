@@ -18,7 +18,7 @@ export default class Groups extends React.Component<any, GroupsState> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch('/admin/groups', {
             credentials: 'same-origin'
         })

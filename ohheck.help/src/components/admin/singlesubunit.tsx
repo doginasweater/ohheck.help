@@ -17,7 +17,7 @@ export default class SingleSubunit extends React.Component<any, SingleSubunitSta
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         if (!this.props.location.state) {
             this.getData(this.props.match.params.id);
         } else if (this.props.location.state.id != this.props.match.params.id) {

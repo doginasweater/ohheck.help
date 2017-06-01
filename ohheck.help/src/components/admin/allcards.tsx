@@ -22,7 +22,7 @@ export default class AllCards extends React.Component<any, AllCardsState> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.getData(0, this.state.take);
     }
 

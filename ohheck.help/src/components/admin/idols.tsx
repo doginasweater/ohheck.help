@@ -18,7 +18,7 @@ export default class Idols extends React.Component<any, IdolsState> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch('/admin/idols', {
             credentials: 'same-origin'
         }).then(response => {

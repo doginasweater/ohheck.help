@@ -18,7 +18,7 @@ export default class Subunits extends React.Component<any, SubunitState> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch('/admin/subunits', {
             credentials: 'same-origin'
         })

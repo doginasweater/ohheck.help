@@ -14,6 +14,8 @@ interface FormState {
     loading: boolean;
     choices: any;
     cards: any;
+    error: boolean;
+    message: string;
 }
 
 export default class Form extends React.Component<any, FormState> {
@@ -24,18 +26,25 @@ export default class Form extends React.Component<any, FormState> {
             survey: new Survey({}),
             loading: true,
             choices: {},
-            cards: {}
+            cards: {},
+            error: false,
+            message: ''
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch(`/api/survey/${this.props.match.params.id}`)
             .then(response => {
                 return response.json();
-            })
-            .then(data => {
+            }).then(data => {
                 this.setState({
                     survey: new Survey(data),
+                    loading: false
+                });
+            }).catch(error => {
+                this.setState({
+                    error: true,
+                    message: '',
                     loading: false
                 });
             });
@@ -94,6 +103,14 @@ export default class Form extends React.Component<any, FormState> {
                     loading...
                 </div>
             );
+        }
+
+        if (this.state.error) {
+            return (
+                <div className="pure-u-1">
+                    Oh no! There was an error loading the survey :(
+                </div>
+            )
         }
 
         if (!this.state.survey.active) {
