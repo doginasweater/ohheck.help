@@ -1,0 +1,11 @@
+﻿const SET_ERROR = 'SET_ERROR';
+const DISMISS_ERROR = 'DISMISS_ERROR';
+const AUTHENTICATE = 'AUTHENTICATE';
+const LOGOUT = 'LOGOUT';
+
+export {
+    SET_ERROR,
+    DISMISS_ERROR,
+    AUTHENTICATE,
+    LOGOUT
+};

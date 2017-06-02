@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import Home from './components/home';
 import Admin from './components/admin/admin';
 import Thanks from './components/survey/thanks';

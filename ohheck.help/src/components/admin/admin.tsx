@@ -1,24 +1,27 @@
 ﻿import * as React from 'react';
 import { Link, Route } from 'react-router-dom';
 import * as a from '.';
+import { connect } from 'react-redux';
+import { setError, dismissError, authenticate } from '../../actions/admin';
 
+@connect(state => ({ admin: state.admin }))
 export default class Admin extends React.Component<any, any> {
     constructor(props) {
         super(props);
 
-        this.state = {
-            authenticated: document.cookie.indexOf('AspNetCore.Identity.Application') !== -1
-        };
+        if (document.cookie.indexOf('AspNetCore.Identity.Application') !== -1) {
+            props.dispatch(authenticate());
+        }
     }
 
     auth = () => {
-        this.setState({
-            authenticated: true
-        });
+        const { dispatch } = this.props;
+
+        dispatch(authenticate());
     }
 
     render() {
-        if (!this.state.authenticated) {
+        if (!this.props.admin.authenticated) {
             return (
                 <div className="pure-u-1">
                     <h1>Oh Heck! Admin</h1>
@@ -28,7 +31,14 @@ export default class Admin extends React.Component<any, any> {
         } else {
             return (
                 <div className="pure-u-1 some-space">
-                    <h1>Oh Heck! Admin</h1>
+                    <div className="pure-u-1-3">
+                        <h1>Oh Heck! Admin</h1>
+                    </div>
+                    <div className={`pure-u-2-3 ${this.props.admin.error ? 'error' : ''}`}>
+                        <h3>
+                            {this.props.admin.error ? this.props.admin.errorMessage : ''}
+                        </h3>
+                    </div>
                     <div className="pure-u-1-4">
                         <h3>menu</h3>
                         <a.AdminNav />
