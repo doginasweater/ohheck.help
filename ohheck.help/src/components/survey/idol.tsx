@@ -7,7 +7,7 @@ export default class Idol extends React.Component<any, any> {
 
     render() {
         return (
-            <div className="pure-u-1 pure-u-md-1-3 pure-u-lg-1-4 some-space center" onClick={this.props.handleClick}>
+            <div className="pure-u-1 pure-u-md-1-3 pure-u-lg-1-4 some-space center fade-in" onClick={this.props.handleClick}>
                 <img src={this.props.imageurl} style={{ width: '250px', height: '350px' }} />
                 <br />
                 {this.props.count ? <span><b>Count</b>: {this.props.count}</span> :

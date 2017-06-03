@@ -100,3 +100,21 @@ ol.horizontal {
         padding-right: 10px;
     }
 }
+
+.fade-in {
+    animation: fadein .5s;
+}
+
+.fade-in-slow{
+    animation: fadein 1s;
+}
+
+@keyframes fadein {
+    from { 
+        opacity: 0; 
+    }
+
+    to { 
+        opacity: 1;
+    }
+}

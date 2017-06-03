@@ -39,7 +39,7 @@ export default class Admin extends React.Component<any, any> {
                             {this.props.admin.error ? this.props.admin.errorMessage : ''}
                         </h3>
                     </div>
-                    <div className="pure-u-1-4">
+                    <div className="pure-u-1-4 fade-in-slow">
                         <h3>menu</h3>
                         <a.AdminNav />
                     </div>
