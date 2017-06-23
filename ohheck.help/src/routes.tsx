@@ -7,6 +7,8 @@ import Thanks from './components/survey/thanks';
 import Survey from './components/survey/form';
 import './scss/app.scss';
 import Icon from './components/icon';
+import { IdentityTesting } from './components/identity';
+import { Callback } from './components/callback';
 
 export default <div className="main pure-g">
     <div className="pure-u-1">
@@ -23,6 +25,8 @@ export default <div className="main pure-g">
     <Route path="/thanks" component={Thanks} />
     <Route path="/dashboard" component={Admin} />
     <Route path="/survey/:id" component={Survey} />
+    <Route exact path="/identity" component={IdentityTesting} />
+    <Route exact path="/callback" component={Callback} />
 
     <footer className="pure-u-1">
         <div className="pull-right small">
