@@ -29,7 +29,7 @@ export default class SingleCard extends React.Component<any, any> {
         }
 
         return (
-            <div className="pure-u-1">
+            <div className="pure-u-1 slide-in">
                 <div className="pure-u-1">
                     <a href="#" onClick={this.props.history.goBack}>Back</a>
                 </div>

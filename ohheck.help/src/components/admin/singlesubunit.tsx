@@ -81,7 +81,7 @@ export default class SingleSubunit extends React.Component<any, SingleSubunitSta
         const { subunit } = this.state;
 
         return (
-            <div>
+            <div className="pure-u-1 slide-in">
                 <h3>{subunit.name}</h3>
                 {subunit.idols.length > 0 ? this.renderIdols() : <div>No data to display</div>}
             </div>

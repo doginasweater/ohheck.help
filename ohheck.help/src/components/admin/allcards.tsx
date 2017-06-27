@@ -63,7 +63,7 @@ export default class AllCards extends React.Component<any, AllCardsState> {
         }
 
         return (
-            <div className="pure-u-1">
+            <div className="pure-u-1 slide-in">
                 <h3>All the cards</h3>
                 {/*<div className="pure-u-3-4" />
                 <div className="pure-u-1-4 some-space">

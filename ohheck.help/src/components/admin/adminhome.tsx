@@ -58,9 +58,9 @@ export default class AdminHome extends React.Component<any, any> {
 
     render() {
         return (
-            <div>
+            <div className="slide-in">
                 <h3>Home</h3>
-                <div className="slide-in">
+                <div>
                     <h4>Surveys</h4>
                     <table className="pure-table pure-table-striped pure-table-horizontal">
                         <thead>

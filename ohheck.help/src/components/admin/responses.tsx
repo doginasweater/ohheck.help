@@ -34,8 +34,8 @@ export default class Responses extends React.Component<any, any> {
         const body = !this.props.admin.responsesloading ? this.renderList(this.props.admin.responses) : <tr><td>Loading...</td></tr>
 
         return (
-            <div className="pure-u-1">
-                <h3>responses</h3>
+            <div className="pure-u-1 slide-in">
+                <h3>Survey Responses</h3>
                 <table className="pure-table pure-table-striped pure-table-horizontal">
                     <thead>
                         <tr>

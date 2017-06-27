@@ -50,7 +50,7 @@ export default class Login extends React.Component<any, any> {
 
     render() {
         return (
-            <div className="pure-u-1">
+            <div className="pure-u-1 slide-in">
                 <form className="pure-form pure-form-stacked">
                     <fieldset>
                         <legend>Login</legend>

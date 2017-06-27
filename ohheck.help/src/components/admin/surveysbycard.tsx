@@ -30,8 +30,8 @@ export default class SurveysByCard extends React.Component<any, any> {
         const body = !this.props.admin.responsesbycardloading ? this.renderList(this.props.admin.responsesbycard) : <div>Loading...</div>
 
         return (
-            <div className="pure-u-1">
-                <h3>surveys by card</h3>
+            <div className="pure-u-1 slide-in">
+                <h3>Survey By Card</h3>
                 <div className="pure-u-1">
                     {body}
                 </div>

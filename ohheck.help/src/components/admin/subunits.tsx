@@ -49,7 +49,7 @@ export default class Subunits extends React.Component<any, any> {
         }
 
         return (
-            <div className="pure-u-1">
+            <div className="pure-u-1 slide-in">
                 <h3>Subunits</h3>
                 <table className="pure-table pure-table-horizontal full-width">
                     <thead>

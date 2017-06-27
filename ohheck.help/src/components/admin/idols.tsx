@@ -45,7 +45,7 @@ export default class Idols extends React.Component<any, any> {
         }
 
         return (
-            <div>
+            <div className="pure-u-1 slide-in">
                 <h3>Idols</h3>
                 Total number of idols: {this.props.admin.idols.length}
                 <hr />

@@ -23,7 +23,7 @@ export default class Settings extends React.Component<any, any> {
 
     render() {
         return (
-            <div className="pure-u-1">
+            <div className="pure-u-1 slide-in">
                 <h3>Settings</h3>
 
                 <form className="pure-form pure-form-stacked">

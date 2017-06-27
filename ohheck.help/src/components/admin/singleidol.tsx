@@ -5,8 +5,6 @@ export default class SingleIdol extends React.Component<any, any> {
     constructor(props) {
         super(props);
 
-        console.log(props);
-
         this.state = {
             idol: null
         };
@@ -32,7 +30,7 @@ export default class SingleIdol extends React.Component<any, any> {
         }
 
         return (
-            <div className="pure-u-1">
+            <div className="pure-u-1 slide-in">
                 <h3>{idol.name}</h3>
                 <table className="pure-table pure-table-horizontal full-width">
                     <tbody>

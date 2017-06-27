@@ -82,7 +82,7 @@ export default class NewSurvey extends React.Component<any, NewSurveyState> {
 
     render() {
         return (
-            <div>
+            <div className="pure-u-1 slide-in">
                 <h3>Create a new survey</h3>
                 <form className="pure-form pure-form-stacked pure-u-1">
                     <fieldset>

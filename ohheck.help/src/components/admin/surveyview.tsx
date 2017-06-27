@@ -85,7 +85,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         const { survey } = this.state;
 
         return (
-            <div>
+            <div className="pure-u-1 slide-in">
                 <div className="pure-u-1-2">
                     <h3>{survey.name}</h3>
                 </div>
