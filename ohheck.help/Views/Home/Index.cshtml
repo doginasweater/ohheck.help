@@ -1,26 +1,39 @@
-﻿@{ 
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Oh Heck!</title>
-        <link rel="stylesheet" 
-              href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" 
-              integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" 
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
-        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,400" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    </head>
-    <body>
-        <div id="react-root"></div>
-        <!-- Vendor -->
-        <script src="~/js/vendor.js" asp-append-version="true"></script>
-        <!-- Main -->
-        <script src="/js/bundle.js" asp-append-version="true"></script>
-    </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="We're Aki and Chrissu and we play games for your amusement as Oh Heck on YouTube. Sometimes, we need help." />
+  <title>Oh Heck!</title>
+  <link rel="stylesheet"
+        href="https://unpkg.com/purecss@0.6.2/build/pure-min.css"
+        integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-43960502-5', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+<body>
+  <div id="react-root"></div>
+  <!-- Vendor -->
+  <script src="~/js/vendor.js" asp-append-version="true"></script>
+  <!-- Main -->
+  <script src="/js/bundle.js" asp-append-version="true"></script>
+</body>
 </html>
