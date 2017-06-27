@@ -12,46 +12,38 @@ using ohheck.help.Models.Data;
 using ohheck.help.Models.ApiModels;
 using Newtonsoft.Json;
 
-namespace ohheck.help.Controllers
-{
+namespace ohheck.help.Controllers {
     [Authorize]
-    public class AdminController : Controller
-    {
+    public class AdminController : Controller {
         private readonly ILogger _logger;
         private readonly HeckingContext _db;
         private readonly HttpClient client;
 
-        public AdminController(ILoggerFactory factory, HeckingContext ctx, HttpClient _client)
-        {
+        public AdminController(ILoggerFactory factory, HeckingContext ctx, HttpClient _client) {
             _logger = factory.CreateLogger<AdminController>();
             _db = ctx;
             client = _client;
             _db.user = User?.Identity?.Name ?? "admin panel";
         }
 
-        public async Task<Result> SetupDb()
-        {
+        public async Task<Result> SetupDb() {
             var url = "api/cacheddata/";
 
             var response = await client.GetAsync(url);
 
-            if (response.IsSuccessStatusCode)
-            {
+            if (response.IsSuccessStatusCode) {
                 var content = await response.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<CachedResponse>(content);
 
-                var units = obj.cards_info.sub_units.Select(x => new Subunit
-                {
+                var units = obj.cards_info.sub_units.Select(x => new Subunit {
                     name = x
                 });
 
-                foreach (var su in units)
-                {
+                foreach (var su in units) {
                     _db.Subunits.Add(su);
                 }
 
-                _db.Surveys.Add(new Survey
-                {
+                _db.Surveys.Add(new Survey {
                     id = 1,
                     name = "first survey",
                     slug = "cyaron"
@@ -65,26 +57,21 @@ namespace ohheck.help.Controllers
             return Result.Failure(response.ReasonPhrase);
         }
 
-        public async Task<Result> Setup()
-        {
+        public async Task<Result> Setup() {
             var url = "api/cards/";
 
-            do
-            {
+            do {
                 var response = await client.GetStringAsync(url);
                 var respObj = JsonConvert.DeserializeObject<ApiResponse>(response);
 
                 url = respObj.next;
 
-                foreach (var card in respObj.results)
-                {
-                    if (_db.Cards.Any(x => x.apiid == card.id))
-                    {
+                foreach (var card in respObj.results) {
+                    if (_db.Cards.Any(x => x.apiid == card.id)) {
                         continue;
                     }
 
-                    var c = new Card
-                    {
+                    var c = new Card {
                         apiid = card.id,
                         gameid = card.game_id,
                         rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
@@ -94,8 +81,7 @@ namespace ohheck.help.Controllers
                         isidol = false
                     };
 
-                    var c2 = new Card
-                    {
+                    var c2 = new Card {
                         apiid = card.id,
                         gameid = card.game_id,
                         rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
@@ -107,20 +93,16 @@ namespace ohheck.help.Controllers
 
                     var idol = _db.Idols.FirstOrDefault(x => x.name == card.idol.name);
 
-                    if (idol == null)
-                    {
+                    if (idol == null) {
                         var g = _db.Groups.FirstOrDefault(x => x.name == card.idol.main_unit);
 
-                        if (g == null)
-                        {
-                            g = new Group
-                            {
+                        if (g == null) {
+                            g = new Group {
                                 name = card.idol.main_unit
                             };
                         }
 
-                        idol = new Idol
-                        {
+                        idol = new Idol {
                             name = card.idol.name,
                             subunit = _db.Subunits.Include(x => x.idols).FirstOrDefault(x => x.name == card.idol.sub_unit),
                             group = g
@@ -140,8 +122,7 @@ namespace ohheck.help.Controllers
             return Result.Success();
         }
 
-        public IActionResult Responses(int id)
-        {
+        public IActionResult Responses(int id) {
             var submissions = _db.Submissions
                 .Include(x => x.answers)
                     .ThenInclude(x => x.question)
@@ -157,8 +138,7 @@ namespace ohheck.help.Controllers
                 .Where(x => x.answers.Any())
                 .SelectMany(x => x.answers)
                 .OrderBy(x => x.question.sortorder)
-                .Select(x => new
-                {
+                .Select(x => new {
                     question = x.question.sortorder,
                     answer = x.answer.text,
                     text = x.text,
@@ -179,16 +159,23 @@ namespace ohheck.help.Controllers
             return Json(submissions);
         }
 
-        public async Task<List<Submission>> SurveysByCard(int id)
-        {
-            var answers = await _db.Submissions
-                .Include(x => x.answers)
-                .ThenInclude(x => x.cardchoices)
-                .ThenInclude(x => x.card)
-                .Where(x => x.surveyid == id)
-                .ToListAsync();
+        public IActionResult SurveysByCard(int id) {
+            var responses = from cc in _db.CardChoices
+                            join c in _db.Choices on cc.choiceid equals c.id
+                            join s in _db.Submissions on c.submissionid equals s.id
+                            where s.surveyid == id
+                            select cc.card;
 
-            return answers;
+            var molded = responses
+                .GroupBy(x => x.id)
+                .Select(x => new {
+                    count = x.Count(),
+                    imageurl = x.FirstOrDefault().imageurl,
+                    id = x.FirstOrDefault().id
+                })
+                .OrderByDescending(x => x.count);
+
+            return Json(molded);
         }
 
         public List<SurveyViewModel> AllSurveys() => _db.Surveys.Select(x => x.Prettify()).ToList();

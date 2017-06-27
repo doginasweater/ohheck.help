@@ -12,7 +12,9 @@
     SURVEYS_FETCH,
     SURVEYS_FETCH_FULFILLED,
     RESPONSES_FETCH,
-    RESPONSES_FETCH_FULFILLED
+    RESPONSES_FETCH_FULFILLED,
+    RESPONSES_BYCARD_FETCH,
+    RESPONSES_BYCARD_FETCH_FULFILLED
 } from '../constants/admin';
 
 export const setError = error => ({ type: SET_ERROR, error });
@@ -35,3 +37,6 @@ export const surveysFetchFulfilled = surveys => ({ type: SURVEYS_FETCH_FULFILLED
 
 export const responsesFetch = id => ({ type: RESPONSES_FETCH, id });
 export const responsesFetchFulfilled = responses => ({ type: RESPONSES_FETCH_FULFILLED, responses });
+
+export const responsesByCardFetch = id => ({ type: RESPONSES_BYCARD_FETCH, id });
+export const responsesByCardFetchFulfilled = cards => ({ type: RESPONSES_BYCARD_FETCH_FULFILLED, cards });

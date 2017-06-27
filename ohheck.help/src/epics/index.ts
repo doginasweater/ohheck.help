@@ -5,7 +5,8 @@ import {
     fetchSubunitsEpic,
     fetchIdolsEpic,
     fetchSurveysEpic,
-    fetchResponsesEpic
+    fetchResponsesEpic,
+    fetchResponsesByCardEpic
 } from './admin';
 
 export const rootEpic = combineEpics(
@@ -14,5 +15,6 @@ export const rootEpic = combineEpics(
     fetchIdolsEpic,
     fetchSurveysEpic,
     fetchResponsesEpic,
+    fetchResponsesByCardEpic,
     fetchSurveyEpic
 );

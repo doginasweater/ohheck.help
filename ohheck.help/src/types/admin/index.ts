@@ -8,6 +8,7 @@ import { Idol } from './idol';
 import { Subunit } from './subunit';
 import { Response } from './response';
 import { ResponseAnswer } from './responseanswer';
+import { ResponseByCard } from './responsebycard';
 
 export {
     Survey,
@@ -19,5 +20,6 @@ export {
     Idol,
     Subunit,
     Response,
-    ResponseAnswer
+    ResponseAnswer,
+    ResponseByCard
 };

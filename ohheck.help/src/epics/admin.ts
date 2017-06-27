@@ -1,4 +1,4 @@
-﻿import { Group, Subunit, Idol, Survey, Response } from '../types/admin';
+﻿import { Group, Subunit, Idol, Survey, Response, ResponseByCard } from '../types/admin';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import 'rxjs';
 
@@ -7,7 +7,8 @@ import {
     SUBUNITS_FETCH,
     IDOLS_FETCH,
     SURVEYS_FETCH,
-    RESPONSES_FETCH
+    RESPONSES_FETCH,
+    RESPONSES_BYCARD_FETCH
 } from '../constants/admin';
 
 import {
@@ -15,7 +16,8 @@ import {
     subunitsFetchFulfilled,
     idolsFetchFulfilled,
     surveysFetchFulfilled,
-    responsesFetchFulfilled
+    responsesFetchFulfilled,
+    responsesByCardFetchFulfilled
 } from '../actions/admin';
 
 export const fetchGroupsEpic = action$ =>
@@ -56,4 +58,12 @@ export const fetchResponsesEpic = action$ =>
             ajax.getJSON(`/admin/responses/${action.id}`)
                 .map((response: Response[]) => response.map(item => new Response(item)))
                 .map(responses => responsesFetchFulfilled(responses))
+        );
+
+export const fetchResponsesByCardEpic = action$ =>
+    action$.ofType(RESPONSES_BYCARD_FETCH)
+        .mergeMap(action =>
+            ajax.getJSON(`/admin/surveysbycard/${action.id}`)
+                .map((response: ResponseByCard[]) => response.map(item => new ResponseByCard(item)))
+                .map(responses => responsesByCardFetchFulfilled(responses))
         );

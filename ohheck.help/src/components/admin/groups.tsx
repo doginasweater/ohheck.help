@@ -21,15 +21,12 @@ export default class Groups extends React.Component<any, any> {
     renderList = groups => groups.map(
         (item: Group, index: number) =>
             <tr key={index}>
-                <td>{item.name}</td>
+                <td>{item.name || "None"}</td>
                 <td>
                     {item.subunits.map((innerItem: Subunit, innerIndex: number) =>
                         <div key={innerIndex}>
-                            <Link to={{
-                                pathname: `/dashboard/subunits/${innerItem.id}`,
-                                state: innerItem
-                            }}>
-                                {innerItem.name}
+                            <Link to={{ pathname: `/dashboard/subunits/${innerItem.id}`, state: innerItem }}>
+                                {innerItem.name || "None"}
                             </Link>
                         </div>
                     )}
@@ -37,10 +34,7 @@ export default class Groups extends React.Component<any, any> {
                 <td>
                     {item.idols.map((innerItem: Idol, innerIndex: number) =>
                         <div key={innerIndex} className="pure-u-1-3">
-                            <Link to={{
-                                pathname: `/dashboard/idols/${innerItem.id}`,
-                                state: innerItem
-                            }}>
+                            <Link to={{ pathname: `/dashboard/idols/${innerItem.id}`, state: innerItem }}>
                                 {innerItem.name}
                             </Link>
                         </div>

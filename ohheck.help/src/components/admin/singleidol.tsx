@@ -5,6 +5,8 @@ export default class SingleIdol extends React.Component<any, any> {
     constructor(props) {
         super(props);
 
+        console.log(props);
+
         this.state = {
             idol: null
         };
@@ -32,36 +34,27 @@ export default class SingleIdol extends React.Component<any, any> {
         return (
             <div className="pure-u-1">
                 <h3>{idol.name}</h3>
-                <table className="pure-table pure-table-horizontal" style={{ 'width': '100%' }}>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
+                <table className="pure-table pure-table-horizontal full-width">
                     <tbody>
                         <tr>
-                            <td>Group</td>
-                            <td>{idol.group.name}</td>
+                            <td><b>Group</b></td>
+                            <td>{idol.group ? idol.group.name : "None"}</td>
                         </tr>
                         <tr>
-                            <td>Subunit</td>
-                            <td>{idol.subunit.name}</td>
+                            <td><b>Subunit</b></td>
+                            <td>{idol.subunit ? idol.subunit.name : "None"}</td>
                         </tr>
                         <tr>
-                            <td>Last import</td>
+                            <td><b>Last import</b></td>
                             <td>{idol.modified}</td>
                         </tr>
                         <tr>
-                            <td>Cards</td>
+                            <td><b>Cards</b></td>
                             <td>
                                 {idol.cards.map((item, index) =>
                                     <div className="pure-u-1-4" key={index}>
-                                        <Link to={{
-                                            pathname: `/dashboard/cards/${item.id}`,
-                                            state: item
-                                        }}>
-                                            {item.isidol ? "Idlz: " : "Unidlz: "}{item.gameid}
+                                        <Link to={{ pathname: `/dashboard/cards/${item.id}`, state: item }}>
+                                            {item.isidol ? "Idlz:" : "Unidlz:"} {item.gameid}
                                         </Link>
                                     </div>
                                 )}

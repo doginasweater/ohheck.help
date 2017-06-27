@@ -29,7 +29,7 @@ export default class Subunits extends React.Component<any, any> {
                 <td>
                     {item.idols.map((innerItem: Idol, innerIndex: number) =>
                         <div key={innerIndex} className="pure-u-1-3">
-                            <Link to={`/dashboard/idol/${innerItem.id}`}>
+                            <Link to={{ pathname: `/dashboard/idols/${innerItem.id}`, state: innerItem }}>
                                 {innerItem.name}
                             </Link>
                         </div>
@@ -51,7 +51,7 @@ export default class Subunits extends React.Component<any, any> {
         return (
             <div className="pure-u-1">
                 <h3>Subunits</h3>
-                <table className="pure-table">
+                <table className="pure-table pure-table-horizontal full-width">
                     <thead>
                         <tr>
                             <th>Name</th>

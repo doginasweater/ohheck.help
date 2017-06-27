@@ -1,4 +1,4 @@
-﻿import { Group, Subunit, Idol, Survey, Response } from '../types/admin';
+﻿import { Group, Subunit, Idol, Survey, Response, ResponseByCard } from '../types/admin';
 
 import {
     SET_ERROR,
@@ -14,7 +14,9 @@ import {
     SURVEYS_FETCH,
     SURVEYS_FETCH_FULFILLED,
     RESPONSES_FETCH,
-    RESPONSES_FETCH_FULFILLED
+    RESPONSES_FETCH_FULFILLED,
+    RESPONSES_BYCARD_FETCH,
+    RESPONSES_BYCARD_FETCH_FULFILLED
 } from '../constants/admin';
 
 interface IAdminStore {
@@ -32,6 +34,8 @@ interface IAdminStore {
     surveyid: number;
     responses?: Response[];
     responsesloading: boolean;
+    responsesbycard?: ResponseByCard[];
+    responsesbycardloading: boolean;
 }
 
 const AdminInitial: IAdminStore = {
@@ -48,7 +52,9 @@ const AdminInitial: IAdminStore = {
     surveysloading: true,
     surveyid: -1,
     responses: null,
-    responsesloading: true
+    responsesloading: true,
+    responsesbycard: null,
+    responsesbycardloading: true
 };
 
 export function admin(state = AdminInitial, action) {
@@ -130,6 +136,18 @@ export function admin(state = AdminInitial, action) {
                 ...state,
                 responsesloading: false,
                 responses: action.responses
+            };
+        case RESPONSES_BYCARD_FETCH:
+            return {
+                ...state,
+                responsesbycardloading: true,
+                surveyid: action.id
+            };
+        case RESPONSES_BYCARD_FETCH_FULFILLED:
+            return {
+                ...state,
+                responsesbycardloading: false,
+                responsesbycard: action.cards
             };
         default:
             return state;
