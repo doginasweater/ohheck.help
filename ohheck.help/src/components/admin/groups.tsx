@@ -1,49 +1,24 @@
 ﻿import * as React from 'react';
-import 'whatwg-fetch';
+import { connect } from 'react-redux';
 import { Group, Subunit, Idol } from '../../types/admin';
 import { Link } from 'react-router-dom';
+import { groupsFetch } from '../../actions/admin';
 
-interface GroupsState {
-    loading: boolean;
-    groups: Group[];
-}
-
-export default class Groups extends React.Component<any, GroupsState> {
+@connect(state => ({ admin: state.admin }))
+export default class Groups extends React.Component<any, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            groups: [],
-            loading: true
-        };
     }
 
     componentDidMount() {
-        fetch('/admin/groups', {
-            credentials: 'same-origin'
-        })
-        .then(response => {
-            this.setState({
-                loading: false
-            });
+        const { dispatch } = this.props;
 
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(response.statusText);
-            }
-        })
-        .then((json: any) => {
-            let data: Group[] = json.map(item => new Group(item));
-
-            this.setState({
-                groups: data
-            });
-        })
-        .catch(ex => console.log(ex));
+        if (!this.props.admin.groups) {
+            dispatch(groupsFetch());
+        }
     }
 
-    renderList = () => this.state.groups.map(
+    renderList = groups => groups.map(
         (item: Group, index: number) =>
             <tr key={index}>
                 <td>{item.name}</td>
@@ -75,7 +50,7 @@ export default class Groups extends React.Component<any, GroupsState> {
     );
 
     render() {
-        if (this.state.loading) {
+        if (this.props.admin.groupsloading) {
             return (
                 <div className="pure-u-1">
                     <h3>Groups</h3>
@@ -96,7 +71,7 @@ export default class Groups extends React.Component<any, GroupsState> {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderList()}
+                        {this.renderList(this.props.admin.groups)}
                     </tbody>
                 </table>
             </div>

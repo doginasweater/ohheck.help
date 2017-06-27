@@ -1,16 +1,18 @@
 ﻿import { combineEpics } from 'redux-observable';
-import { FETCH_SURVEY } from '../constants/survey';
-import { fetchSurvey, fetchSurveyFulfilled } from '../actions/survey';
-import { ajax } from 'rxjs/observable/dom/ajax';
-import 'rxjs';
-
-const fetchSurveyEpic = action$ =>
-    action$.ofType(FETCH_SURVEY)
-        .mergeMap(action =>
-            ajax.getJSON(`/api/survey/${action.slug}`)
-                .map(response => fetchSurveyFulfilled(response))
-        );
+import { fetchSurveyEpic } from './survey';
+import {
+    fetchGroupsEpic,
+    fetchSubunitsEpic,
+    fetchIdolsEpic,
+    fetchSurveysEpic,
+    fetchResponsesEpic
+} from './admin';
 
 export const rootEpic = combineEpics(
+    fetchGroupsEpic,
+    fetchSubunitsEpic,
+    fetchIdolsEpic,
+    fetchSurveysEpic,
+    fetchResponsesEpic,
     fetchSurveyEpic
 );

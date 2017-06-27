@@ -6,6 +6,8 @@ import { AnswerTypes } from './answertypes';
 import { Group } from './group';
 import { Idol } from './idol';
 import { Subunit } from './subunit';
+import { Response } from './response';
+import { ResponseAnswer } from './responseanswer';
 
 export {
     Survey,
@@ -15,5 +17,7 @@ export {
     AnswerTypes,
     Group,
     Idol,
-    Subunit
+    Subunit,
+    Response,
+    ResponseAnswer
 };

@@ -1,54 +1,37 @@
 ﻿import * as React from 'react';
 import { Link, Route } from 'react-router-dom';
-import 'whatwg-fetch';
+import { connect } from 'react-redux';
+import { responsesFetch } from '../../actions/admin';
+import { Response, ResponseAnswer } from '../../types/admin';
 
+@connect(state => ({ admin: state.admin }))
 export default class Responses extends React.Component<any, any> {
     constructor(props) {
         super(props);
-
-        this.state = { };
     }
 
-    componentDidMount() {
-        fetch(`/admin/responses/${this.props.match.id}`, {
-            credentials: 'same-origin'
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then(data => {
-            this.setState({
-                responses: data
-            });
-        });
+    componentDidMount = () => {
+        if (!this.props.admin.responses && (this.props.match.params.id !== this.props.admin.surveyid)) {
+            const { dispatch } = this.props;
+
+            dispatch(responsesFetch(this.props.match.params.id));
+        }
     }
 
     renderList = list =>
-        list.map((item, index) =>
+        list.map((item: Response, index) =>
             <tr key={index}>
-                <td>
-                    {item.submitted}
-                </td>
-                <td>
-                    {item.submitter}
-                </td>
-                <td>
-                    {item.comments}
-                </td>
-                <td>
-                    {item.nextgroup}
-                </td>
-                <td>
-                    {item.cards}
-                </td>
+                <td>{item.submitted}</td>
+                <td>{item.questions[0].cards}</td>
+                <td>{item.questions[1].text}</td>
+                <td>{item.questions[2].text}</td>
+                <td>{item.questions[3].answer}</td>
             </tr>
         );
 
 
     render() {
-        const body = this.state.responses ? this.renderList(this.state.responses) : <tr><td>Loading...</td></tr>
+        const body = !this.props.admin.responsesloading ? this.renderList(this.props.admin.responses) : <tr><td>Loading...</td></tr>
 
         return (
             <div className="pure-u-1">
@@ -57,10 +40,10 @@ export default class Responses extends React.Component<any, any> {
                     <thead>
                         <tr>
                             <th>Submitted</th>
+                            <th>Cards</th>
                             <th>Submitter</th>
                             <th>Comments</th>
                             <th>Next Group</th>
-                            <th>Cards</th>
                         </tr>
                     </thead>
                     <tbody>

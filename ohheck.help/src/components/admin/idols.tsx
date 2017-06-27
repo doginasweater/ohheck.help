@@ -1,43 +1,24 @@
 ﻿import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Idol, Subunit, Group } from '../../types/admin';
-import 'whatwg-fetch';
+import { idolsFetch } from '../../actions/admin';
 
-interface IdolsState {
-    idols: Idol[];
-    loading: boolean;
-}
-
-export default class Idols extends React.Component<any, IdolsState> {
+@connect(state => ({ admin: state.admin }))
+export default class Idols extends React.Component<any, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            idols: [],
-            loading: true
-        };
     }
 
     componentDidMount() {
-        fetch('/admin/idols', {
-            credentials: 'same-origin'
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(response.statusText);
-            }
-        }).then((json: any) => {
-            let data: Idol[] = json.map(item => new Idol(item));
+        const { dispatch } = this.props;
 
-            this.setState({
-                idols: data,
-                loading: false
-            });
-        });
+        if (!this.props.admin.idols) {
+            dispatch(idolsFetch());
+        }
     }
 
-    renderIdols = () => this.state.idols.map((item: Idol, index: number) =>
+    renderIdols = idols => idols.map((item: Idol, index: number) =>
         <div key={index} className="pure-u-1-3 some-space">
             <div className="idol-box">
                 <Link to={{
@@ -54,7 +35,7 @@ export default class Idols extends React.Component<any, IdolsState> {
     )
 
     render() {
-        if (this.state.loading) {
+        if (this.props.admin.idolsloading) {
             return (
                 <div>
                     <h3>Idols</h3>
@@ -66,9 +47,9 @@ export default class Idols extends React.Component<any, IdolsState> {
         return (
             <div>
                 <h3>Idols</h3>
-                Total number of idols: {this.state.idols.length}
+                Total number of idols: {this.props.admin.idols.length}
                 <hr />
-                {this.renderIdols()}
+                {this.renderIdols(this.props.admin.idols)}
             </div>
         );
     }

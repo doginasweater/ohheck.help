@@ -39,11 +39,8 @@ export default class Admin extends React.Component<any, any> {
                             {this.props.admin.error ? this.props.admin.errorMessage : ''}
                         </h3>
                     </div>
-                    <div className="pure-u-1-4 fade-in-slow">
-                        <h3>menu</h3>
-                        <a.AdminNav />
-                    </div>
-                    <div className="pure-u-3-4">
+                    <a.AdminNav />
+                    <div className="pure-u-3-4 slide-in-container">
                         <Route exact path="/dashboard" component={a.AdminHome} />
 
                         <Route path="/dashboard/responses/:id" component={a.Responses} />

@@ -1,45 +1,27 @@
 ﻿import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
-import Login from './login';
-import 'whatwg-fetch';
 import { Survey } from '../../types/admin';
 import Icon from '../icon';
+import { surveysFetch } from '../../actions/admin';
 
+@connect(state => ({ admin: state.admin }))
 export default class AdminHome extends React.Component<any, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            surveys: [] as Survey[]
-        };
     }
 
     componentWillMount() {
-        fetch('/admin/allsurveys', {
-            credentials: 'same-origin'
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(response.statusText);
-            }
-        })
-        .then((json: any) => {
-            let data: Survey[] = json.map((item, index) => new Survey(item));
+        const { dispatch } = this.props;
 
-            this.setState({
-                surveys: data
-            });
-        })
-        .catch(ex => {
-            console.log('exception!', ex);
-        });
+        if (!this.props.admin.surveys) {
+            dispatch(surveysFetch());
+        }
     }
 
     renderBody = () => {
-        if (this.state.surveys.length > 0) {
-            return this.state.surveys.map((item: Survey, index: number) => 
+        if (this.props.admin.surveys) {
+            return this.props.admin.surveys.map((item: Survey, index: number) =>
                 <tr key={index}>
                     <td>{item.name}</td>
                     <td>{item.title}</td>
@@ -76,24 +58,26 @@ export default class AdminHome extends React.Component<any, any> {
 
     render() {
         return (
-            <div className="fade-in-slow">
+            <div>
                 <h3>Home</h3>
-                <h4>Surveys</h4>
-                <table className="pure-table pure-table-striped pure-table-horizontal">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Title</th>
-                            <th>Active</th>
-                            <th>Slug</th>
-                            <th>Responses</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderBody()}
-                    </tbody>
-                </table>
+                <div className="slide-in">
+                    <h4>Surveys</h4>
+                    <table className="pure-table pure-table-striped pure-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th>Active</th>
+                                <th>Slug</th>
+                                <th>Responses</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderBody()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }

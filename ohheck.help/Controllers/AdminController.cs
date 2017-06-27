@@ -140,9 +140,9 @@ namespace ohheck.help.Controllers
             return Result.Success();
         }
 
-        public async Task<IActionResult> Responses(int id)
+        public IActionResult Responses(int id)
         {
-            var submissions = await _db.Submissions
+            var submissions = _db.Submissions
                 .Include(x => x.answers)
                     .ThenInclude(x => x.question)
                 .Include(x => x.answers)
@@ -155,19 +155,26 @@ namespace ohheck.help.Controllers
                     .ThenInclude(x => x.answer)
                 .Where(x => x.surveyid == id)
                 .Where(x => x.answers.Any())
-                .Select(x => x.answers
-                    .OrderBy(y => y.question.sortorder)
-                    .Select(y => new
-                    {
-                        question = y.question.sortorder,
-                        answer = y.answer.text,
-                        text = y.text,
-                        cards = string.Join(", ", y.cardchoices.Select(z => z.card.gameid)),
-                        selections = y.choiceanswers.Select(z => z.answer)
-                    })
-                    .GroupBy(y => y.question)
-                )
-                .ToListAsync();
+                .SelectMany(x => x.answers)
+                .OrderBy(x => x.question.sortorder)
+                .Select(x => new
+                {
+                    question = x.question.sortorder,
+                    answer = x.answer.text,
+                    text = x.text,
+                    cards = string.Join(", ", x.cardchoices.Select(y => y.card.gameid)),
+                    selections = x.choiceanswers.Select(y => y.answer),
+                    submissionid = x.submissionid,
+                    submitted = x.created
+                })
+                .GroupBy(x => x.submissionid)
+                .ToList()
+                .Select(x => new {
+                    submissionid = x.Key,
+                    submitted = x.First().submitted.ToString("g"),
+                    questions = x.OrderBy(y => y.question)
+                })
+                .ToList();
 
             return Json(submissions);
         }
