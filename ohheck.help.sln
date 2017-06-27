@@ -1,10 +1,15 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26510.0
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ohheck.help", "ohheck.help\ohheck.help.csproj", "{C7D6A320-15B5-4494-A466-44B4B6F4DD2D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ohheck.help.tests", "ohheck.help.tests\ohheck.help.tests.csproj", "{372A1B13-75FF-4BA9-ABE6-43F2A780FEDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2DAC954B-6D90-4E4C-99CC-AF115C233A40}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
