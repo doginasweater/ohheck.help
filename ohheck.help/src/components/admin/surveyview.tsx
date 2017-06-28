@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
+import { connect } from 'react-redux';
 import { Survey, Question } from '../../types/admin';
-import 'whatwg-fetch';
+import { surveyFetch, editSurvey, editSurveyStop } from '../../actions/surveymgmt';
 import Questions from '../questions';
 
 let ReactMarkdown: any = require('react-markdown');
@@ -13,6 +14,10 @@ interface SurveyViewState {
     editable: boolean;
 }
 
+@connect(state => ({
+    admin: state.admin,
+    surveymgmt: state.surveymgmt
+}))
 export default class SurveyView extends React.Component<any, SurveyViewState> {
     constructor(props) {
         super(props);
@@ -27,25 +32,14 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
     }
 
     componentDidMount() {
-        fetch(`/admin/survey/${this.props.match.params.id}`, {
-            credentials: 'same-origin'
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-        }).then(json => {
-            let data = new Survey(json);
+        const { dispatch } = this.props;
 
-            this.setState({
-                survey: data,
-                loading: false
-            });
-        });
+        dispatch(surveyFetch(this.props.match.params.id));
     }
 
     createMarkup = () => {
         return {
-            __html: this.state.survey.comments
+            __html: this.props.surveymgmt.survey.comments
         };
     }
 
@@ -70,19 +64,23 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
     toggleEdit = event => {
         event.preventDefault();
 
-        this.setState({
-            editable: !this.state.editable
-        });
+        const { dispatch } = this.props;
+
+        if (this.props.surveymgmt.editable) {
+            dispatch(editSurveyStop());
+        } else {
+            dispatch(editSurvey());
+        }
     }
 
     render() {
-        if (this.state.loading) {
+        if (this.props.surveymgmt.surveyloading) {
             return (
                 <div>Loading...</div>
             );
         }
 
-        const { survey } = this.state;
+        const { survey } = this.props.surveymgmt;
 
         return (
             <div className="pure-u-1 slide-in">
@@ -90,9 +88,9 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
                     <h3>{survey.name}</h3>
                 </div>
                 <div className="pure-u-1-2">
-                    <button onClick={this.toggleEdit} className="pure-button button-primary pull-right">
+                    {/*<button onClick={this.toggleEdit} className="pure-button button-primary pull-right">
                         Edit Survey
-                    </button>
+                    </button>*/}
                 </div>
                 <div className="breathing-room">
                     <div className="pure-u-1-2">
@@ -118,7 +116,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
                         <form className="pure-form pure-form-stacked">
                             <b>Questions</b>:
                             <Questions
-                                questions={this.state.survey.questions}
+                                questions={this.props.surveymgmt.survey.questions}
                                 ispublic={false}
                                 handleClick={this.handleClick}
                                 handleChange={this.handleChange}
