@@ -1,5 +1,7 @@
 ﻿import * as React from 'react';
-import { Survey, Question, Answer } from '../../types/admin';
+import { connect } from 'react-redux';
+import { Survey, Question, Answer, IAdminStore, ISurveyMgmt } from '../../types/admin';
+import { IReduxProps } from '../../types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
 
@@ -12,7 +14,16 @@ interface NewSurveyState {
     questions: Question[];
 }
 
-export default class NewSurvey extends React.Component<any, NewSurveyState> {
+interface NewSurveyProps extends IReduxProps {
+    admin: IAdminStore;
+    surveymgmt: ISurveyMgmt;
+}
+
+@connect(state => ({
+    admin: state.admin,
+    surveymgmt: state.surveymgmt
+}))
+export default class NewSurvey extends React.Component<NewSurveyProps, NewSurveyState> {
     constructor(props) {
         super(props);
 
@@ -24,6 +35,10 @@ export default class NewSurvey extends React.Component<any, NewSurveyState> {
             active: 'false',
             questions: []
         };
+    }
+
+    componentDidMount = () => {
+        console.log(this.props);
     }
 
     handleChange = event => {
@@ -50,7 +65,7 @@ export default class NewSurvey extends React.Component<any, NewSurveyState> {
                 question={item}
                 save={this.saveQuestion}
                 index={index} />
-    )
+    );
 
     saveQuestion = (question, index) => {
         let qs: Question[] = [...this.state.questions];

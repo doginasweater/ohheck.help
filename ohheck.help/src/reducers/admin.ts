@@ -1,4 +1,4 @@
-﻿import { Group, Subunit, Idol, Survey, Response, ResponseByCard } from '../types/admin';
+﻿import { Group, Subunit, Idol, Survey, Response, ResponseByCard, IAdminStore } from '../types/admin';
 
 import {
     SET_ERROR,
@@ -18,25 +18,6 @@ import {
     RESPONSES_BYCARD_FETCH,
     RESPONSES_BYCARD_FETCH_FULFILLED
 } from '../constants/admin';
-
-interface IAdminStore {
-    error: boolean;
-    errorMessage: string;
-    authenticated: boolean;
-    groups?: Group[];
-    groupsloading: boolean;
-    subunits: Subunit[];
-    subunitsloading: boolean;
-    idols?: Idol[];
-    idolsloading: boolean;
-    surveys?: Survey[];
-    surveysloading: boolean;
-    surveyid: number;
-    responses?: Response[];
-    responsesloading: boolean;
-    responsesbycard?: ResponseByCard[];
-    responsesbycardloading: boolean;
-}
 
 const AdminInitial: IAdminStore = {
     error: false,

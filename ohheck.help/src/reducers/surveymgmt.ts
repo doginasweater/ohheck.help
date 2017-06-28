@@ -1,4 +1,4 @@
-﻿import { Survey, Question } from '../types/admin';
+﻿import { Survey, Question, ISurveyMgmt } from '../types/admin';
 
 import { 
     SURVEY_FETCH,
@@ -12,14 +12,6 @@ import {
     NEW_SET_TITLE,
     NEW_SET_QUESTIONS
 } from '../constants/surveymgmt';
-
-interface ISurveyMgmt {
-    surveyid: number;
-    survey?: Survey;
-    surveyloading: boolean;
-    editable: boolean;
-    newsurvey?: Survey;
-}
 
 const initialState: ISurveyMgmt = {
     surveyid: -1,

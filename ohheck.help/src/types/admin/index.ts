@@ -9,6 +9,8 @@ import { Subunit } from './subunit';
 import { Response } from './response';
 import { ResponseAnswer } from './responseanswer';
 import { ResponseByCard } from './responsebycard';
+import { ISurveyMgmt } from './isurveymgmt';
+import { IAdminStore } from './iadminstore';
 
 export {
     Survey,
@@ -21,5 +23,7 @@ export {
     Subunit,
     Response,
     ResponseAnswer,
-    ResponseByCard
+    ResponseByCard,
+    ISurveyMgmt,
+    IAdminStore
 };
