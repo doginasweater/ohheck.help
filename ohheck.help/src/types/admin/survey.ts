@@ -14,12 +14,12 @@ export class Survey extends Common {
     constructor(json) {
         super(json);
 
-        this.name = json.name;
-        this.title = json.title;
-        this.active = json.active;
-        this.comments = json.comments;
-        this.slug = json.slug;
-        this.questions = json.questions;
-        this.responses = json.responses;
+        this.name = json.name || '';
+        this.title = json.title || '';
+        this.active = json.active || false;
+        this.comments = json.comments || '';
+        this.slug = json.slug || '';
+        this.questions = json.questions || [];
+        this.responses = json.responses || [];
     }
 }

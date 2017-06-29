@@ -32,12 +32,11 @@
     list-style-type: none;
 
     li {
-        vertical-align: text-top;
-        line-height: 1;
-        display: block;
+        display: flex;
+        align-items: center;
 
-        a {
-            vertical-align: text-top;
+        .material-icons {
+            margin-right: .25em;
         }
     }
 }
@@ -109,6 +108,29 @@ ol.horizontal {
 
 .full-width {
     width: 100%;
+}
+
+.legend-fake {
+    font-weight: 200;
+    color: #333;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.new-question-options {
+    padding-left: 10px;
+    margin: 0 !important;
+}
+
+.compact-table {
+    td {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    th {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 @keyframes fadein {

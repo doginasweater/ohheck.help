@@ -1,6 +1,13 @@
 ﻿import * as React from 'react';
+import { Question } from '../../../types/admin';
 
-export default class NewSelectBox extends React.Component<any, any> {
+interface NewSelectBoxProps {
+    question: Question;
+    save: (question: Question, index: number) => void;
+    index: number;
+}
+
+export default class NewSelectBox extends React.Component<NewSelectBoxProps, any> {
     constructor(props) {
         super(props);
     }

@@ -1,7 +1,13 @@
 ﻿import * as React from 'react';
 import { Question } from '../../../types/admin';
 
-export default class NewMultiline extends React.Component<any, any> {
+interface NewMultiLineProps {
+    question: Question;
+    save: (question: Question, index: number) => void;
+    index: number;
+}
+
+export default class NewMultiline extends React.Component<NewMultiLineProps, any> {
     constructor(props) {
         super(props);
 
@@ -11,9 +17,11 @@ export default class NewMultiline extends React.Component<any, any> {
     }
 
     handleChange = event => {
-        let q: Question = { ...this.props.question };
-        q.type = 'MultiLineText';
-        q.text = event.target.value;
+        let q: Question = {
+            ...this.props.question,
+            type: 'MultiLineText',
+            text: event.target.value
+        };
 
         this.props.save(q, this.props.index);
     }

@@ -1,7 +1,13 @@
 ﻿import * as React from 'react';
 import { Question } from '../../../types/admin';
 
-export default class NewSingleLine extends React.Component<any, any> {
+interface NewSingleLineProps {
+    question: Question;
+    save: (question: Question, index: number) => void;
+    index: number;
+}
+
+export default class NewSingleLine extends React.Component<NewSingleLineProps, any> {
     constructor(props) {
         super(props);
     }

@@ -1,6 +1,13 @@
 ﻿import * as React from 'react';
+import { Question } from '../../../types/admin';
 
-export default class NewCheckboxes extends React.Component<any, any> {
+interface NewCheckboxesProps {
+    question: Question;
+    save: (question: Question, index: number) => void;
+    index: number;
+}
+
+export default class NewCheckboxes extends React.Component<NewCheckboxesProps, any> {
     constructor(props) {
         super(props);
 
@@ -12,7 +19,7 @@ export default class NewCheckboxes extends React.Component<any, any> {
     handleSave = event => {
         event.preventDefault();
 
-        this.props.save(this.props.question);
+        this.props.save(this.props.question, this.props.index);
     }
 
     addCheckbox = event => {
