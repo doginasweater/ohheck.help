@@ -25,7 +25,7 @@ export default class Admin extends React.Component<any, any> {
             return (
                 <div className="pure-u-1">
                     <h1>Oh Heck! Admin</h1>
-                    <a.Login authenticate={this.auth} />;
+                    <a.Login authenticate={this.auth} />
                 </div>
             );
         } else {
