@@ -22,7 +22,7 @@ export default class Form extends React.Component<any, any> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         const { dispatch } = this.props;
 
         dispatch(fetchSurvey(this.props.match.params.id));

@@ -38,7 +38,7 @@ export default class PublicCards extends React.Component<any, CardsState> {
             })
         });
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.renderCards();
     }
 

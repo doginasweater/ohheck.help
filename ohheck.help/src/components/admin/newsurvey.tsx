@@ -81,17 +81,16 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(newSetQuestions(questions));
     }
 
-    moveQuestion = (movedQuestion: Question, index: number) => {
+    moveQuestion = (movedQuestion: Question, index: number, up: boolean) => {
         let { questions } = this.props.surveymgmt.newsurvey;
 
         const unmoved = questions[index];
-        const movingup = movedQuestion.sortorder < unmoved.sortorder;
 
         let toSwap = questions.filter(item => item.sortorder === movedQuestion.sortorder)[0];
 
         const toSwapIndex = questions.indexOf(toSwap);
 
-        toSwap.sortorder = movingup ? toSwap.sortorder += 1 : toSwap.sortorder -= 1;
+        toSwap.sortorder = up ? toSwap.sortorder += 1 : toSwap.sortorder -= 1;
 
         questions[index] = movedQuestion;
         questions[toSwapIndex] = toSwap;

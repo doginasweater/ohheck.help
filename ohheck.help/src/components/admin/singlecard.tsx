@@ -9,7 +9,7 @@ export default class SingleCard extends React.Component<any, any> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         if (this.props.location.state) {
             this.setState({
                 card: this.props.location.state

@@ -2,7 +2,7 @@
 import { Answer } from './answer';
 import { Question } from './question';
 import { Submission } from './submission';
-import { AnswerTypes } from './answertypes';
+import { AnswerTypes, AnswerType } from './answertypes';
 import { Group } from './group';
 import { Idol } from './idol';
 import { Subunit } from './subunit';
@@ -18,6 +18,7 @@ export {
     Question,
     Submission,
     AnswerTypes,
+    AnswerType,
     Group,
     Idol,
     Subunit,

@@ -10,7 +10,7 @@ export default class SurveysByCard extends React.Component<any, any> {
         super(props);
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         const { dispatch } = this.props;
 
         dispatch(responsesByCardFetch(this.props.match.params.id));

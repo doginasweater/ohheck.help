@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { AnswerTypes, Question } from '../../../types/admin';
+import { AnswerTypes, AnswerType, Question } from '../../../types/admin';
 import { CardChooser, Checkboxes, NewMultiline, NewRadioButtons, NewSelectBox, NewSingleLine } from '.';
 import Icon from '../../icon';
 
@@ -9,7 +9,7 @@ interface NewQuestionProps {
     save: (question: Question, index: number) => void;
     deleteQuestion: (event: React.FormEvent<HTMLButtonElement>) => void;
     numquestions: number;
-    shiftQuestion: (Question, Index) => void;
+    shiftQuestion: (Question, Index, Direction) => void;
 }
 
 export default class NewQuestion extends React.Component<NewQuestionProps, any> {
@@ -26,7 +26,7 @@ export default class NewQuestion extends React.Component<NewQuestionProps, any> 
     }
 
     renderOptions = () => AnswerTypes.map(
-        (item, index) => <option value={item} key={index}>{item}</option>
+        (item: string, index: number) => <option value={item} key={index}>{item}</option>
     );
 
     renderQuestion = () => {
@@ -67,12 +67,14 @@ export default class NewQuestion extends React.Component<NewQuestionProps, any> 
     }
 
     moveQuestion = (dir: string): void => {
+        const up = dir === 'up';
+
         const newq: Question = {
             ...this.props.question,
-            sortorder: dir === 'up' ? this.props.question.sortorder - 1 : this.props.question.sortorder + 1
+            sortorder: up ? this.props.question.sortorder - 1 : this.props.question.sortorder + 1
         };
 
-        this.props.shiftQuestion(newq, this.props.index);
+        this.props.shiftQuestion(newq, this.props.index, up);
     }
 
     renderMoveButtons = (question: Question): JSX.Element[] => {

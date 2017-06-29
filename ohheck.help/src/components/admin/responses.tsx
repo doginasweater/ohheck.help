@@ -10,7 +10,7 @@ export default class Responses extends React.Component<any, any> {
         super(props);
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         if (!this.props.admin.responses && (this.props.match.params.id !== this.props.admin.surveyid)) {
             const { dispatch } = this.props;
 

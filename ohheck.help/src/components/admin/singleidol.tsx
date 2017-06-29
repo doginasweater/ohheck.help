@@ -10,7 +10,7 @@ export default class SingleIdol extends React.Component<any, any> {
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         if (this.props.location.state) {
             this.setState({
                 idol: this.props.location.state

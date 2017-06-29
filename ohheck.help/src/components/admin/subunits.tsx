@@ -10,7 +10,7 @@ export default class Subunits extends React.Component<any, any> {
         super(props);
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         const { dispatch } = this.props;
 
         if (!this.props.admin.subunits) {
