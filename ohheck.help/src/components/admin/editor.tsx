@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import Icon from '../icon';
+import Icon from 'components/icon';
 
 let ReactMarkdown: any = require('react-markdown');
 
@@ -9,12 +9,22 @@ export default class Editor extends React.Component<any, any> {
 
         this.state = {
             edit: true
-        }
+        };
     }
 
-    resize = event => {
-        event.target.style.height = 'auto';
-        event.target.style.height = `${event.target.scrollHeight}px`;
+    editorbox: HTMLTextAreaElement | null = null;
+
+    componentDidUpdate() {
+        this.resize();
+    }
+
+    resize = () => {
+        if (!this.editorbox) {
+            return;
+        }
+
+        this.editorbox.style.height = 'auto';
+        this.editorbox.style.height = `${this.editorbox.scrollHeight + 5}px`;
     }
 
     display = () => {
@@ -24,13 +34,15 @@ export default class Editor extends React.Component<any, any> {
                 value={this.props.value}
                 onChange={this.props.handleChange}
                 onKeyDown={this.resize}
-                className="pure-u-1"
-                style={{ 'height': 'auto' }} />
+                className="pure-u-1 box"
+                ref={ el => this.editorbox = el } />
         } else {
-            return <div>
-                <b>Preview</b>
-                <ReactMarkdown source={this.props.value} escapeHtml={true} />
-            </div>;
+            return (
+                <div className="box">
+                    <b>Preview</b>
+                    <ReactMarkdown source={this.props.value} escapeHtml={true} />
+                </div>
+            );
         }
     }
 
@@ -52,9 +64,9 @@ export default class Editor extends React.Component<any, any> {
 
     render() {
         return (
-            <div>
+            <div className="editor-container">
                 This box allows <a href="http://commonmark.org/help/">markdown</a>.
-                <div className="pure-u-1" style={{ 'minHeight': '5em' }}>
+                <div className="pure-u-1 editor">
                     {this.display()}
                 </div>
                 <button className="pure-button button-primary"

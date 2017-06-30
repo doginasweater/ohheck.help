@@ -63,11 +63,19 @@ ol.horizontal {
     div {
         margin: 10px 0 10px 0;
     }
+
+    button {
+        margin-top: 1em;
+    }
 }
 
 .idol-box {
     padding: 10px;
     
+    &:hover {
+        background-color: rgba(128, 128, 128, 0.1);
+    }
+
     a {
         text-decoration: none;
         color: #000;
@@ -76,10 +84,6 @@ ol.horizontal {
     a:visited {
         color: #000;
     }
-}
-
-.idol-box:hover {
-    background-color: rgba(128, 128, 128, 0.1);
 }
 
 .error {
@@ -131,6 +135,75 @@ ol.horizontal {
         padding-left: 10px;
         padding-right: 10px;
     }
+}
+
+.pure-form-aligned .pure-control-group {
+    span.label {
+        text-align: right;
+        display: inline-block;
+        vertical-align: middle;
+        width: 10em;
+        margin: 0 1em 0 0;
+    }
+
+    &.inline label {
+        width: auto;
+        margin: 0 0.5em 0 0;
+    }
+
+    &.inline div {
+        display: inline-flex;
+        justify-content: space-around;
+        flex-flow: row nowrap;
+
+        label {
+            flex: 0 1 auto;
+        }
+    }
+}
+
+.editor-container {
+    margin: 1em 0 1em 0;
+
+    .editor {
+        min-height: 5em;
+
+        .box {
+            height: auto;
+            margin-top: .5em;
+            margin-bottom: 1em;
+        }
+    }
+}
+
+.questions-container {
+    div {
+        margin: 10px 0 10px 0;
+    }
+
+    label {
+        display: block;
+        margin-bottom: .5em;
+    }
+}
+
+.card-chooser {
+     background-color: rgba(128, 128, 128, 0.1);
+     width: 80%;
+
+     .card-chooser-item {
+         padding: 0 1em;
+         margin: 0;
+
+         .material-icons {
+             margin: 0;
+             padding: 0;
+         }
+
+         &:hover {
+             background-color: rgba(128, 128, 128, 0.3);
+         }
+     }
 }
 
 @keyframes fadein {

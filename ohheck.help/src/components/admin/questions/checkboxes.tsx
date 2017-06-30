@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { Question } from 'types/admin';
+import Icon from 'components/icon';
 
 interface NewCheckboxesProps {
     question: Question;
@@ -35,9 +36,10 @@ export default class NewCheckboxes extends React.Component<NewCheckboxesProps, a
 
     renderCheckboxes = () => this.state.checkboxes.map(
         (item, index) =>
-            <div className="pure-u-1" key={index}>
-                <label>{index}</label>
+            <div className="pure-control-group" key={index}>
+                <label htmlFor={`checkbox-${index}`}>{index}</label>
                 <input type="text" className="pure-u-3-4" placeholder="checkbox label goes here" />
+                <span className="pure-form-message-inline">thing</span>
             </div>
         );
 

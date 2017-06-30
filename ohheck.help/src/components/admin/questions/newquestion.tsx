@@ -25,7 +25,7 @@ export default class NewQuestion extends React.Component<NewQuestionProps, any> 
         this.props.save(newq, this.props.index);
     }
 
-    renderOptions = () => AnswerTypes.map(
+    renderOptions = (): JSX.Element[] => AnswerTypes.map(
         (item: string, index: number) => <option value={item} key={index}>{item}</option>
     );
 
@@ -104,8 +104,8 @@ export default class NewQuestion extends React.Component<NewQuestionProps, any> 
     render() {
         if (!this.props.question.type) {
             return (
-                <div>
-                    <label htmlFor="answertype">Please choose a question type</label>
+                <div className="pure-control-group">
+                    <label htmlFor="answertype">Type</label>
                     <select name="answertype" value={this.props.question.type} onChange={this.handleChange}>
                         <option value="">Select One</option>
                         {this.renderOptions()}
@@ -136,6 +136,14 @@ export default class NewQuestion extends React.Component<NewQuestionProps, any> 
                                         </td>
                                         <td>
                                             {this.props.question.sortorder}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Required</b>
+                                        </td>
+                                        <td className="align-icon">
+                                            {this.props.question.type === 'Cards' ? 'Yes' : 'No' }
                                         </td>
                                     </tr>
                                     <tr>

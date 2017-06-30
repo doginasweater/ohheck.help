@@ -10,10 +10,6 @@ interface NewMultiLineProps {
 export default class NewMultiline extends React.Component<NewMultiLineProps, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            box: ''
-        };
     }
 
     handleChange = event => {
@@ -31,8 +27,16 @@ export default class NewMultiline extends React.Component<NewMultiLineProps, any
             <fieldset>
                 <legend>Multi Line Text</legend>
 
-                <label htmlFor="box">What do you want your multi line question to say?</label>
-                <input type="text" name="box" className="pure-u-3-4" onChange={this.handleChange} value={this.props.question.text} />
+                <label htmlFor={`box-${this.props.question.id}`}>
+                    What do you want your multi line response question to say?
+                </label>
+                <input
+                    type="text"
+                    name={`box-${this.props.question.id}`}
+                    className="pure-u-22-24"
+                    onChange={this.handleChange}
+                    value={this.props.question.text}
+                    placeholder="Enter question text..." />
             </fieldset>
         );
     }

@@ -1,10 +1,11 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { Survey, Question, Answer, IAdminStore, ISurveyMgmt } from '../../types/admin';
-import { IReduxProps } from '../../types/redux';
+import { Survey, Question, Answer, IAdminStore, ISurveyMgmt } from 'types/admin';
+import { IReduxProps } from 'types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
-import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle } from '../../actions/surveymgmt';
+import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle } from 'actions/surveymgmt';
+import Icon from 'components/icon';
 
 interface NewSurveyProps extends IReduxProps {
     admin: IAdminStore;
@@ -20,37 +21,38 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         super(props);
     }
 
-    handleChange = event => {
+    handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
         const { dispatch } = this.props;
-        let { newsurvey } = this.props.surveymgmt;
 
-        switch (event.target.name) {
+        switch (event.currentTarget.name) {
             case 'name':
-                dispatch(newSetName(event.target.value));
+                dispatch(newSetName(event.currentTarget.value));
                 return;
             case 'title':
-                dispatch(newSetTitle(event.target.value));
+                dispatch(newSetTitle(event.currentTarget.value));
                 return;
             case 'comments':
-                dispatch(newSetComments(event.target.value));
+                dispatch(newSetComments(event.currentTarget.value));
                 return;
             case 'active':
-                dispatch(newSetActive(event.target.value === 'true'));
+                dispatch(newSetActive(event.currentTarget.value === 'true'));
+                return;
+            default:
                 return;
         }
     }
 
-    handleSlug = event => {
+    handleSlug = (event: React.FormEvent<HTMLInputElement>): void => {
         const regex = /^[a-z0-9\-]*$/;
 
-        if (regex.test(event.target.value)) {
+        if (regex.test(event.currentTarget.value)) {
             const { dispatch } = this.props;
 
-            dispatch(newSetSlug(event.target.value));
+            dispatch(newSetSlug(event.currentTarget.value));
         }
     }
 
-    questionSort = (q1: Question, q2: Question) => {
+    questionSort = (q1: Question, q2: Question): number => {
         if (q1.sortorder < q2.sortorder) {
             return -1;
         } else if (q1.sortorder > q2.sortorder) {
@@ -60,7 +62,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         }
     }
 
-    renderQuestions = () => {
+    renderQuestions = (): JSX.Element[] => {
         const { newsurvey } = this.props.surveymgmt;
 
         if (newsurvey) {
@@ -80,7 +82,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         }
     }
 
-    saveQuestion = (question: Question, index: number) => {
+    saveQuestion = (question: Question, index: number): void => {
         const { dispatch } = this.props;
         const { newsurvey } = this.props.surveymgmt;
 
@@ -95,7 +97,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(newSetQuestions(questions));
     }
 
-    moveQuestion = (movedQuestion: Question, index: number, up: boolean) => {
+    moveQuestion = (movedQuestion: Question, index: number, up: boolean): void => {
         const { newsurvey } = this.props.surveymgmt;
 
         if (!newsurvey) {
@@ -129,7 +131,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(newSetQuestions(questions.filter(question => question.id !== Number(event.currentTarget.id))));
     }
 
-    addQuestion = event => {
+    addQuestion = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
@@ -151,38 +153,51 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
             <div className="pure-u-1 slide-in">
                 <h3>Create a new survey</h3>
 
-                <form className="pure-form pure-form-stacked pure-u-1">
+                <form className="pure-form pure-form-aligned pure-u-1">
                     <fieldset>
                         <legend>Basic, required information</legend>
 
                         <div className="pure-control-group">
-                            <label htmlFor="name">First, give it a name. This is for your purposes.</label>
-                            <input type="text" name="name" value={newsurvey.name} onChange={this.handleChange} />
+                            <label htmlFor="name">Name</label>
+                            <input type="text" name="name" value={newsurvey.name} onChange={this.handleChange} className="pure-u-1-4" />
+                            <span className="pure-form-message-inline">
+                                This is for your purposes.
+                            </span>
                         </div>
 
                         <div className="pure-control-group">
-                            <label htmlFor="title">Now, give it a title, the one you want the world to see.</label>
-                            <input type="text" name="title" value={newsurvey.title} onChange={this.handleChange} />
+                            <label htmlFor="title">Title</label>
+                            <input type="text" name="title" value={newsurvey.title} onChange={this.handleChange} className="pure-u-1-4" />
+                            <span className="pure-form-message-inline">
+                                The name you want the world to see
+                            </span>
                         </div>
 
                         <div className="pure-control-group">
                             <label htmlFor="slug">
-                                Now, give it a slug. This is the url that will load the survey.
-                                This must be all lowercase and contain no spaces. Try using the subunit or group name. This 
-                                box <b>will not</b> accept anything but lowercase letters, numbers, or hyphens.
+                                Slug
                             </label>
-                            <input type="text" name="slug" value={newsurvey.slug} onChange={this.handleSlug} />
+                            <input type="text" name="slug" value={newsurvey.slug} onChange={this.handleSlug} className="pure-u-1-4" />
+                            <span className="pure-form-message-inline">
+                                This will determine the survey URL. Lowercase letters, numbers, or hyphens <b>only</b>.
+                            </span>
                         </div>
 
-                        <div className="pure-control-group">
-                            <div>Do you want this survey to be immediately active?</div>
+                        <div className="pure-control-group inline">
+                            <span className="label">Start active</span>
 
-                            <label htmlFor="true" className="pure-radio">
-                                <input type="radio" name="active" value="true" id="true" onChange={this.handleChange} /> Yes
-                            </label>
-                            <label htmlFor="false" className="pure-radio">
-                                <input type="radio" name="active" value="false" id="false" checked={true} onChange={this.handleChange} /> No
-                            </label>
+                            <div className="pure-u-1-4">
+                                <label htmlFor="true" className="pure-radio">
+                                    <input type="radio" name="active" value="true" id="true" onChange={this.handleChange} /> Yes
+                                </label>
+                                <label htmlFor="false" className="pure-radio">
+                                    <input type="radio" name="active" value="false" id="false" checked={true} onChange={this.handleChange} /> No
+                                </label>
+                            </div>
+
+                            <span className="pure-form-message-inline">
+                                Inactive forms are inaccessible to users
+                            </span>
                         </div>
 
                         <div className="pure-control-group">
@@ -194,11 +209,13 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
                     <fieldset>
                         <legend>Questions!</legend>
 
-                        <div className="breathing-room">
+                        <div className="questions-container">
                             {this.renderQuestions()}
+                        </div>
 
+                        <div className="breathing-room">
                             <button onClick={this.addQuestion} className="pure-button button-primary">
-                                <i className="material-icons">add</i> Add a new question
+                                <Icon icon="add" /> Add a new question
                             </button>
                         </div>
                     </fieldset>

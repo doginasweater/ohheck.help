@@ -27,8 +27,17 @@ export default class NewSingleLine extends React.Component<NewSingleLineProps, a
             <fieldset>
                 <legend>Single Line Text</legend>
                 
-                <label htmlFor="box">What do you want your single line question to say?</label>
-                <input type="text" name="box" className="pure-u-3-4" value={this.props.question.text} onChange={this.handleChange} />
+                <label htmlFor={`box-${this.props.question.id}`}>
+                    What do you want your single line response question to say?
+                </label>
+
+                <input
+                    type="text"
+                    name={`box-${this.props.question.id}`}
+                    className="pure-u-22-24"
+                    value={this.props.question.text}
+                    onChange={this.handleChange}
+                    placeholder="Enter question text..." />
             </fieldset>
         );
     }
