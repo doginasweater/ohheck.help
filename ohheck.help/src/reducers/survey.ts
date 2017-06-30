@@ -2,7 +2,7 @@
 import { FETCH_SURVEY, FETCH_SURVEY_FULFILLED } from '../constants/survey';
 
 interface ISurveyStore {
-    survey?: Survey;
+    survey: Survey | null;
     loading: boolean;
     choices: any;
     cards: any;

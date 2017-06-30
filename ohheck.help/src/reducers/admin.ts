@@ -1,4 +1,12 @@
-﻿import { Group, Subunit, Idol, Survey, Response, ResponseByCard, IAdminStore } from '../types/admin';
+﻿import {
+    Group,
+    Subunit,
+    Idol,
+    Survey,
+    Response,
+    ResponseByCard,
+    IAdminStore
+} from '../types/admin';
 
 import {
     SET_ERROR,

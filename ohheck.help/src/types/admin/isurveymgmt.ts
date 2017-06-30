@@ -2,8 +2,8 @@
 
 export interface ISurveyMgmt {
     surveyid: number;
-    survey?: Survey;
+    survey: Survey | null;
     surveyloading: boolean;
     editable: boolean;
-    newsurvey?: Survey;
+    newsurvey: Survey;
 }

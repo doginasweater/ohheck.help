@@ -60,21 +60,35 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         }
     }
 
-    renderQuestions = () => this.props.surveymgmt.newsurvey.questions
-        .sort(this.questionSort)
-        .map((item: Question, index: number) =>
-            <NewQuestion
-                key={index}
-                deleteQuestion={this.deleteQuestion}
-                question={item}
-                save={this.saveQuestion}
-                index={index}
-                numquestions={this.props.surveymgmt.newsurvey.questions.length}
-                shiftQuestion={this.moveQuestion} />);
+    renderQuestions = () => {
+        const { newsurvey } = this.props.surveymgmt;
+
+        if (newsurvey) {
+            return newsurvey.questions
+                .sort(this.questionSort)
+                .map((item: Question, index: number) =>
+                    <NewQuestion
+                        key={index}
+                        deleteQuestion={this.deleteQuestion}
+                        question={item}
+                        save={this.saveQuestion}
+                        index={index}
+                        numquestions={newsurvey.questions.length}
+                        shiftQuestion={this.moveQuestion} />);
+        } else {
+            return [];
+        }
+    }
 
     saveQuestion = (question: Question, index: number) => {
         const { dispatch } = this.props;
-        let { questions } = this.props.surveymgmt.newsurvey;
+        const { newsurvey } = this.props.surveymgmt;
+
+        if (!newsurvey) {
+            return;
+        }
+
+        let { questions } = newsurvey;
 
         questions[index] = question;
 
@@ -82,7 +96,13 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
     }
 
     moveQuestion = (movedQuestion: Question, index: number, up: boolean) => {
-        let { questions } = this.props.surveymgmt.newsurvey;
+        const { newsurvey } = this.props.surveymgmt;
+
+        if (!newsurvey) {
+            return;
+        }
+
+        let { questions } = newsurvey;
 
         const unmoved = questions[index];
 

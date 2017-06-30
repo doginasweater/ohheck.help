@@ -27,7 +27,7 @@ export default class Subunits extends React.Component<any, any> {
                     </Link>
                 </td>
                 <td>
-                    {item.idols.map((innerItem: Idol, innerIndex: number) =>
+                    {item.idols && item.idols.map((innerItem: Idol, innerIndex: number) =>
                         <div key={innerIndex} className="pure-u-1-3">
                             <Link to={{ pathname: `/dashboard/idols/${innerItem.id}`, state: innerItem }}>
                                 {innerItem.name}

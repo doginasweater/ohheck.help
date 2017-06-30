@@ -28,7 +28,7 @@ export default class Idols extends React.Component<any, any> {
                     <b>Name</b>: {item.name}<br />
                     <b>Group</b>: {item.group ? item.group.name : "None"}<br />
                     <b>Subunit</b>: {item.subunit ? item.subunit.name : "None"}<br />
-                    <b>Number of cards</b>: {item.cards.length}<br />
+                    <b>Number of cards</b>: {item.cards ? item.cards.length : 0}<br />
                 </Link>
             </div>
         </div>

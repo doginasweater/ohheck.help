@@ -4,17 +4,17 @@ export interface IAdminStore {
     error: boolean;
     errorMessage: string;
     authenticated: boolean;
-    groups?: Group[];
+    groups: Group[] | null;
     groupsloading: boolean;
-    subunits: Subunit[];
+    subunits: Subunit[] | null;
     subunitsloading: boolean;
-    idols?: Idol[];
+    idols: Idol[] | null;
     idolsloading: boolean;
-    surveys?: Survey[];
+    surveys: Survey[] | null;
     surveysloading: boolean;
     surveyid: number;
-    responses?: Response[];
+    responses: Response[] | null;
     responsesloading: boolean;
-    responsesbycard?: ResponseByCard[];
+    responsesbycard: ResponseByCard[] | null;
     responsesbycardloading: boolean;
 }

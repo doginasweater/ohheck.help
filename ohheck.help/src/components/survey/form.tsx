@@ -64,9 +64,13 @@ export default class Form extends React.Component<any, any> {
         }).then(response => {
             if (response.ok) {
                 return response.json();
+            } else {
+                throw new Error(response.statusText);
             }
         }).then(data => {
             window.location.href = '/thanks';
+        }).catch(error => {
+            console.error(error);
         });
     }
 

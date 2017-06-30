@@ -3,9 +3,9 @@ import { Group, Subunit } from '.';
 
 export class Idol extends Common {
     name: string;
-    group?: Group;
-    subunit?: Subunit;
-    cards?: Card[];
+    group: Group | null;
+    subunit: Subunit | null;
+    cards: Card[] | null;
 
     constructor(json) {
         super(json);

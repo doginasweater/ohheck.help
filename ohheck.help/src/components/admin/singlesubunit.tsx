@@ -55,19 +55,27 @@ export default class SingleSubunit extends React.Component<any, SingleSubunitSta
             .catch(ex => console.log(ex));
     }
 
-    renderIdols = () => this.state.subunit.idols.map((item: Idol, index: number) =>
-        <div className="pure-u-1-3" key={index}>
-            <Link to={{
-                pathname: `/dashboard/idols/${item.id}`,
-                state: item
-            }}>
-                {item.name}
-            </Link>
-            <p>
-                <b>Number of cards</b>: {item.cards.length}
-            </p>
-        </div>
-    ) 
+    renderIdols = () => {
+        const { idols } = this.state.subunit;
+
+        if (!idols) {
+            return [<div></div>];
+        }
+
+        return idols.map((item: Idol, index: number) =>
+            <div className="pure-u-1-3" key={index}>
+                <Link to={{
+                    pathname: `/dashboard/idols/${item.id}`,
+                    state: item
+                }}>
+                    {item.name}
+                </Link>
+                <p>
+                    <b>Number of cards</b>: {item.cards ? item.cards.length : 0}
+                </p>
+            </div>
+        );
+    }
 
     render() {
         if (this.state.loading) {
@@ -83,7 +91,7 @@ export default class SingleSubunit extends React.Component<any, SingleSubunitSta
         return (
             <div className="pure-u-1 slide-in">
                 <h3>{subunit.name}</h3>
-                {subunit.idols.length > 0 ? this.renderIdols() : <div>No data to display</div>}
+                {subunit.idols && subunit.idols.length > 0 ? this.renderIdols() : <div>No data to display</div>}
             </div>
         );
     }

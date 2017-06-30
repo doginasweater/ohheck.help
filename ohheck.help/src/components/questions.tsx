@@ -48,6 +48,10 @@ export default class Questions extends React.Component<QuestionsProps, any> {
                 } else {
                     return <Cards {...item} key={index} />;
                 }
+            default:
+                console.error('unknown question type:', item.type);
+
+                return <div>Unknown question type</div>;
         }
     });
 

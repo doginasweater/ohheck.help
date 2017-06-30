@@ -7,12 +7,20 @@ export default class Cards extends React.Component<Question, any> {
         super(props);
     }
 
-    renderCardList = () => this.props.answers[0].cards.map(
-        (item: Card, index: number) =>
-            <div className="pure-u-1-24" key={index}>
-                <a href={item.imageurl} target="_blank">{item.gameid}</a>
-            </div>
-    );
+    renderCardList = (): JSX.Element | JSX.Element[] => {
+        const cards = this.props.answers[0].cards;
+
+        if (cards) {
+            return cards.map(
+                (item: Card, index: number) =>
+                    <div className="pure-u-1-24" key={index}>
+                        <a href={item.imageurl} target="_blank">{item.gameid}</a>
+                    </div>
+            );
+        } else {
+            return <div></div>;
+        }
+    }
 
 
     render() {
