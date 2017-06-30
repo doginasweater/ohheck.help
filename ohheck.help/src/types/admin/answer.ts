@@ -4,7 +4,7 @@ export class Answer extends Common {
     text: string;
     value: string;
     sortorder: number;
-    cards?: Card[];
+    cards: Card[] | null;
 
     constructor(json) {
         super(json);

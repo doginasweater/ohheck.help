@@ -2,7 +2,7 @@
 import { Link, Route } from 'react-router-dom';
 import * as a from '.';
 import { connect } from 'react-redux';
-import { setError, dismissError, authenticate } from '../../actions/admin';
+import { setError, dismissError, authenticate } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))
 export default class Admin extends React.Component<any, any> {

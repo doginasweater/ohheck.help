@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { Question } from '../../../types/admin';
+import { Question } from 'types/admin';
 
 interface NewSingleLineProps {
     question: Question;
@@ -13,9 +13,11 @@ export default class NewSingleLine extends React.Component<NewSingleLineProps, a
     }
 
     handleChange = event => {
-        let q: Question = { ...this.props.question };
-        q.type = 'SingleLineText';
-        q.text = event.target.value;
+        const q: Question = {
+            ...this.props.question,
+            type: 'SingleLineText',
+            text: event.target.value
+        };
 
         this.props.save(q, this.props.index);
     }

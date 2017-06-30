@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
-import { Question } from '../../types/admin';
-import { Card } from '../../types';
+import { Question } from 'types/admin';
+import { Card } from 'types';
 
 export default class Cards extends React.Component<Question, any> {
     constructor(props) {

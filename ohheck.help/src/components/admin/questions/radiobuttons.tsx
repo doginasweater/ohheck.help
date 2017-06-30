@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { Question } from '../../../types/admin';
+import { Question } from 'types/admin';
 
 interface NewRadioButtonsProps {
     question: Question;

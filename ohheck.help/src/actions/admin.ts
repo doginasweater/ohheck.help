@@ -15,7 +15,7 @@
     RESPONSES_FETCH_FULFILLED,
     RESPONSES_BYCARD_FETCH,
     RESPONSES_BYCARD_FETCH_FULFILLED
-} from '../constants/admin';
+} from 'constants/admin';
 
 export const setError = error => ({ type: SET_ERROR, error });
 export const dismissError = () => ({ type: DISMISS_ERROR });

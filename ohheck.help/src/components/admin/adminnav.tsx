@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '../icon';
+import Icon from 'components/icon';
 import { connect } from 'react-redux';
-import { logout } from '../../actions/admin';
+import { logout } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))
 export default class AdminNav extends React.Component<any, any> {

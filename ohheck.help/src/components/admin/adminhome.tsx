@@ -1,9 +1,9 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
-import { Survey } from '../../types/admin';
-import Icon from '../icon';
-import { surveysFetch } from '../../actions/admin';
+import { Survey } from 'types/admin';
+import Icon from 'components/icon';
+import { surveysFetch } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))
 export default class AdminHome extends React.Component<any, any> {
