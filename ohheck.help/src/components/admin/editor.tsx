@@ -14,6 +14,12 @@ export default class Editor extends React.Component<any, any> {
 
     editorbox: HTMLTextAreaElement | null = null;
 
+    componentDidMount() {
+        if (this.props.value) {
+            this.resize();
+        }
+    }
+
     componentDidUpdate() {
         this.resize();
     }
@@ -29,13 +35,15 @@ export default class Editor extends React.Component<any, any> {
 
     display = () => {
         if (this.state.edit) {
-            return <textarea
-                name={this.props.name}
-                value={this.props.value}
-                onChange={this.props.handleChange}
-                onKeyDown={this.resize}
-                className="pure-u-1 box"
-                ref={ el => this.editorbox = el } />
+            return (
+                <textarea
+                    name={this.props.name}
+                    value={this.props.value}
+                    onChange={this.props.handleChange}
+                    onKeyDown={this.resize}
+                    className="pure-u-1 box"
+                    ref={el => this.editorbox = el} />
+            );
         } else {
             return (
                 <div className="box">
