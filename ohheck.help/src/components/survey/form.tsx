@@ -1,18 +1,24 @@
 ﻿import * as React from 'react';
 import 'whatwg-fetch';
-import Subunit from './subunit';
-import Idol from './idol';
-import { Survey } from '../../types/admin';
-import Questions from '../questions';
+import Subunit from 'components/survey/subunit';
+import Idol from 'components/survey/idol';
+import { Survey } from 'types/admin';
+import Questions from 'components/questions';
 import { Link } from 'react-router-dom';
-import Icon from '../icon';
+import Icon from 'components/icon';
 import { connect } from 'react-redux';
-import { fetchSurvey } from '../../actions/survey';
+import { fetchSurvey } from 'actions/survey';
+import { IReduxProps, ISurveyStore } from 'types/redux';
+import { setCard, setChoice } from 'actions/survey';
 
 let ReactMarkdown: any = require('react-markdown');
 
-@connect(state => ({form: state.survey}))
-export default class Form extends React.Component<any, any> {
+interface IFormProps extends IReduxProps {
+    form: ISurveyStore;
+}
+
+@connect(state => ({ form: state.survey }))
+export default class Form extends React.Component<IFormProps, any> {
     constructor() {
         super();
 
@@ -28,29 +34,29 @@ export default class Form extends React.Component<any, any> {
         dispatch(fetchSurvey(this.props.match.params.id));
     }
 
-    handleClick = id => {
-        this.setState({
-            cards: {
-                ...this.state.cards,
-                [id]: !this.state.cards[id]
-            }
-        });
+    handleClick = (id: number): void => {
+        const { dispatch, form } = this.props;
+
+        dispatch(setCard(id, !form.cards[id]));
     }
 
-    handleChange = event => {
-        this.setState({
-            choices: {
-                ...this.state.choices,
-                [event.target.name]: event.target.value
-            }
-        });
+    handleChange = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+        const { dispatch, form } = this.props;
+
+        dispatch(setChoice(event.currentTarget.name, event.currentTarget.value));
     }
 
     submit = event => {
         event.preventDefault();
 
+        const { survey } = this.props.form;
+
+        if (!survey) {
+            return;
+        }
+
         const toSubmit = {
-            surveyid: this.props.form.survey.id,
+            surveyid: survey.id,
             choices: this.state.choices,
             cards: this.state.cards
         };
@@ -75,7 +81,7 @@ export default class Form extends React.Component<any, any> {
     }
 
     render() {
-        if (this.props.loading) {
+        if (this.props.form.loading) {
             return (
                 <div className="pure-u-1">
                     loading...
@@ -83,20 +89,20 @@ export default class Form extends React.Component<any, any> {
             );
         }
 
-        if (!this.props.form.survey || this.props.error) {
+        const { form } = this.props;
+
+        if (!form || !form.survey || form.error) {
             return (
                 <div className="pure-u-1">
                     Oh no! There was an error loading the survey :(
                 </div>
-            )
+            );
         }
 
-        const { survey } = this.props.form;
-
-        if (survey && !survey.active) {
+        if (form.survey && !form.survey.active) {
             return (
                 <div className="pure-u-1">
-                    <h1>{survey.title}</h1>
+                    <h1>{form.survey.title}</h1>
                     <div>
                         Sorry! This survey is not active. Do you want to try going <Link to="/">home</Link>?
                     </div>
@@ -106,16 +112,16 @@ export default class Form extends React.Component<any, any> {
 
         return (
             <div className="pure-u-1">
-                <h1>{survey.title}</h1>
-                <ReactMarkdown escapeHtml={true} source={survey.comments} />
+                <h1>{form.survey.title}</h1>
+                <ReactMarkdown escapeHtml={true} source={form.survey.comments} />
                 <form name="survey" className="pure-form pure-form-stacked">
                     <Questions
-                        questions={survey.questions}
+                        questions={form.survey.questions}
                         ispublic={true}
                         handleClick={this.handleClick}
                         handleChange={this.handleChange}
-                        choices={this.state.choices}
-                        cards={this.state.cards} />
+                        choices={form.choices}
+                        cards={form.cards} />
                     <p className="center">
                         <button className="pure-button button-primary" onSubmit={this.submit} onClick={this.submit}>
                             <Icon icon="done" /> submit!

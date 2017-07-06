@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { Question } from '../../types/admin';
+import { Question } from 'types/admin';
 
 export default class SingleLineText extends React.Component<any, any> {
     constructor(props) {

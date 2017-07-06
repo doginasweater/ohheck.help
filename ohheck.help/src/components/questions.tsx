@@ -9,8 +9,8 @@ interface QuestionsProps {
     ispublic: boolean;
     choices?: any;
     cards?: any;
-    handleChange?: any;
-    handleClick?: any;
+    handleChange: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    handleClick: (id: number) => void;
 }
 
 export default class Questions extends React.Component<QuestionsProps, any> {

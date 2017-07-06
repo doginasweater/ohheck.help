@@ -1,14 +1,12 @@
-﻿import { Survey } from '../types/admin/survey';
-import { FETCH_SURVEY, FETCH_SURVEY_FULFILLED } from '../constants/survey';
-
-interface ISurveyStore {
-    survey: Survey | null;
-    loading: boolean;
-    choices: any;
-    cards: any;
-    error: boolean;
-    message: string;
-}
+﻿import { Survey } from 'types/admin/survey';
+import { ISurveyStore } from 'types/redux';
+import {
+    FETCH_SURVEY,
+    FETCH_SURVEY_FULFILLED,
+    SET_CARD,
+    SET_CHOICE,
+    DISPLAY_CARD
+} from 'constants/survey';
 
 const SurveyInitial: ISurveyStore = {
     survey: null,
@@ -16,7 +14,8 @@ const SurveyInitial: ISurveyStore = {
     choices: {},
     cards: {},
     error: false,
-    message: ''
+    message: '',
+    displayedcards: []
 };
 
 export function survey(state = SurveyInitial, action) {
@@ -30,7 +29,31 @@ export function survey(state = SurveyInitial, action) {
             return {
                 ...state,
                 loading: false,
-                survey: new Survey(action.survey)
+                survey: action.survey
+            };
+        case SET_CHOICE:
+            return {
+                ...state,
+                choices: {
+                    ...state.choices,
+                    [action.name]: action.value
+                }
+            };
+        case SET_CARD:
+            return {
+                ...state,
+                cards: {
+                    ...state.cards,
+                    [action.id]: action.status
+                }
+            };
+        case DISPLAY_CARD:
+            return {
+                ...state,
+                displayedcards: [
+                    ...state.displayedcards,
+                    action.card
+                ]
             };
         default:
             return state;
