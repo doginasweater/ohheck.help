@@ -13,6 +13,8 @@
     <None Remove="src\components\common\mdown.tsx" />
     <None Remove="src\constants\index.ts" />
     <None Remove="src\types\redux\isurveystore.ts" />
+    <None Remove="src\types\survey\index.ts" />
+    <None Remove="src\types\survey\surveysubmission.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
@@ -45,5 +47,7 @@
     <TypeScriptCompile Include="src\components\common\mdown.tsx" />
     <TypeScriptCompile Include="src\constants\index.ts" />
     <TypeScriptCompile Include="src\types\redux\isurveystore.ts" />
+    <TypeScriptCompile Include="src\types\survey\index.ts" />
+    <TypeScriptCompile Include="src\types\survey\surveysubmission.ts" />
   </ItemGroup>
 </Project>

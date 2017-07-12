@@ -48,7 +48,7 @@ export default class AllCards extends React.Component<any, AllCardsState> {
     renderCards = () => this.state.cards.map(
         (item: Card, index: number) =>
             <div className="pure-u-1-4" key={index}>
-                <img src={item.imageurl} style={{ width: '250px', height: '350px' }} />
+                <img src={item.imageurl} className="card" />
             </div>
     )
 

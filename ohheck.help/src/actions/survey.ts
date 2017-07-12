@@ -3,7 +3,9 @@
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
     SET_CHOICE,
-    DISPLAY_CARD
+    DISPLAY_CARD,
+    SUBMIT_SURVEY,
+    SUBMIT_SURVEY_FULFILLED
 } from 'constants/survey';
 
 export const fetchSurvey = slug => ({ type: FETCH_SURVEY, slug });

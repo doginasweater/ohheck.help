@@ -3,8 +3,8 @@
 export interface ISurveyStore {
     survey: Survey | null;
     loading: boolean;
-    choices: any;
-    cards: any;
+    choices: Map<number, string>;
+    cards: Map<number, boolean>;
     error: boolean;
     message: string;
     displayedcards: JSX.Element[];

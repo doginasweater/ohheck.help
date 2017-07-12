@@ -1,6 +1,5 @@
 ﻿import Form from './form';
 import Group from './group';
-import Idol from './idol';
 import MultilineText from './multilinetext';
 import PublicCards from './publiccards';
 import SelectBox from './selectbox';
@@ -11,7 +10,6 @@ import Thanks from './thanks';
 export {
     Form,
     Group,
-    Idol,
     MultilineText,
     PublicCards,
     SelectBox,

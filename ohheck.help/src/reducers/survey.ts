@@ -11,8 +11,8 @@ import {
 const SurveyInitial: ISurveyStore = {
     survey: null,
     loading: true,
-    choices: {},
-    cards: {},
+    choices: new Map<number, string>(),
+    cards: new Map<number, boolean>(),
     error: false,
     message: '',
     displayedcards: []
@@ -34,18 +34,12 @@ export function survey(state = SurveyInitial, action) {
         case SET_CHOICE:
             return {
                 ...state,
-                choices: {
-                    ...state.choices,
-                    [action.name]: action.value
-                }
+                choices: state.choices.set(action.name, action.value)
             };
         case SET_CARD:
             return {
                 ...state,
-                cards: {
-                    ...state.cards,
-                    [action.id]: action.status
-                }
+                cards: state.cards.set(action.id, action.status)
             };
         case DISPLAY_CARD:
             return {

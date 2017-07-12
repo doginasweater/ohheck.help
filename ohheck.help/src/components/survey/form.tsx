@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
-import 'whatwg-fetch';
-import Subunit from 'components/survey/subunit';
-import Idol from 'components/survey/idol';
+import { Subunit } from 'components/survey';
+import { Idol } from 'components/common';
 import { Survey } from 'types/admin';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,6 +8,7 @@ import { fetchSurvey } from 'actions/survey';
 import { IReduxProps, ISurveyStore } from 'types/redux';
 import { setCard, setChoice } from 'actions/survey';
 import { Icon, MDown, Questions } from 'components/common';
+import 'whatwg-fetch';
 
 interface IFormProps extends IReduxProps {
     form: ISurveyStore;
@@ -34,7 +34,7 @@ export default class Form extends React.Component<IFormProps, any> {
     handleClick = (id: number): void => {
         const { dispatch, form } = this.props;
 
-        dispatch(setCard(id, !form.cards[id]));
+        dispatch(setCard(id, !form.cards.get(id)));
     }
 
     handleChange = (event: React.KeyboardEvent<HTMLInputElement>): void => {

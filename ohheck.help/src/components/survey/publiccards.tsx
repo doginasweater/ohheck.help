@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'types/commontypes';
-import { Idol } from 'components/survey';
+import { Idol } from 'components/common';
 import * as Rx from 'rxjs';
 import { displayCard } from 'actions/survey';
 

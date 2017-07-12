@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
-import { Idol } from '../survey';
-import { responsesByCardFetch } from '../../actions/admin';
+import { Idol } from 'components/common';
+import { responsesByCardFetch } from 'actions/admin';
 
 @connect(state => ({admin: state.admin}))
 export default class SurveysByCard extends React.Component<any, any> {
