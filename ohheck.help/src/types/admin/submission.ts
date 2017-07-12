@@ -1,6 +1,7 @@
-﻿import { Common, Choice } from '..';
+﻿import { ModelBase } from '../commontypes/modelbase';
+import { Choice } from '../commontypes/choice';
 
-export class Submission extends Common {
+export class Submission extends ModelBase {
     survey: number;
     submitter: string;
     choices: Choice[];

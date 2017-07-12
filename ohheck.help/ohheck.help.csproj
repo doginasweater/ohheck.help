@@ -9,7 +9,10 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="src\components\common\index.ts" />
+    <None Remove="src\components\common\mdown.tsx" />
     <None Remove="src\constants\index.ts" />
+    <None Remove="src\types\redux\isurveystore.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
@@ -38,6 +41,9 @@
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\components\common\index.ts" />
+    <TypeScriptCompile Include="src\components\common\mdown.tsx" />
     <TypeScriptCompile Include="src\constants\index.ts" />
+    <TypeScriptCompile Include="src\types\redux\isurveystore.ts" />
   </ItemGroup>
 </Project>

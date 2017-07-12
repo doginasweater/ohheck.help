@@ -1,12 +1,10 @@
 ﻿import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link, Route } from 'react-router-dom';
-import Home from './components/home';
-import Admin from './components/admin/admin';
-import Thanks from './components/survey/thanks';
-import Survey from './components/survey/form';
+import { Home, Icon } from 'components/common';
+import { Admin } from 'components/admin';
+import { Form, Thanks } from 'components/survey';
 import './scss/app.scss';
-import Icon from './components/icon';
 
 export default <div className="main pure-g">
     <div className="pure-u-1">
@@ -22,7 +20,7 @@ export default <div className="main pure-g">
     <Route exact path="/" component={Home} />
     <Route path="/thanks" component={Thanks} />
     <Route path="/dashboard" component={Admin} />
-    <Route path="/survey/:id" component={Survey} />
+    <Route path="/survey/:id" component={Form} />
 
     <footer className="pure-u-1">
         <div className="pull-right small">

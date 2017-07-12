@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Card } from 'types/card';
+import { Card } from 'types/commontypes';
 import 'whatwg-fetch';
 
 interface AllCardsState {

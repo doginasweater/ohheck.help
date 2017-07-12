@@ -1,12 +1,12 @@
-﻿import {
+﻿import { Idol } from 'types/commontypes';
+import { IAdminStore } from 'types/redux';
+import {
     Group,
     Subunit,
-    Idol,
     Survey,
     Response,
-    ResponseByCard,
-    IAdminStore
-} from '../types/admin';
+    ResponseByCard
+} from 'types/admin';
 
 import {
     SET_ERROR,
@@ -25,7 +25,7 @@ import {
     RESPONSES_FETCH_FULFILLED,
     RESPONSES_BYCARD_FETCH,
     RESPONSES_BYCARD_FETCH_FULFILLED
-} from '../constants/admin';
+} from 'constants/admin';
 
 const AdminInitial: IAdminStore = {
     error: false,

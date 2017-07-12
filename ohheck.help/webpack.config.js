@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const path = require('path');
 
 module.exports = env => {
@@ -28,7 +28,7 @@ module.exports = env => {
         module: {
             rules: [
                 { test: /\.ts(x?)?$/, include: /src/, use: { loader: 'babel-loader', options: { cacheDirectory: true } } },
-                { test: /\.tsx?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
+                { test: /\.ts(x?)?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
                 {
                     test: /\.(scss|css)$/,
                     use: [

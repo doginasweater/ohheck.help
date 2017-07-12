@@ -1,7 +1,5 @@
 ﻿import * as React from 'react';
-import Icon from 'components/icon';
-
-let ReactMarkdown: any = require('react-markdown');
+import { Icon, MDown } from 'components/common';
 
 export default class Editor extends React.Component<any, any> {
     constructor(props) {
@@ -48,7 +46,7 @@ export default class Editor extends React.Component<any, any> {
             return (
                 <div className="box">
                     <b>Preview</b>
-                    <ReactMarkdown source={this.props.value} escapeHtml={true} />
+                    <MDown text={this.props.value} />
                 </div>
             );
         }

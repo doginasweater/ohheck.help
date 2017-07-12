@@ -1,4 +1,4 @@
-﻿import { Survey } from '.';
+﻿import { Survey } from 'types/admin';
 
 export interface ISurveyMgmt {
     surveyid: number;

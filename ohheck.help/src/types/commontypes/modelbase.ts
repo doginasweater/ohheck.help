@@ -1,4 +1,4 @@
-﻿export class Common {
+﻿export class ModelBase {
     id: number;
     created: Date;
     createdby: string;

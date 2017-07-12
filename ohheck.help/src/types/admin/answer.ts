@@ -1,6 +1,7 @@
-﻿import { Common, Card } from '..';
+﻿import { ModelBase } from '../commontypes/modelbase';
+import { Card } from '../commontypes/card';
 
-export class Answer extends Common {
+export class Answer extends ModelBase {
     text: string;
     value: string;
     sortorder: number;

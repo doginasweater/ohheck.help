@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { Survey, Question } from '../../types/admin';
-import { surveyFetch, editSurvey, editSurveyStop } from '../../actions/surveymgmt';
-import Questions from '../questions';
+import { Survey, Question } from 'types/admin';
+import { surveyFetch, editSurvey, editSurveyStop } from 'actions/surveymgmt';
+import { Questions, MDown } from 'components/common';
 
 let ReactMarkdown: any = require('react-markdown');
 
@@ -35,12 +35,6 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         const { dispatch } = this.props;
 
         dispatch(surveyFetch(this.props.match.params.id));
-    }
-
-    createMarkup = () => {
-        return {
-            __html: this.props.surveymgmt.survey.comments
-        };
     }
 
     handleClick = id => {
@@ -110,7 +104,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
                     </div>
                     <div className="pure-u-1">
                         <b>Comments</b>:
-                        <ReactMarkdown escapeHtml={true} source={survey.comments} />
+                        <MDown text={survey.comments} />
                     </div>
                     <div className="pure-u-1">
                         <form className="pure-form pure-form-stacked">

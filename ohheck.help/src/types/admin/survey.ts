@@ -1,8 +1,9 @@
-﻿import { Common } from '..';
-import { Question } from '.';
-import { Submission } from '.';
+﻿import { ModelBase } from '../commontypes/modelbase';
+import { Card } from '../commontypes/card';
+import { Question } from './question';
+import { Submission } from './submission';
 
-export class Survey extends Common {
+export class Survey extends ModelBase {
     name: string;
     title: string;
     active: boolean;

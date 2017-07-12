@@ -1,7 +1,7 @@
-﻿import { Common } from '..';
-import { Answer } from './answer';
+﻿import { ModelBase } from '../commontypes/modelbase';
+import { Answer } from 'types/admin';
 
-export class Question extends Common {
+export class Question extends ModelBase {
     text: string;
     type: string;
     sortorder: number;

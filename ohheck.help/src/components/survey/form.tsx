@@ -3,15 +3,12 @@ import 'whatwg-fetch';
 import Subunit from 'components/survey/subunit';
 import Idol from 'components/survey/idol';
 import { Survey } from 'types/admin';
-import Questions from 'components/questions';
 import { Link } from 'react-router-dom';
-import Icon from 'components/icon';
 import { connect } from 'react-redux';
 import { fetchSurvey } from 'actions/survey';
 import { IReduxProps, ISurveyStore } from 'types/redux';
 import { setCard, setChoice } from 'actions/survey';
-
-let ReactMarkdown: any = require('react-markdown');
+import { Icon, MDown, Questions } from 'components/common';
 
 interface IFormProps extends IReduxProps {
     form: ISurveyStore;
@@ -113,7 +110,7 @@ export default class Form extends React.Component<IFormProps, any> {
         return (
             <div className="pure-u-1">
                 <h1>{form.survey.title}</h1>
-                <ReactMarkdown escapeHtml={true} source={form.survey.comments} />
+                <MDown text={form.survey.comments} />
                 <form name="survey" className="pure-form pure-form-stacked">
                     <Questions
                         questions={form.survey.questions}

@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { Question } from 'types/admin';
-import { Card } from 'types';
+import { Card } from 'types/commontypes';
 
-export default class Cards extends React.Component<Question, any> {
+export class Cards extends React.Component<Question, any> {
     constructor(props) {
         super(props);
     }

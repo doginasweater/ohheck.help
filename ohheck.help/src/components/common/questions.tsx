@@ -1,8 +1,7 @@
 ﻿import * as React from 'react';
-import { Survey, Question } from '../types/admin';
-import { SingleLineText, MultilineText, SelectBox, PublicCards } from './survey';
-import { Cards } from './admin';
-
+import { Survey, Question } from 'types/admin';
+import { SingleLineText, MultilineText, SelectBox, PublicCards } from 'components/survey';
+import { Cards } from 'components/common';
 
 interface QuestionsProps {
     questions: Question[];
@@ -13,7 +12,7 @@ interface QuestionsProps {
     handleClick: (id: number) => void;
 }
 
-export default class Questions extends React.Component<QuestionsProps, any> {
+export class Questions extends React.Component<QuestionsProps, any> {
     constructor(props) {
         super(props);
     }

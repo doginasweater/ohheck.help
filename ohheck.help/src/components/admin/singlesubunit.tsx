@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
-import { Subunit, Idol, Group } from '../../types/admin';
+import { Subunit, Group } from 'types/admin';
+import { Idol } from 'types/commontypes';
 import { Link } from 'react-router-dom';
 
 interface SingleSubunitState {

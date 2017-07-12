@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Question } from 'types/admin';
-import Icon from 'components/icon';
+import { Icon } from 'components/common';
 
 interface NewCheckboxesProps {
     question: Question;

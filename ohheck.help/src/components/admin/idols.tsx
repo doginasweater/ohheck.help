@@ -1,8 +1,9 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Idol, Subunit, Group } from '../../types/admin';
-import { idolsFetch } from '../../actions/admin';
+import { Subunit, Group } from 'types/admin';
+import { Idol } from 'types/commontypes';
+import { idolsFetch } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))
 export default class Idols extends React.Component<any, any> {

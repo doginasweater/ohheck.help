@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Link } from 'react-router-dom';
-import Icon from 'components/icon';
+import { Icon } from 'components/common';
 import { connect } from 'react-redux';
 import { logout } from 'actions/admin';
 

@@ -1,11 +1,11 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { Survey, Question, Answer, IAdminStore, ISurveyMgmt } from 'types/admin';
-import { IReduxProps } from 'types/redux';
+import { Survey, Question, Answer } from 'types/admin';
+import { IAdminStore, ISurveyMgmt, IReduxProps } from 'types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
 import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle } from 'actions/surveymgmt';
-import Icon from 'components/icon';
+import { Icon } from 'components/common';
 
 interface NewSurveyProps extends IReduxProps {
     admin: IAdminStore;

@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { Survey } from 'types/admin';
-import Icon from 'components/icon';
+import { Icon } from 'components/common';
 import { surveysFetch } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))

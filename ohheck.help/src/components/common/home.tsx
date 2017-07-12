@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 
-export default class Home extends React.Component<any, any> {
+export class Home extends React.Component<any, any> {
     constructor() {
         super();
     }

@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { AnswerTypes, AnswerType, Question } from 'types/admin';
 import { CardChooser, Checkboxes, NewMultiline, NewRadioButtons, NewSelectBox, NewSingleLine } from '.';
-import Icon from 'components/icon';
+import { Icon } from 'components/common';
 
 interface NewQuestionProps {
     question: Question;

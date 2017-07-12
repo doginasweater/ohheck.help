@@ -2,4 +2,4 @@
 
 const Icon = ({ icon }) => <i className="material-icons">{icon}</i>;
 
-export default Icon;
+export { Icon };

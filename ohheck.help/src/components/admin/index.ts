@@ -1,39 +1,39 @@
-﻿import AdminHome from './adminhome';
+﻿import Admin from './admin';
+import AdminHome from './adminhome';
 import AdminNav from './adminnav';
-import Responses from './responses';
-import SurveysByCard from './surveysbycard';
-import Login from './login';
-import Groups from './groups';
-import Subunits from './subunits';
-import Idols from './idols';
 import AllCards from './allcards';
-import SurveyView from './surveyview';
-import NewSurvey from './newsurvey';
-import SingleGroup from './singlegroup';
-import SingleSubunit from './singlesubunit';
-import SingleIdol from './singleidol';
-import SingleCard from './singlecard';
-import Cards from './cards';
-import Settings from './settings';
 import Editor from './editor';
+import Groups from './groups';
+import Idols from './idols';
+import Login from './login';
+import NewSurvey from './newsurvey';
+import Responses from './responses';
+import Settings from './settings';
+import SingleCard from './singlecard';
+import SingleGroup from './singlegroup';
+import SingleIdol from './singleidol';
+import SingleSubunit from './singlesubunit';
+import Subunits from './subunits';
+import SurveysByCard from './surveysbycard';
+import SurveyView from './surveyview';
 
 export {
+    Admin,
     AdminHome,
     AdminNav,
-    Responses,
-    SurveysByCard,
-    Login,
-    Groups,
-    Subunits,
-    Idols,
     AllCards,
-    SurveyView,
+    Editor,
+    Groups,
+    Idols,
+    Login,
     NewSurvey,
-    SingleGroup,
-    SingleSubunit,
-    SingleIdol,
-    SingleCard,
-    Cards,
+    Responses,
     Settings,
-    Editor
+    SingleCard,
+    SingleGroup,
+    SingleIdol,
+    SingleSubunit,
+    Subunits,
+    SurveysByCard,
+    SurveyView
 };

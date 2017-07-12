@@ -1,4 +1,5 @@
-﻿import { Group, Subunit, Idol, Survey, ResponseByCard } from '.';
+﻿import { Group, Subunit, Survey, ResponseByCard } from 'types/admin';
+import { Idol } from 'types/commontypes';
 
 export interface IAdminStore {
     error: boolean;

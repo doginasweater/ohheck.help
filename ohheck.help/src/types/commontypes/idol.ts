@@ -1,7 +1,8 @@
-﻿import { Common, Card } from '..';
-import { Group, Subunit } from '.';
+﻿import { ModelBase } from './modelbase';
+import { Card } from './card';
+import { Group, Subunit } from 'types/admin';
 
-export class Idol extends Common {
+export class Idol extends ModelBase {
     name: string;
     group: Group | null;
     subunit: Subunit | null;

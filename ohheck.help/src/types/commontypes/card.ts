@@ -1,6 +1,6 @@
-﻿import { Common } from './common';
+﻿import { ModelBase } from './modelbase';
 
-export class Card extends Common {
+export class Card extends ModelBase {
     gameid: number;
     rarity: string;
     attribute: string;

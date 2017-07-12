@@ -1,7 +1,8 @@
-﻿import { Common } from '..';
-import { Idol, Subunit } from '.';
+﻿import { ModelBase } from '../commontypes/modelbase';
+import { Idol } from '../commontypes/idol';
+import { Subunit } from './subunit';
 
-export class Group extends Common {
+export class Group extends ModelBase {
     name: string;
     subunits: Subunit[];
     idols: Idol[];

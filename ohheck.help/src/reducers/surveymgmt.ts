@@ -1,4 +1,5 @@
-﻿import { Survey, Question, ISurveyMgmt } from '../types/admin';
+﻿import { Survey, Question } from 'types/admin';
+import { ISurveyMgmt } from 'types/redux';
 
 import { 
     SURVEY_FETCH,

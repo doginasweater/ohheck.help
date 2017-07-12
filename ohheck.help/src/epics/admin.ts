@@ -1,4 +1,5 @@
-﻿import { Group, Subunit, Idol, Survey, Response, ResponseByCard } from '../types/admin';
+﻿import { Group, Subunit, Survey, Response, ResponseByCard } from 'types/admin';
+import { Idol } from 'types/commontypes';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import 'rxjs';
 

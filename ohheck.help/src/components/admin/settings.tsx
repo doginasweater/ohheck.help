@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Editor } from '.';
-import Icon from '../icon';
+import { Icon } from 'components/common';
 
 export default class Settings extends React.Component<any, any> {
     constructor(props) {

@@ -1,8 +1,9 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { Group, Subunit, Idol } from '../../types/admin';
+import { Group, Subunit } from 'types/admin';
+import { Idol } from 'types/commontypes';
 import { Link } from 'react-router-dom';
-import { groupsFetch } from '../../actions/admin';
+import { groupsFetch } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))
 export default class Groups extends React.Component<any, any> {
