@@ -1,5 +1,9 @@
 ﻿import { combineEpics } from 'redux-observable';
-import { fetchSurveyEpic } from './survey';
+
+import {
+    fetchSurveyEpic,
+    submitSurveyEpic
+} from './survey';
 
 import {
     fetchGroupsEpic,
@@ -22,5 +26,6 @@ export const rootEpic = combineEpics(
     fetchResponsesEpic,
     fetchResponsesByCardEpic,
     fetchMgmtSurveyEpic,
-    fetchSurveyEpic
+    fetchSurveyEpic,
+    submitSurveyEpic
 );

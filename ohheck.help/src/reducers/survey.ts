@@ -1,11 +1,13 @@
-﻿import { Survey } from 'types/admin/survey';
+﻿import { Survey } from 'types/admin';
 import { ISurveyStore } from 'types/redux';
 import {
     FETCH_SURVEY,
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
     SET_CHOICE,
-    DISPLAY_CARD
+    DISPLAY_CARD,
+    SUBMIT_SURVEY,
+    SUBMIT_SURVEY_FULFILLED
 } from 'constants/survey';
 
 const SurveyInitial: ISurveyStore = {
@@ -15,10 +17,11 @@ const SurveyInitial: ISurveyStore = {
     cards: new Map<number, boolean>(),
     error: false,
     message: '',
-    displayedcards: []
+    displayedcards: [],
+    submitting: false
 };
 
-export function survey(state = SurveyInitial, action) {
+export const survey = (state = SurveyInitial, action): ISurveyStore => {
     switch (action.type) {
         case FETCH_SURVEY:
             return {
@@ -48,6 +51,18 @@ export function survey(state = SurveyInitial, action) {
                     ...state.displayedcards,
                     action.card
                 ]
+            };
+        case SUBMIT_SURVEY:
+            return {
+                ...state,
+                submitting: true,
+                submitresponse: ''
+            };
+        case SUBMIT_SURVEY_FULFILLED:
+            return {
+                ...state,
+                submitting: false,
+                submitresponse: action.response
             };
         default:
             return state;

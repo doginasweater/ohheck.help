@@ -4,10 +4,11 @@ import { Idol } from 'components/common';
 import { Survey } from 'types/admin';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchSurvey } from 'actions/survey';
+import { fetchSurvey, submitSurvey } from 'actions/survey';
 import { IReduxProps, ISurveyStore } from 'types/redux';
 import { setCard, setChoice } from 'actions/survey';
 import { Icon, MDown, Questions } from 'components/common';
+import { SurveySubmission } from 'types/survey';
 import 'whatwg-fetch';
 
 interface IFormProps extends IReduxProps {
@@ -46,35 +47,19 @@ export default class Form extends React.Component<IFormProps, any> {
     submit = event => {
         event.preventDefault();
 
-        const { survey } = this.props.form;
+        const { dispatch, form } = this.props;
 
-        if (!survey) {
+        if (!form.survey) {
             return;
         }
 
-        const toSubmit = {
-            surveyid: survey.id,
-            choices: this.state.choices,
-            cards: this.state.cards
+        const toSubmit: SurveySubmission = {
+            surveyid: form.survey.id,
+            choices: form.choices,
+            cards: form.cards
         };
 
-        fetch('/api/submit', {
-            method: 'POST',
-            body: JSON.stringify(toSubmit),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(response.statusText);
-            }
-        }).then(data => {
-            window.location.href = '/thanks';
-        }).catch(error => {
-            console.error(error);
-        });
+        dispatch(submitSurvey(toSubmit));
     }
 
     render() {

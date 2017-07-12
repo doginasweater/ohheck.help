@@ -8,4 +8,6 @@ export interface ISurveyStore {
     error: boolean;
     message: string;
     displayedcards: JSX.Element[];
+    submitting: boolean;
+    submitresponse?: string;
 }
