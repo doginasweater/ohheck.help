@@ -22,7 +22,7 @@ export const fetchSurveyEpic = action$ =>
 export const submitSurveyEpic = action$ =>
     action$.ofType(SUBMIT_SURVEY)
         .mergeMap(action =>
-            ajax.post('/api/submit', { response: action.submission }, { 'Content-Type': 'application/json' })
+            ajax.post('/api/submit', action.submission, { 'Content-Type': 'application/json' })
                 .map(response => {
                     const result = JSON.parse(response.responseText);
 

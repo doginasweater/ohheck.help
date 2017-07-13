@@ -19,11 +19,6 @@ interface IFormProps extends IReduxProps {
 export default class Form extends React.Component<IFormProps, any> {
     constructor() {
         super();
-
-        this.state = {
-            choices: {},
-            cards: {},
-        };
     }
 
     componentDidMount() {
@@ -53,13 +48,16 @@ export default class Form extends React.Component<IFormProps, any> {
             return;
         }
 
+        console.log('choices', form.choices);
+        console.log('cards', form.cards);
+
         const toSubmit: SurveySubmission = {
             surveyid: form.survey.id,
             choices: form.choices,
             cards: form.cards
         };
 
-        dispatch(submitSurvey(toSubmit));
+        //dispatch(submitSurvey(toSubmit));
     }
 
     render() {

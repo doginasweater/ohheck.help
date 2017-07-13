@@ -28,6 +28,7 @@ namespace ohheck.help.Controllers
                 .SingleOrDefault(x => x.slug == id.ToLower())
                 .Prettify(false);
 
+        [HttpPost]
         public async Task<Result> Submit([FromBody] SurveySubmission response)
         {
             var survey = await _db.Surveys
