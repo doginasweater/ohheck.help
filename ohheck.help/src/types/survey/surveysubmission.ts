@@ -1,7 +1,7 @@
 ﻿export class SurveySubmission {
     surveyid: number;
-    choices: Map<number, string>;
-    cards: Map<number, boolean>;
+    choices: { [id: number]: string; }
+    cards: { [id: number]: boolean; }
 
     constructor(data) {
         this.surveyid = data.surveyid;

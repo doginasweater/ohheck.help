@@ -30,7 +30,7 @@ export default class Form extends React.Component<IFormProps, any> {
     handleClick = (id: number): void => {
         const { dispatch, form } = this.props;
 
-        dispatch(setCard(id, !form.cards.get(id)));
+        dispatch(setCard(id, !form.cards[id]));
     }
 
     handleChange = (event: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -57,7 +57,7 @@ export default class Form extends React.Component<IFormProps, any> {
             cards: form.cards
         };
 
-        //dispatch(submitSurvey(toSubmit));
+        dispatch(submitSurvey(toSubmit));
     }
 
     render() {

@@ -11,7 +11,7 @@ interface IIdolProps {
     handleClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-@connect((state, ownProps) => ({ selected: state.survey.cards.get(ownProps.name) }))
+@connect((state, ownProps) => ({ selected: state.survey.cards[ownProps.name] }))
 export class Idol extends React.Component<IIdolProps, any> {
     constructor(props) {
         super(props);
