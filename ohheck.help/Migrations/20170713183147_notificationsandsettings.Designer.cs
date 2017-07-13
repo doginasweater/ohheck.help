@@ -8,9 +8,10 @@ using ohheck.help.Models.Data;
 namespace ohheck.help.Migrations
 {
     [DbContext(typeof(HeckingContext))]
-    partial class HeckingContextModelSnapshot : ModelSnapshot
+    [Migration("20170713183147_notificationsandsettings")]
+    partial class notificationsandsettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

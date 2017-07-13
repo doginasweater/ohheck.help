@@ -21,7 +21,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         super(props);
     }
 
-    handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
+    handleChange = (event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): void => {
         const { dispatch } = this.props;
 
         switch (event.currentTarget.name) {

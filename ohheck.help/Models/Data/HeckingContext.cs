@@ -63,7 +63,10 @@ namespace ohheck.help.Models.Data
         public virtual DbSet<ChoiceAnswer> ChoiceAnswers { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Idol> Idols { get; set; }
+        public virtual DbSet<NotificationAction> NotificationActions { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<Submission> Submissions { get; set; }
         public virtual DbSet<Subunit> Subunits { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }

@@ -1,7 +1,14 @@
 ﻿import * as React from 'react';
 import { Icon, MDown } from 'components/common';
 
-export default class Editor extends React.Component<any, any> {
+interface IEditorProps {
+    name: string;
+    value: string;
+    disabled?: boolean;
+    handleChange: (event: React.FormEvent<HTMLTextAreaElement>) => void;
+}
+
+export default class Editor extends React.Component<IEditorProps, any> {
     constructor(props) {
         super(props);
 
@@ -40,6 +47,7 @@ export default class Editor extends React.Component<any, any> {
                     onChange={this.props.handleChange}
                     onKeyDown={this.resize}
                     className="pure-u-1 box"
+                    disabled={this.props.disabled}
                     ref={el => this.editorbox = el} />
             );
         } else {
@@ -76,11 +84,13 @@ export default class Editor extends React.Component<any, any> {
                     {this.display()}
                 </div>
                 <button className="pure-button button-primary"
+                    disabled={this.props.disabled}
                     onClick={this.setEdit}
                     onSubmit={event => event.preventDefault()}> 
                     <Icon icon="edit" /> Edit
                 </button>
                 <button className="pure-button button-primary"
+                    disabled={this.props.disabled}
                     onClick={this.setPreview}
                     onSubmit={event => event.preventDefault()}>
                     <Icon icon="remove_red_eye" /> Preview

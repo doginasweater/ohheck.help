@@ -5,12 +5,11 @@ import {
     Subunit,
     Survey,
     Response,
-    ResponseByCard
+    ResponseByCard,
+    Notification
 } from 'types/admin';
 
 import {
-    SET_ERROR,
-    DISMISS_ERROR,
     AUTHENTICATE,
     LOGOUT,
     GROUPS_FETCH,
@@ -24,7 +23,9 @@ import {
     RESPONSES_FETCH,
     RESPONSES_FETCH_FULFILLED,
     RESPONSES_BYCARD_FETCH,
-    RESPONSES_BYCARD_FETCH_FULFILLED
+    RESPONSES_BYCARD_FETCH_FULFILLED,
+    SET_NOTIFICATION,
+    DISMISS_NOTIFICATION
 } from 'constants/admin';
 
 const AdminInitial: IAdminStore = {
@@ -43,22 +44,83 @@ const AdminInitial: IAdminStore = {
     responses: null,
     responsesloading: true,
     responsesbycard: null,
-    responsesbycardloading: true
+    responsesbycardloading: true,
+    notifications: [
+        new Notification({
+            id: 1,
+            level: 'info',
+            text: 'It is 7/15, new cards are expected in the api. Go to settings to sync them.',
+            seen: false,
+            action: {
+                type: 'link',
+                location: '/dashboard/settings',
+                text: 'Settings'
+            },
+            created: new Date('2017-07-13 00:00'),
+            createdby: 'kevin',
+            modified: new Date('2017-07-13 00:00'),
+            modifiedby: 'kevin',
+        }),
+        new Notification({
+            id: 2,
+            level: 'error',
+            text: 'Last sync failed!',
+            seen: false,
+            created: new Date('2017-07-13 00:00'),
+            createdby: 'kevin',
+            modified: new Date('2017-07-13 00:00'),
+            modifiedby: 'kevin',
+        }),
+        new Notification({
+            id: 3,
+            level: 'success',
+            text: 'Card/idol sync succeeded',
+            seen: false,
+            action: {
+                text: 'View cards',
+                location: '/dashboard/cards',
+                type: 'link'
+            },
+            created: new Date('2017-07-13 00:00'),
+            createdby: 'kevin',
+            modified: new Date('2017-07-13 00:00'),
+            modifiedby: 'kevin',
+        }),
+        new Notification({
+            id: 4,
+            level: 'warning',
+            text: 'Card/idol sync succeeded with errors',
+            seen: false,
+            action: {
+                text: 'View errors',
+                location: '/dashboard/cards',
+                type: 'link'
+            },
+            created: new Date('2017-07-13 00:00'),
+            createdby: 'kevin',
+            modified: new Date('2017-07-13 00:00'),
+            modifiedby: 'kevin',
+        })
+    ]
 };
 
 export function admin(state = AdminInitial, action) {
     switch (action.type) {
-        case SET_ERROR:
+        case SET_NOTIFICATION:
             return {
                 ...state,
-                error: true,
-                errorMessage: action.error
+                notifications: [
+                    ...state.notifications,
+                    action.notification
+                ]
             };
-        case DISMISS_ERROR:
+        case DISMISS_NOTIFICATION:
             return {
                 ...state,
-                error: false,
-                errorMessage: ''
+                notifications: [
+                    ...state.notifications.filter((item: Notification) => item.id !== action.notification.id),
+                    action.notification
+                ]
             };
         case AUTHENTICATE:
             return {

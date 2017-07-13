@@ -2,10 +2,17 @@
 import { Link, Route } from 'react-router-dom';
 import * as a from '.';
 import { connect } from 'react-redux';
-import { setError, dismissError, authenticate } from 'actions/admin';
+import { setNotification, dismissNotification, authenticate } from 'actions/admin';
+import { Icon } from 'components/common';
+import { IReduxProps, IAdminStore } from 'types/redux';
+import { Notification } from 'types/admin';
+
+interface IAdminProps extends IReduxProps {
+    admin: IAdminStore;
+}
 
 @connect(state => ({ admin: state.admin }))
-export default class Admin extends React.Component<any, any> {
+export default class Admin extends React.Component<IAdminProps, any> {
     constructor(props) {
         super(props);
 
@@ -20,6 +27,47 @@ export default class Admin extends React.Component<any, any> {
         dispatch(authenticate());
     }
 
+    dismiss = (note: Notification) => {
+        const { dispatch } = this.props;
+
+        note.seen = true;
+
+        dispatch(dismissNotification(note));
+    }
+
+    displayNotification = () => {
+        const { notifications } = this.props.admin;
+
+        if (notifications.length === 0) {
+            return <div className="pure-u-2-3">&nbsp;</div>;
+        }
+
+        const note = notifications.find(item => !item.seen);
+
+        if (!note) {
+            return <div className="pure-u-2-3">&nbsp;</div>;
+        }
+
+        return (
+            <div className="pure-u-15-24 item">
+                <div className={`pure-u-1 notification ${note.level}`}>
+                    <div className="pure-u-4-24">
+                        {note.created.toDateString()}
+                    </div>
+                    <div className="pure-u-15-24">
+                        {note.text}
+                    </div>
+                    <div className="pure-u-4-24">
+                        {note.action ? <Link to={`${note.action.location}`}>{note.action.text}</Link> : '&nbsp;'}
+                    </div>
+                    <div className="pure-u-1-24" onClick={event => { event.preventDefault(); this.dismiss(note); }} style={{ cursor: 'pointer' }}>
+                        <Icon icon="close" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         if (!this.props.admin.authenticated) {
             return (
@@ -31,13 +79,11 @@ export default class Admin extends React.Component<any, any> {
         } else {
             return (
                 <div className="pure-u-1 some-space">
-                    <div className="pure-u-1-3">
-                        <h1>Oh Heck! Admin</h1>
-                    </div>
-                    <div className={`pure-u-2-3 ${this.props.admin.error ? 'error' : ''}`}>
-                        <h3>
-                            {this.props.admin.error ? this.props.admin.errorMessage : ''}
-                        </h3>
+                    <div className="pure-u-1 flex-contain">
+                        <div className="pure-u-1-3 item">
+                            <h1>Oh Heck! Admin</h1>
+                        </div>
+                        {this.displayNotification()}
                     </div>
                     <a.AdminNav />
                     <div className="pure-u-3-4 slide-in-container">

@@ -11,6 +11,7 @@ using ohheck.help.Models;
 using ohheck.help.Models.Data;
 using ohheck.help.Models.ApiModels;
 using Newtonsoft.Json;
+using ohheck.help.Models.ViewModels;
 
 namespace ohheck.help.Controllers {
     [Authorize]
@@ -247,5 +248,32 @@ namespace ohheck.help.Controllers {
                 .Include(x => x.idol)
                 .ThenInclude(x => x.cards)
                 .SingleOrDefaultAsync(x => x.id == id);
+
+        public List<NotificationViewModel> Notifications() =>
+            _db.Notifications
+                .Include(x => x.action)
+                .Where(x => x.foruser == User.Identity.Name || x.foruser == "***")
+                .ToList()
+                .Select(x => new NotificationViewModel(x))
+                .ToList();
+
+        public async Task<Result> AddNotification(NotificationViewModel n) {
+            var note = new Notification {
+                level = (Level)Enum.Parse(typeof(Level), n.level),
+                text = n.text,
+                action = n.action,
+                foruser = string.IsNullOrEmpty(n.foruser) ? "***" : n.foruser,
+                seen = false
+            };
+
+            try {
+                await _db.Notifications.AddAsync(note);
+                await _db.SaveChangesAsync();
+            } catch (Exception ex) {
+                return Result.Failure(ex.Message);
+            }
+
+            return Result.Success();
+        }
     }
 }

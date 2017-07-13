@@ -1,4 +1,4 @@
-﻿import { Group, Subunit, Survey, ResponseByCard } from 'types/admin';
+﻿import { Group, Subunit, Survey, ResponseByCard, Notification } from 'types/admin';
 import { Idol } from 'types/commontypes';
 
 export interface IAdminStore {
@@ -18,4 +18,5 @@ export interface IAdminStore {
     responsesloading: boolean;
     responsesbycard: ResponseByCard[] | null;
     responsesbycardloading: boolean;
+    notifications: Notification[];
 }
