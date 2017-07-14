@@ -6,4 +6,6 @@ export interface ISurveyMgmt {
     surveyloading: boolean;
     editable: boolean;
     newsurvey: Survey;
+    cardfilter: string;
+    cardfiltertype: 'group' | 'subunit' | 'idol' | 'tag' | '';
 }

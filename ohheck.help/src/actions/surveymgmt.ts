@@ -8,8 +8,9 @@
     NEW_SET_NAME,
     NEW_SET_SLUG,
     NEW_SET_TITLE,
-    NEW_SET_QUESTIONS
-} from '../constants/surveymgmt';
+    NEW_SET_QUESTIONS,
+    NEW_SET_CARD_FILTER
+} from 'constants/surveymgmt';
 
 export const surveyFetch = id => ({ type: SURVEY_FETCH, id });
 export const surveyFetchFulfilled = survey => ({ type: SURVEY_FETCH_FULFILLED, survey });
@@ -23,3 +24,5 @@ export const newSetName = (name: string) => ({ type: NEW_SET_NAME, name });
 export const newSetSlug = (slug: string) => ({ type: NEW_SET_SLUG, slug });
 export const newSetTitle = (title: string) => ({ type: NEW_SET_TITLE, title });
 export const newSetQuestions = questions => ({ type: NEW_SET_QUESTIONS, questions });
+
+export const newSetCardFilter = (filter: string, filtertype: 'group' | 'subunit' | 'idol' | 'tag' | '') => ({ type: NEW_SET_CARD_FILTER, filter, filtertype });

@@ -6,6 +6,10 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .flex-contain {
     display: flex;
 
@@ -217,25 +221,6 @@ ol.horizontal {
     label {
         display: block;
         margin-bottom: .5em;
-    }
-}
-
-.card-chooser {
-    background-color: rgba(128, 128, 128, 0.1);
-    width: 80%;
-
-    .card-chooser-item {
-        padding: 0 1em;
-        margin: 0;
-
-        .material-icons {
-            margin: 0;
-            padding: 0;
-        }
-
-        &:hover {
-            background-color: rgba(128, 128, 128, 0.3);
-        }
     }
 }
 

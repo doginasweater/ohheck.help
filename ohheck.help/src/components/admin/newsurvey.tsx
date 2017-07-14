@@ -5,6 +5,7 @@ import { IAdminStore, ISurveyMgmt, IReduxProps } from 'types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
 import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle } from 'actions/surveymgmt';
+import { idolsListFetch, subunitsListFetch, groupsListFetch } from 'actions/admin';
 import { Icon } from 'components/common';
 
 interface NewSurveyProps extends IReduxProps {
@@ -19,6 +20,14 @@ interface NewSurveyProps extends IReduxProps {
 export default class NewSurvey extends React.Component<NewSurveyProps, any> {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+
+        dispatch(idolsListFetch());
+        dispatch(subunitsListFetch());
+        dispatch(groupsListFetch());
     }
 
     handleChange = (event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): void => {

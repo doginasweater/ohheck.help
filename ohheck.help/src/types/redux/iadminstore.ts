@@ -6,10 +6,13 @@ export interface IAdminStore {
     errorMessage: string;
     authenticated: boolean;
     groups: Group[] | null;
+    groupslight: Group[] | null;
     groupsloading: boolean;
     subunits: Subunit[] | null;
+    subunitslight: Subunit[] | null;
     subunitsloading: boolean;
     idols: Idol[] | null;
+    idolslight: Idol[] | null;
     idolsloading: boolean;
     surveys: Survey[] | null;
     surveysloading: boolean;

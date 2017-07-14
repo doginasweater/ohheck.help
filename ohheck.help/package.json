@@ -9,14 +9,14 @@
     "react-markdown": "^2.5.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
-    "redux": "^3.6.0",
+    "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-observable": "^0.14.1",
     "rxjs": "^5.4.2",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "@types/react": "^15.0.33",
+    "@types/react": "^15.0.38",
     "@types/react-dom": "^15.5.1",
     "@types/react-router-dom": "^4.0.5",
     "@types/webpack": "^2.2.15",

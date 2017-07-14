@@ -7,8 +7,11 @@ import {
 
 import {
     fetchGroupsEpic,
+    fetchGroupsListEpic,
     fetchSubunitsEpic,
+    fetchSubunitsListEpic,
     fetchIdolsEpic,
+    fetchIdolsListEpic,
     fetchSurveysEpic,
     fetchResponsesEpic,
     fetchResponsesByCardEpic
@@ -20,8 +23,11 @@ import {
 
 export const rootEpic = combineEpics(
     fetchGroupsEpic,
+    fetchGroupsListEpic,
     fetchSubunitsEpic,
+    fetchSubunitsListEpic,
     fetchIdolsEpic,
+    fetchIdolsListEpic,
     fetchSurveysEpic,
     fetchResponsesEpic,
     fetchResponsesByCardEpic,

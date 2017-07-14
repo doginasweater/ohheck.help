@@ -11,18 +11,21 @@ import {
     NEW_SET_NAME,
     NEW_SET_SLUG,
     NEW_SET_TITLE,
-    NEW_SET_QUESTIONS
-} from '../constants/surveymgmt';
+    NEW_SET_QUESTIONS,
+    NEW_SET_CARD_FILTER
+} from 'constants/surveymgmt';
 
 const initialState: ISurveyMgmt = {
     surveyid: -1,
     survey: null,
     surveyloading: true,
     editable: false,
-    newsurvey: new Survey({})
+    newsurvey: new Survey({}),
+    cardfilter: '',
+    cardfiltertype: ''
 };
 
-export function surveymgmt(state = initialState, action) {
+export const surveymgmt = (state = initialState, action): ISurveyMgmt => {
     switch (action.type) {
         case SURVEY_FETCH:
             return {
@@ -94,6 +97,12 @@ export function surveymgmt(state = initialState, action) {
                     ...state.newsurvey,
                     title: action.title
                 }
+            };
+        case NEW_SET_CARD_FILTER:
+            return {
+                ...state,
+                cardfilter: action.filter,
+                cardfiltertype: action.filtertype
             };
         default:
             return state;

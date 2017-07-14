@@ -2,17 +2,17 @@
 import { Link, Route } from 'react-router-dom';
 import * as a from '.';
 import { connect } from 'react-redux';
-import { setNotification, dismissNotification, authenticate } from 'actions/admin';
+import { dismissNotification, authenticate } from 'actions/admin';
 import { Icon } from 'components/common';
 import { IReduxProps, IAdminStore } from 'types/redux';
 import { Notification } from 'types/admin';
 
-interface IAdminProps extends IReduxProps {
+interface IAdminProps {
     admin: IAdminStore;
 }
 
 @connect(state => ({ admin: state.admin }))
-export default class Admin extends React.Component<IAdminProps, any> {
+export default class Admin extends React.Component<IAdminProps & IReduxProps, any> {
     constructor(props) {
         super(props);
 

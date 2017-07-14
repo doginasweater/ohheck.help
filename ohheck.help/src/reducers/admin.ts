@@ -14,10 +14,16 @@ import {
     LOGOUT,
     GROUPS_FETCH,
     GROUPS_FETCH_FULFILLED,
+    GROUPS_LIST_FETCH,
+    GROUPS_LIST_FETCH_FULFILLED,
     SUBUNITS_FETCH,
     SUBUNITS_FETCH_FULFILLED,
+    SUBUNITS_LIST_FETCH,
+    SUBUNITS_LIST_FETCH_FULFILLED,
     IDOLS_FETCH,
     IDOLS_FETCH_FULFILLED,
+    IDOLS_LIST_FETCH,
+    IDOLS_LIST_FETCH_FULFILLED,
     SURVEYS_FETCH,
     SURVEYS_FETCH_FULFILLED,
     RESPONSES_FETCH,
@@ -33,10 +39,13 @@ const AdminInitial: IAdminStore = {
     errorMessage: '',
     authenticated: false,
     groups: null,
+    groupslight: null,
     groupsloading: true,
     subunits: null,
+    subunitslight: null,
     subunitsloading: true,
     idols: null,
+    idolslight: null,
     idolsloading: true,
     surveys: null,
     surveysloading: true,
@@ -45,66 +54,10 @@ const AdminInitial: IAdminStore = {
     responsesloading: true,
     responsesbycard: null,
     responsesbycardloading: true,
-    notifications: [
-        new Notification({
-            id: 1,
-            level: 'info',
-            text: 'It is 7/15, new cards are expected in the api. Go to settings to sync them.',
-            seen: false,
-            action: {
-                type: 'link',
-                location: '/dashboard/settings',
-                text: 'Settings'
-            },
-            created: new Date('2017-07-13 00:00'),
-            createdby: 'kevin',
-            modified: new Date('2017-07-13 00:00'),
-            modifiedby: 'kevin',
-        }),
-        new Notification({
-            id: 2,
-            level: 'error',
-            text: 'Last sync failed!',
-            seen: false,
-            created: new Date('2017-07-13 00:00'),
-            createdby: 'kevin',
-            modified: new Date('2017-07-13 00:00'),
-            modifiedby: 'kevin',
-        }),
-        new Notification({
-            id: 3,
-            level: 'success',
-            text: 'Card/idol sync succeeded',
-            seen: false,
-            action: {
-                text: 'View cards',
-                location: '/dashboard/cards',
-                type: 'link'
-            },
-            created: new Date('2017-07-13 00:00'),
-            createdby: 'kevin',
-            modified: new Date('2017-07-13 00:00'),
-            modifiedby: 'kevin',
-        }),
-        new Notification({
-            id: 4,
-            level: 'warning',
-            text: 'Card/idol sync succeeded with errors',
-            seen: false,
-            action: {
-                text: 'View errors',
-                location: '/dashboard/cards',
-                type: 'link'
-            },
-            created: new Date('2017-07-13 00:00'),
-            createdby: 'kevin',
-            modified: new Date('2017-07-13 00:00'),
-            modifiedby: 'kevin',
-        })
-    ]
+    notifications: []
 };
 
-export function admin(state = AdminInitial, action) {
+export const admin = (state = AdminInitial, action): IAdminStore => {
     switch (action.type) {
         case SET_NOTIFICATION:
             return {
@@ -133,6 +86,7 @@ export function admin(state = AdminInitial, action) {
                 authenticated: false
             };
         case GROUPS_FETCH:
+        case GROUPS_LIST_FETCH:
             return {
                 ...state,
                 groupsloading: true
@@ -143,7 +97,14 @@ export function admin(state = AdminInitial, action) {
                 groupsloading: false,
                 groups: action.groups
             };
+        case GROUPS_LIST_FETCH_FULFILLED:
+            return {
+                ...state,
+                groupsloading: false,
+                groupslight: action.groupsList
+            };
         case SUBUNITS_FETCH:
+        case SUBUNITS_LIST_FETCH:
             return {
                 ...state,
                 subunitsloading: true
@@ -154,7 +115,14 @@ export function admin(state = AdminInitial, action) {
                 subunitsloading: false,
                 subunits: action.subunits
             };
+        case SUBUNITS_LIST_FETCH_FULFILLED:
+            return {
+                ...state,
+                subunitsloading: false,
+                subunitslight: action.subunitsList
+            };
         case IDOLS_FETCH:
+        case IDOLS_LIST_FETCH:
             return {
                 ...state,
                 idolsloading: true
@@ -164,6 +132,12 @@ export function admin(state = AdminInitial, action) {
                 ...state,
                 idolsloading: false,
                 idols: action.idols
+            };
+        case IDOLS_LIST_FETCH_FULFILLED:
+            return {
+                ...state,
+                idolsloading: false,
+                idolslight: action.idolsList
             };
         case SURVEYS_FETCH:
             return {

@@ -197,6 +197,12 @@ namespace ohheck.help.Controllers {
                 .ThenInclude(x => x.cards)
                 .Include(x => x.idols)
                 .ThenInclude(x => x.subunit)
+                .OrderBy(x => x.name)
+                .ToListAsync();
+
+        public async Task<List<Group>> GroupList() =>
+            await _db.Groups
+                .OrderBy(x => x.name)
                 .ToListAsync();
 
         public async Task<Group> Group(int id) =>
@@ -211,8 +217,14 @@ namespace ohheck.help.Controllers {
                 .Include(x => x.cards)
                 .Include(x => x.group)
                 .Include(x => x.subunit)
-                .OrderBy(x => x.group.name)
+                .OrderBy(x => x.name)
+                .ThenBy(x => x.group.name)
                 .ThenBy(x => x.subunit.name)
+                .ToListAsync();
+
+        public async Task<List<Idol>> IdolList() =>
+            await _db.Idols
+                .OrderBy(x => x.name)
                 .ToListAsync();
 
         public async Task<Idol> Idol(int id) =>
@@ -226,6 +238,12 @@ namespace ohheck.help.Controllers {
             await _db.Subunits
                 .Include(x => x.idols)
                 .ThenInclude(x => x.cards)
+                .OrderBy(x => x.name)
+                .ToListAsync();
+
+        public async Task<List<Subunit>> SubunitList() =>
+            await _db.Subunits
+                .OrderBy(x => x.name)
                 .ToListAsync();
 
         public async Task<Subunit> Subunit(int id) =>
