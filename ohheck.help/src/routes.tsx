@@ -6,7 +6,7 @@ import { Admin } from 'components/admin';
 import { Form, Thanks } from 'components/survey';
 import './scss/app.scss';
 
-export default <div className="main pure-g">
+export const Routes = <div className="main pure-g">
     <div className="pure-u-1">
         <div className="pull-right">
             <a href="https://twitter.com/akikkyu" target="_blank">aki's twitter</a> |&nbsp;
@@ -29,7 +29,3 @@ export default <div className="main pure-g">
         </div>
     </footer>
 </div>;
-
-if (module.hot) {
-    module.hot.accept();
-}

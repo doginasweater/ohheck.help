@@ -27,7 +27,6 @@ module.exports = env => {
         },
         module: {
             rules: [
-                { test: /\.ts(x?)?$/, include: /src/, use: { loader: 'babel-loader', options: { cacheDirectory: true } } },
                 { test: /\.ts(x?)?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
                 {
                     test: /\.(scss|css)$/,
