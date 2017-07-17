@@ -1,7 +1,8 @@
-﻿import { Group, Subunit, Survey, Response, ResponseByCard } from 'types/admin';
+﻿import { Group, Subunit, Survey, Response, ResponseByCard, Notification } from 'types/admin';
 import { Idol } from 'types/commontypes';
 import { ajax } from 'rxjs/observable/dom/ajax';
-import 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/Observable/of';
 
 import {
     GROUPS_FETCH,
@@ -24,15 +25,19 @@ import {
     idolsListFetchFulfilled,
     surveysFetchFulfilled,
     responsesFetchFulfilled,
-    responsesByCardFetchFulfilled
+    responsesByCardFetchFulfilled,
+    setNotification
 } from 'actions/admin';
 
 export const fetchGroupsEpic = action$ =>
     action$.ofType(GROUPS_FETCH)
         .mergeMap(action =>
-            ajax.getJSON('/admin/groups')
+            ajax.getJSON('/admin/grups')
                 .map((response: Group[]) => response.map(item => new Group(item)))
                 .map(groups => groupsFetchFulfilled(groups))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error(`Groups download failed.`, 'epics', 'epics')
+                )))
         );
 
 export const fetchSubunitsEpic = action$ =>
@@ -41,6 +46,9 @@ export const fetchSubunitsEpic = action$ =>
             ajax.getJSON('/admin/subunits')
                 .map((response: Subunit[]) => response.map(item => new Subunit(item)))
                 .map(subunits => subunitsFetchFulfilled(subunits))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Subunits download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchIdolsEpic = action$ =>
@@ -49,6 +57,9 @@ export const fetchIdolsEpic = action$ =>
             ajax.getJSON('/admin/idols')
                 .map((response: Idol[]) => response.map(item => new Idol(item)))
                 .map(idols => idolsFetchFulfilled(idols))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Idols download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchGroupsListEpic = action$ =>
@@ -57,6 +68,9 @@ export const fetchGroupsListEpic = action$ =>
             ajax.getJSON('/admin/grouplist')
                 .map((response: Group[]) => response.map(item => new Group(item)))
                 .map(groups => groupsListFetchFulfilled(groups))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Groups list download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchSubunitsListEpic = action$ =>
@@ -65,6 +79,9 @@ export const fetchSubunitsListEpic = action$ =>
             ajax.getJSON('/admin/subunitlist')
                 .map((response: Subunit[]) => response.map(item => new Subunit(item)))
                 .map(subunits => subunitsListFetchFulfilled(subunits))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Subunits list download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchIdolsListEpic = action$ =>
@@ -73,6 +90,9 @@ export const fetchIdolsListEpic = action$ =>
             ajax.getJSON('/admin/idollist')
                 .map((response: Idol[]) => response.map(item => new Idol(item)))
                 .map(idols => idolsListFetchFulfilled(idols))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Idols list download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchSurveysEpic = action$ =>
@@ -81,6 +101,9 @@ export const fetchSurveysEpic = action$ =>
             ajax.getJSON('/admin/allsurveys')
                 .map((response: Survey[]) => response.map(item => new Survey(item)))
                 .map(surveys => surveysFetchFulfilled(surveys))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Surveys download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchResponsesEpic = action$ =>
@@ -89,6 +112,9 @@ export const fetchResponsesEpic = action$ =>
             ajax.getJSON(`/admin/responses/${action.id}`)
                 .map((response: Response[]) => response.map(item => new Response(item)))
                 .map(responses => responsesFetchFulfilled(responses))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Responses download failed', 'epics', 'epics')
+                )))
         );
 
 export const fetchResponsesByCardEpic = action$ =>
@@ -97,4 +123,7 @@ export const fetchResponsesByCardEpic = action$ =>
             ajax.getJSON(`/admin/surveysbycard/${action.id}`)
                 .map((response: ResponseByCard[]) => response.map(item => new ResponseByCard(item)))
                 .map(responses => responsesByCardFetchFulfilled(responses))
+                .catch(error => Observable.of(
+                    setNotification(Notification.error('Responses download failed', 'epics', 'epics')
+                )))
         );

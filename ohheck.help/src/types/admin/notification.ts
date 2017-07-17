@@ -1,14 +1,16 @@
 ﻿import { ModelBase } from '../commontypes/modelbase';
 
+type actionType = {
+    type: string;
+    location: string;
+    text: string;
+}
+
 export class Notification extends ModelBase {
     level: string;
     text: string;
     seen: boolean;
-    action?: {
-        type: string;
-        location: string;
-        text: string;
-    }
+    action?: actionType;
 
     constructor(json) {
         super(json);
@@ -25,4 +27,20 @@ export class Notification extends ModelBase {
             };
         }
     }
+
+    static make = (level: 'error' | 'warning' | 'success' | 'info', text: string, createdby: string, modifiedby: string, action?: actionType): Notification =>
+        new Notification({
+            level,
+            text,
+            action,
+            created: new Date(),
+            modified: new Date(),
+            createdby,
+            modifiedby
+        });
+
+    static error = (text: string, createdby: string, modifiedby: string, action?: actionType): Notification => Notification.make('error', text, createdby, modifiedby, action);
+    static warning = (text: string, createdby: string, modifiedby: string, action?: actionType): Notification => Notification.make('warning', text, createdby, modifiedby, action);
+    static info = (text: string, createdby: string, modifiedby: string, action?: actionType): Notification => Notification.make('info', text, createdby, modifiedby, action);
+    static success = (text: string, createdby: string, modifiedby: string, action?: actionType): Notification => Notification.make('success', text, createdby, modifiedby, action);
 }

@@ -58,7 +58,7 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
                         {note.text}
                     </div>
                     <div className="pure-u-4-24">
-                        {note.action ? <Link to={`${note.action.location}`}>{note.action.text}</Link> : '&nbsp;'}
+                        {note.action ? <Link to={`${note.action.location}`}>{note.action.text}</Link> : ' '}
                     </div>
                     <div className="pure-u-1-24" onClick={event => { event.preventDefault(); this.dismiss(note); }} style={{ cursor: 'pointer' }}>
                         <Icon icon="close" />
