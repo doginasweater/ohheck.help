@@ -9,7 +9,6 @@ import { IReduxProps, ISurveyStore } from 'types/redux';
 import { setCard, setChoice } from 'actions/survey';
 import { Icon, MDown, Questions } from 'components/common';
 import { SurveySubmission } from 'types/survey';
-import 'whatwg-fetch';
 
 interface IFormProps extends IReduxProps {
     form: ISurveyStore;
