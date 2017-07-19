@@ -8,15 +8,24 @@ export class ChooserList extends React.Component<any, any> {
         super(props);
     }
 
+    renderItems = (): JSX.Element[] => this.props.items.map((item, index) =>
+        <ChooserListItem
+            name={item.name}
+            link={item.link}
+            linktext={item.name}
+            dir={this.props.dir}
+            key={index} />
+    );
+
     render() {
         return (
             <div className="card-chooser">
                 <ChooserListItem name="Select all from this list" bold={true} dir={this.props.dir} />
-                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" linktext="idlz: 1234" dir={this.props.dir} />
-                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" linktext="idlz: 1234" dir={this.props.dir} />
-                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" linktext="idlz: 1234" dir={this.props.dir} />
-                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" linktext="idlz: 1234" dir={this.props.dir} />
-                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" linktext="idlz: 1234" dir={this.props.dir} />
+                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" dir={this.props.dir} linktext="ruby" />
+                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" dir={this.props.dir} linktext="ruby" />
+                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" dir={this.props.dir} linktext="ruby" />
+                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" dir={this.props.dir} linktext="ruby" />
+                <ChooserListItem name="Ruby" link="/dashboard/idols/1234" dir={this.props.dir} linktext="ruby" />
             </div>
         );
     }

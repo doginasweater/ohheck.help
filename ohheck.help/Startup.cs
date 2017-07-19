@@ -17,6 +17,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace ohheck.help
 {
@@ -58,6 +61,14 @@ namespace ohheck.help
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.RequireUniqueEmail = true;
+                options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents {
+                    OnRedirectToLogin = context => {
+                        context.Response.Clear();
+                        context.Response.StatusCode = 401;
+
+                        return Task.FromResult(0);
+                    }
+                };
             });
 
             services.Configure<Secrets>(Configuration);
@@ -115,6 +126,14 @@ namespace ohheck.help
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = false
+                },
+                Events = new JwtBearerEvents {
+                    OnAuthenticationFailed = context => {
+                        context.Response.Clear();
+                        context.Response.StatusCode = 401;
+
+                        return Task.FromResult(0);
+                    }
                 }
             });
 
