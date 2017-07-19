@@ -21,13 +21,12 @@ export default class Login extends React.Component<any, any> {
     submit = event => {
         event.preventDefault();
 
-        fetch('/account/login', {
+        fetch('/account/connect', {
             method: 'POST',
             body: JSON.stringify({
-                Email: this.state.username,
+                Username: this.state.username,
                 Password: this.state.password
             }),
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -36,8 +35,8 @@ export default class Login extends React.Component<any, any> {
             return response.json();
         })
         .then((data: any) => {
-            if (data.success) {
-                this.props.authenticate();
+            if (data) {
+                this.props.authenticate(data.token, new Date(data.expiration));
             } else {
                 this.setState({
                     username: '',

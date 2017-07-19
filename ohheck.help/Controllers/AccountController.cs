@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ohheck.help.Models;
 using ohheck.help.Models.AccountViewModels;
 using ohheck.help.Services;
@@ -24,6 +27,8 @@ namespace ohheck.help.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
+        private readonly PasswordHasher<ApplicationUser> _passwordHasher;
+        private readonly Secrets _secrets;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -31,7 +36,9 @@ namespace ohheck.help.Controllers
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            PasswordHasher<ApplicationUser> passwordHasher,
+            IOptions<Secrets> secrets)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +46,8 @@ namespace ohheck.help.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _passwordHasher = passwordHasher;
+            _secrets = secrets.Value;
         }
 
         //
@@ -65,7 +74,7 @@ namespace ohheck.help.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
@@ -160,6 +169,45 @@ namespace ohheck.help.Controllers
             _logger.LogInformation(4, "User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Connect([FromBody] LoginViewModel model) {
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByNameAsync(model.Username);
+
+            if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) != PasswordVerificationResult.Success) {
+                return BadRequest();
+            }
+
+            var token = await GetJwtSecurityToken(user);
+
+            return Ok(new {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                expiration = token.ValidTo
+            });
+        }
+
+        private async Task<JwtSecurityToken> GetJwtSecurityToken(ApplicationUser user) {
+            var signingkey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secrets.secretkey));
+            var userClaims = await _userManager.GetClaimsAsync(user);
+
+            return new JwtSecurityToken(
+                claims: GetTokenClaims(user).Union(userClaims),
+                expires: DateTime.UtcNow.AddDays(1),
+                signingCredentials: new SigningCredentials(signingkey, SecurityAlgorithms.HmacSha256)
+            );
+        }
+
+        private IEnumerable<Claim> GetTokenClaims(ApplicationUser user) =>
+            new List<Claim> {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName)
+            };
+
 
         private void AddErrors(IdentityResult result)
         {

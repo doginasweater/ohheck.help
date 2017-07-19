@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Logging;
 using ohheck.help.Services;
 using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ohheck.help
 {
@@ -53,13 +57,14 @@ namespace ohheck.help
 
             services.Configure<IdentityOptions>(options =>
             {
-                options.Cookies.ApplicationCookie.CookieHttpOnly = false;
-                options.Cookies.ApplicationCookie.SlidingExpiration = true;
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.Configure<Secrets>(Configuration);
+
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<PasswordHasher<ApplicationUser>>();
 
             services.AddMvc().AddJsonOptions(options =>
             {
@@ -97,6 +102,21 @@ namespace ohheck.help
             }
 
             app.UseStaticFiles();
+
+            var secretKey = Configuration["secretkey"];
+            var signingkey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signingkey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = false
+                }
+            });
 
             app.UseIdentity();
 

@@ -2,9 +2,10 @@
 import { Idol } from 'types/commontypes';
 
 export interface IAdminStore {
+    bearer: string;
+    loginvalid?: Date;
     error: boolean;
     errorMessage: string;
-    authenticated: boolean;
     groups: Group[] | null;
     groupslight: Group[] | null;
     groupsloading: boolean;

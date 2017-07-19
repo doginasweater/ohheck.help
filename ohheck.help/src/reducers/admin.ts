@@ -1,4 +1,5 @@
-﻿import { Idol } from 'types/commontypes';
+﻿import { get } from 'types/commontypes/storage';
+import { Idol } from 'types/commontypes';
 import { IAdminStore } from 'types/redux';
 import {
     Group,
@@ -34,10 +35,13 @@ import {
     DISMISS_NOTIFICATION
 } from 'constants/admin';
 
+const storage = window.localStorage;
+
 const AdminInitial: IAdminStore = {
+    bearer: storage.getItem('bearer') || '',
+    loginvalid: storage.getItem('expiration') ? new Date(storage.getItem('expiration') || '') : new Date(),
     error: false,
     errorMessage: '',
-    authenticated: false,
     groups: null,
     groupslight: null,
     groupsloading: true,
@@ -78,12 +82,13 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
         case AUTHENTICATE:
             return {
                 ...state,
-                authenticated: true
+                bearer: action.token,
+                loginvalid: action.expiration
             };
         case LOGOUT:
             return {
                 ...state,
-                authenticated: false
+                bearer: ''
             };
         case GROUPS_FETCH:
         case GROUPS_LIST_FETCH:

@@ -13,18 +13,18 @@ interface IAdminProps {
 
 @connect(state => ({ admin: state.admin }))
 export default class Admin extends React.Component<IAdminProps & IReduxProps, any> {
-    constructor(props) {
+    constructor(props: IAdminProps & IReduxProps) {
         super(props);
 
-        if (document.cookie.indexOf('AspNetCore.Identity.Application') !== -1) {
-            props.dispatch(authenticate());
+        if (props.admin.bearer && props.admin.loginvalid && props.admin.loginvalid > new Date()) {
+            props.dispatch(authenticate(props.admin.bearer, props.admin.loginvalid));
         }
     }
 
-    auth = () => {
+    auth = (token: string, expiration: Date): void => {
         const { dispatch } = this.props;
 
-        dispatch(authenticate());
+        dispatch(authenticate(token, expiration));
     }
 
     dismiss = (note: Notification) => {
@@ -69,7 +69,7 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
     }
 
     render() {
-        if (!this.props.admin.authenticated) {
+        if (!this.props.admin.bearer) {
             return (
                 <div className="pure-u-1">
                     <h1>Oh Heck! Admin</h1>

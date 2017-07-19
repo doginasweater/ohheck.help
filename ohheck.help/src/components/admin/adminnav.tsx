@@ -69,9 +69,9 @@ export default class AdminNav extends React.Component<any, any> {
                     <li className="divider" />
                     <li>
                         <Icon icon="close" />
-                        <a href="/account/logout" onClick={this.logout}>
+                        <Link to="/" onClick={this.logout}>
                             Logout
-                    </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

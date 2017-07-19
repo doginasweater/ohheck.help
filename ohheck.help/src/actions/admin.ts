@@ -28,8 +28,25 @@ import {
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
 export const dismissNotification = (notification: Notification) => ({ type: DISMISS_NOTIFICATION, notification });
 
-export const authenticate = () => ({ type: AUTHENTICATE });
-export const logout = () => ({ type: LOGOUT });
+export const authenticate = (token: string, expiration: Date) => {
+    window.localStorage.setItem('bearer', token);
+    window.localStorage.setItem('expiration', expiration.toUTCString());
+
+    return {
+        type: AUTHENTICATE,
+        token,
+        expiration
+    }
+}
+
+export const logout = () => {
+    window.localStorage.setItem('bearer', '');
+    window.localStorage.setItem('expiration', '');
+
+    return {
+        type: LOGOUT
+    }
+}
 
 export const groupsFetch = () => ({ type: GROUPS_FETCH });
 export const groupsFetchFulfilled = groups => ({ type: GROUPS_FETCH_FULFILLED, groups });
