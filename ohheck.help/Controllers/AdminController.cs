@@ -293,5 +293,7 @@ namespace ohheck.help.Controllers {
 
             return Result.Success();
         }
+
+        public IActionResult Error() => NotFound();
     }
 }

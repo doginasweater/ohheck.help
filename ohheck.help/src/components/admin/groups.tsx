@@ -19,7 +19,7 @@ export default class Groups extends React.Component<any, any> {
         }
     }
 
-    renderList = groups => groups.map(
+    renderList = groups => groups && groups.map(
         (item: Group, index: number) =>
             <tr key={index}>
                 <td>{item.name || "None"}</td>

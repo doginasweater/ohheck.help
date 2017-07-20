@@ -147,6 +147,11 @@ namespace ohheck.help
                     defaults: new { controller = "Admin", Action = "Index" });
 
                 routes.MapRoute(
+                    name: "admin-error",
+                    template: "admin/{*url}",
+                    defaults: new { controller = "Admin", Action = "Error" });
+
+                routes.MapRoute(
                     name: "account",
                     template: "account/{action}/{id?}",
                     defaults: new { controller = "Account", Action = "Login" });
