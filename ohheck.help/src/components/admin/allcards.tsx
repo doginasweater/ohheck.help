@@ -43,22 +43,6 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
         dispatch(cardsFetch(skip, take));
     }
 
-    next = (event: React.MouseEvent<HTMLAnchorElement>): void => {
-        event.preventDefault();
-
-        const { admin, dispatch } = this.props;
-
-        dispatch(cardsFetch(admin.skip + admin.take, admin.take));
-    }
-
-    previous = (event: React.MouseEvent<HTMLAnchorElement>): void => {
-        event.preventDefault();
-
-        const { admin, dispatch } = this.props;
-
-        dispatch(cardsFetch(admin.skip - admin.take, admin.take));
-    }
-
     renderCards = (cards: Card[]) => cards.map(
         (item: Card, index: number) =>
             <div className="pure-u-1-4" key={index}>
