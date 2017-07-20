@@ -1,59 +1,104 @@
 ﻿import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card } from 'types/commontypes';
-import 'whatwg-fetch';
+import { IReduxProps, IAdminStore } from 'types/redux';
+import { cardsFetch } from 'actions/admin';
 
-interface AllCardsState {
-    loading: boolean;
-    cards: Card[];
-    page: number;
-    take: number;
+interface AllCardsProps {
+    admin: IAdminStore;
 }
 
-export default class AllCards extends React.Component<any, AllCardsState> {
+@connect(state => ({ admin: state.admin }))
+export default class AllCards extends React.Component<AllCardsProps & IReduxProps, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loading: true,
-            cards: [],
-            page: 1,
-            take: 100
-        };
     }
 
     componentDidMount() {
-        this.getData(0, this.state.take);
+        const { skip, take } = this.props.match.params;
+
+        this.handleUrl(skip, take);
     }
 
-    getData = (skip, take) => {
-        fetch(`/admin/cards?skip=${skip}&take=${take}`, {
-            credentials: 'same-origin'
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error(response.statusText);
-            }
-        }).then((json: any) => {
-            let data: Card[] = json.map(item => new Card(item));
+    shouldComponentUpdate(nextProps: AllCardsProps & IReduxProps): boolean {
+        const { skip, take } = this.props.match.params;
+        const nextSkip = nextProps.match.params.skip;
+        const nextTake = nextProps.match.params.take;
 
-            this.setState({
-                cards: data,
-                loading: false
-            });
-        });
+        if ((skip !== nextSkip || take !== nextTake) && !nextProps.admin.cardsloading) {
+            this.handleUrl(nextSkip, nextTake);
+
+            return true;
+        } else if (nextProps.admin.cardsloading || !nextProps.admin.cardsloading) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    renderCards = () => this.state.cards.map(
+    handleUrl = (skip: number, take: number) => {
+        const { dispatch } = this.props;
+
+        dispatch(cardsFetch(skip, take));
+    }
+
+    next = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+        event.preventDefault();
+
+        const { admin, dispatch } = this.props;
+
+        dispatch(cardsFetch(admin.skip + admin.take, admin.take));
+    }
+
+    previous = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+        event.preventDefault();
+
+        const { admin, dispatch } = this.props;
+
+        dispatch(cardsFetch(admin.skip - admin.take, admin.take));
+    }
+
+    renderCards = (cards: Card[]) => cards.map(
         (item: Card, index: number) =>
             <div className="pure-u-1-4" key={index}>
-                <img src={item.imageurl} className="card" />
+                <Link to={`/dashboard/cards/${item.id}`}>
+                    <img src={item.imageurl} className="card" />
+                </Link>
             </div>
     )
 
+    renderPagination = (): JSX.Element[] => {
+        const { skip, take } = this.props.admin;
+
+        const prevSkip = Number(skip) - Number(take);
+        const nextSkip = Number(skip) + Number(take);
+
+        const prev =
+            <div className="pure-u-1-2" key={0}>
+                <Link to={`/dashboard/cards/${prevSkip}/${take}`}>&lt; Previous {take}</Link>
+            </div>;
+
+        const next =
+            <div className="pure-u-1-2" style={{ textAlign: 'right' }} key={1}>
+                <Link to={`/dashboard/cards/${nextSkip}/${take}`}>Next {take} &gt;</Link>
+            </div>;
+
+        let pagination: JSX.Element[] = [];
+
+        if (prevSkip > 0) {
+            pagination.push(prev);
+        } else {
+            pagination.push(<div className="pure-u-1-2" key={2}></div>);
+        }
+
+        pagination.push(next);
+
+        return pagination;
+    }
+
     render() {
-        if (this.state.loading) {
+        if (this.props.admin.cardsloading) {
             return (
                 <div className="pure-u-1">
                     <h3>All the cards</h3>
@@ -62,15 +107,20 @@ export default class AllCards extends React.Component<any, AllCardsState> {
             );
         }
 
+        const { skip, take } = this.props.admin;
+
         return (
             <div className="pure-u-1 slide-in">
                 <h3>All the cards</h3>
-                {/*<div className="pure-u-3-4" />
-                <div className="pure-u-1-4 some-space">
-                    <label>Filter</label><br />
-                    <input type="text" className="pure-u-1" />
-                </div>*/}
-                {this.renderCards()}
+                <div className="pure-u-1">
+                    {this.renderPagination()}
+                </div>
+                <div className="pure-u-1" style={{ margin: '2em 0 2em 0' }}>
+                    {this.props.admin.cards && this.renderCards(this.props.admin.cards)}
+                </div>
+                <div className="pure-u-1">
+                    {this.renderPagination()}
+                </div>
             </div>
         );
     }

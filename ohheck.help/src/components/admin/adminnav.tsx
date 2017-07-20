@@ -55,7 +55,7 @@ export default class AdminNav extends React.Component<any, any> {
                     </li>
                     <li>
                         <Icon icon="view_carousel" />
-                        <Link to="/dashboard/cards">
+                        <Link to="/dashboard/cards/0/48">
                             Cards
                     </Link>
                     </li>

@@ -1,5 +1,5 @@
 ﻿import { Group, Subunit, Survey, ResponseByCard, Notification } from 'types/admin';
-import { Idol } from 'types/commontypes';
+import { Card, Idol } from 'types/commontypes';
 
 export interface IAdminStore {
     bearer: string;
@@ -23,4 +23,10 @@ export interface IAdminStore {
     responsesbycard: ResponseByCard[] | null;
     responsesbycardloading: boolean;
     notifications: Notification[];
+    cardsloading: boolean;
+    cards: Card[] | null;
+    skip: number;
+    take: number;
+    fullcards: Card[] | null;
+    cardloading: boolean;
 }

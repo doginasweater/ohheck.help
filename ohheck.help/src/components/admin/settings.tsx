@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Editor } from '.';
 import { Icon } from 'components/common';
 import { Notification } from 'types/admin';
-import { setNotification } from 'actions/admin';
+import { setNotification, logout } from 'actions/admin';
 import { IReduxProps, IAdminStore } from 'types/redux';
 
 interface ISettingsProps extends IReduxProps {
@@ -33,6 +33,14 @@ export default class Settings extends React.Component<ISettingsProps, any> {
 
     runSync = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
+    }
+
+    logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
+
+        const { dispatch } = this.props;
+
+        dispatch(logout());
     }
 
     loadNotifications = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -162,6 +170,14 @@ export default class Settings extends React.Component<ISettingsProps, any> {
 
                         <button className="pure-button button-primary" onClick={this.loadNotifications} onSubmit={this.loadNotifications}>
                             <Icon icon="announcement" /> Notification Test
+                        </button>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Auth test</legend>
+
+                        <button className="pure-button button-primary" onClick={this.logout} onSubmit={this.logout} type="button">
+                            <Icon icon="close" /> Auth test
                         </button>
                     </fieldset>
                 </form>

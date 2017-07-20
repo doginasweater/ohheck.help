@@ -16,9 +16,9 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
     constructor(props: IAdminProps & IReduxProps) {
         super(props);
 
-        if (props.admin.bearer && props.admin.loginvalid && props.admin.loginvalid > new Date()) {
+        /*if (props.admin.bearer && props.admin.loginvalid && props.admin.loginvalid > new Date()) {
             props.dispatch(authenticate(props.admin.bearer, props.admin.loginvalid));
-        }
+        }*/
     }
 
     auth = (token: string, expiration: Date): void => {
@@ -68,23 +68,16 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
         );
     }
 
-    render() {
+    displayLogin = () => {
         if (!this.props.admin.bearer) {
             return (
                 <div className="pure-u-1">
-                    <h1>Oh Heck! Admin</h1>
                     <a.Login authenticate={this.auth} />
                 </div>
             );
         } else {
             return (
-                <div className="pure-u-1 some-space">
-                    <div className="pure-u-1 flex-contain">
-                        <div className="pure-u-1-3 item">
-                            <h1>Oh Heck! Admin</h1>
-                        </div>
-                        {this.displayNotification()}
-                    </div>
+                <div>
                     <a.AdminNav />
                     <div className="pure-u-3-4 slide-in-container">
                         <Route exact path="/dashboard" component={a.AdminHome} />
@@ -104,8 +97,8 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
                         <Route path="/dashboard/idols/:id" component={a.SingleIdol} />
                         <Route exact path="/dashboard/idols" component={a.Idols} />
 
-                        <Route path="/dashboard/cards/:id" component={a.SingleCard} />
-                        <Route exact path="/dashboard/cards" component={a.AllCards} />
+                        <Route exact path="/dashboard/cards/:id" component={a.SingleCard} />
+                        <Route exact path="/dashboard/cards/:skip/:take" component={a.AllCards} />
 
                         <Route path="/dashboard/survey/:id" component={a.SurveyView} />
                         <Route exact path="/dashboard/survey" component={a.NewSurvey} />
@@ -115,5 +108,19 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
                 </div>
             );
         }
+    }
+
+    render() {
+        return (
+            <div className="pure-u-1 some-space">
+                <div className="pure-u-1 flex-contain">
+                    <div className="pure-u-1-3 item">
+                        <h1>Oh Heck! Admin</h1>
+                    </div>
+                    {this.displayNotification()}
+                </div>
+                {this.displayLogin()}
+            </div>
+        );
     }
 }

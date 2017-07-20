@@ -1,29 +1,59 @@
 ﻿import * as React from 'react';
+import { connect } from 'react-redux';
+import { Card } from 'types/commontypes';
+import { IReduxProps, IAdminStore } from 'types/redux';
+import { cardFetch, setNotification } from 'actions/admin';
+import { Notification } from 'types/admin';
 
-export default class SingleCard extends React.Component<any, any> {
+interface SingleCardProps {
+    admin: IAdminStore;
+}
+
+@connect(state => ({ admin: state.admin }))
+export default class SingleCard extends React.Component<SingleCardProps & IReduxProps, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            card: null
-        };
     }
 
     componentDidMount() {
-        if (this.props.location.state) {
-            this.setState({
-                card: this.props.location.state
-            });
+        const id = this.props.match.params.id;
+        const { dispatch } = this.props;
+
+        if (!id) {
+            dispatch(setNotification(Notification.error('No id given. Cannot download card.', 'singlecard', 'singlecard')));
+
+            return;
+        }
+
+
+        if (!this.props.admin.fullcards) {
+            dispatch(cardFetch(Number(id)));
+
+            return;
+        }
+
+        const card = this.props.admin.fullcards.find(item => item.id === id);
+
+        if (!card) {
+            dispatch(cardFetch(Number(id)));
         }
     }
 
     render() {
-        const { card } = this.state;
+        if (this.props.admin.cardloading || !this.props.admin.fullcards) {
+            return (
+                <div className="pure-u-1">
+                    <h3>Loading...</h3>
+                </div>
+            );
+        }
+
+        const card = this.props.admin.fullcards.find(item => item.id === Number(this.props.match.params.id));
 
         if (!card) {
             return (
                 <div className="pure-u-1">
-                    <h3>Loading...</h3>
+                    <h3>Card not found!</h3>
                 </div>
             );
         }

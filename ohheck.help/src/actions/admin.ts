@@ -1,8 +1,10 @@
 ﻿import { Notification } from 'types/admin';
+import { Card } from "types/commontypes";
 
 import {
     AUTHENTICATE,
     LOGOUT,
+    LOGOUT_WITH_NOTE,
     GROUPS_FETCH,
     GROUPS_FETCH_FULFILLED,
     GROUPS_LIST_FETCH,
@@ -22,7 +24,11 @@ import {
     RESPONSES_BYCARD_FETCH,
     RESPONSES_BYCARD_FETCH_FULFILLED,
     SET_NOTIFICATION,
-    DISMISS_NOTIFICATION
+    DISMISS_NOTIFICATION,
+    CARDS_FETCH,
+    CARDS_FETCH_FULFILLED,
+    CARD_FETCH,
+    CARD_FETCH_FULFILLED
 } from 'constants/admin';
 
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
@@ -48,6 +54,16 @@ export const logout = () => {
     }
 }
 
+export const logoutWithNote = (notification: Notification) => {
+    window.localStorage.setItem('bearer', '');
+    window.localStorage.setItem('expiration', '');
+
+    return {
+        type: LOGOUT_WITH_NOTE,
+        notification
+    };
+}
+
 export const groupsFetch = () => ({ type: GROUPS_FETCH });
 export const groupsFetchFulfilled = groups => ({ type: GROUPS_FETCH_FULFILLED, groups });
 export const groupsListFetch = () => ({ type: GROUPS_LIST_FETCH });
@@ -71,3 +87,9 @@ export const responsesFetchFulfilled = responses => ({ type: RESPONSES_FETCH_FUL
 
 export const responsesByCardFetch = id => ({ type: RESPONSES_BYCARD_FETCH, id });
 export const responsesByCardFetchFulfilled = cards => ({ type: RESPONSES_BYCARD_FETCH_FULFILLED, cards });
+
+export const cardsFetch = (skip: number, take: number) => ({ type: CARDS_FETCH, skip, take });
+export const cardsFetchFulfilled = (cards: Card[]) => ({ type: CARDS_FETCH_FULFILLED, cards });
+
+export const cardFetch = (id: number) => ({ type: CARD_FETCH, id });
+export const cardFetchFulFilled = (card: Card) => ({ type: CARD_FETCH_FULFILLED, card });

@@ -255,17 +255,13 @@ namespace ohheck.help.Controllers {
         public async Task<List<Card>> Cards(int skip, int take) =>
             await _db.Cards
                 .Where(x => !string.IsNullOrEmpty(x.imageurl))
-                .Include(x => x.idol)
-                .ThenInclude(x => x.cards)
+                .OrderBy(x => x.gameid)
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
 
         public async Task<Card> Card(int id) =>
-            await _db.Cards
-                .Include(x => x.idol)
-                .ThenInclude(x => x.cards)
-                .SingleOrDefaultAsync(x => x.id == id);
+            await _db.Cards.SingleOrDefaultAsync(x => x.id == id);
 
         public List<NotificationViewModel> Notifications() =>
             _db.Notifications

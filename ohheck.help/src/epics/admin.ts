@@ -1,5 +1,5 @@
 ﻿import { Group, Subunit, Survey, Response, ResponseByCard, Notification } from 'types/admin';
-import { Idol } from 'types/commontypes';
+import { Card, Idol } from 'types/commontypes';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
 import { get } from './utils';
@@ -13,7 +13,9 @@ import {
     IDOLS_LIST_FETCH,
     SURVEYS_FETCH,
     RESPONSES_FETCH,
-    RESPONSES_BYCARD_FETCH
+    RESPONSES_BYCARD_FETCH,
+    CARDS_FETCH,
+    CARD_FETCH
 } from 'constants/admin';
 
 import {
@@ -26,15 +28,22 @@ import {
     surveysFetchFulfilled,
     responsesFetchFulfilled,
     responsesByCardFetchFulfilled,
-    setNotification
+    setNotification,
+    logoutWithNote,
+    cardsFetchFulfilled,
+    cardFetchFulFilled
 } from 'actions/admin';
 
 const genInner = <T>(action, state, endpoint: string, callback, errortext: string) =>
-    Observable.fromPromise(get<T>(endpoint, state.getState().admin.bearer))
+    get<T>(endpoint, state.getState().admin.bearer)
         .map(response => callback(response))
-        .catch(error => 
-            Observable.of(setNotification(Notification.error(errortext, 'epics', 'epics')))
-        )
+        .catch(error => {
+            if (error.message === '401') {
+                return Observable.of(logoutWithNote(Notification.info('Session expired. Please log in again.', 'epics', 'epics')));
+            } else {
+                return Observable.of(setNotification(Notification.error(errortext, 'epics', 'epics')))
+            }
+        });
 
 const genEpic = <T>(action$, state, type: string, endpoint: string, callback, errortext: string) =>
     action$.ofType(type).mergeMap(action => genInner(action, state, endpoint, callback, errortext));
@@ -69,3 +78,11 @@ export const fetchResponsesEpic = (action$, state) =>
 export const fetchResponsesByCardEpic = (action$, state) =>
     action$.ofType(RESPONSES_BYCARD_FETCH).mergeMap(action =>
         genInner<ResponseByCard[]>(action, state, `/admin/responsesbycard/${action.id}`, responsesByCardFetchFulfilled, 'Responses download failed'));
+
+export const fetchCardsEpic = (action$, state) =>
+    action$.ofType(CARDS_FETCH).mergeMap(action =>
+        genInner<Card[]>(action, state, `/admin/cards?skip=${action.skip}&take=${action.take}`, cardsFetchFulfilled, 'Cards download failed'));
+
+export const fetchCardEpic = (action$, state) =>
+    action$.ofType(CARD_FETCH).mergeMap(action =>
+        genInner<Card>(action, state, `/admin/card?id=${action.id}`, cardFetchFulFilled, 'Card download failed'));

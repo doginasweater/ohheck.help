@@ -13,6 +13,7 @@ import {
 import {
     AUTHENTICATE,
     LOGOUT,
+    LOGOUT_WITH_NOTE,
     GROUPS_FETCH,
     GROUPS_FETCH_FULFILLED,
     GROUPS_LIST_FETCH,
@@ -32,7 +33,11 @@ import {
     RESPONSES_BYCARD_FETCH,
     RESPONSES_BYCARD_FETCH_FULFILLED,
     SET_NOTIFICATION,
-    DISMISS_NOTIFICATION
+    DISMISS_NOTIFICATION,
+    CARDS_FETCH,
+    CARDS_FETCH_FULFILLED,
+    CARD_FETCH,
+    CARD_FETCH_FULFILLED
 } from 'constants/admin';
 
 const storage = window.localStorage;
@@ -58,7 +63,13 @@ const AdminInitial: IAdminStore = {
     responsesloading: true,
     responsesbycard: null,
     responsesbycardloading: true,
-    notifications: []
+    notifications: [],
+    cardsloading: false,
+    cards: [],
+    skip: 0,
+    take: 50,
+    fullcards: [],
+    cardloading: true
 };
 
 export const admin = (state = AdminInitial, action): IAdminStore => {
@@ -88,7 +99,18 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
         case LOGOUT:
             return {
                 ...state,
-                bearer: ''
+                bearer: '',
+                loginvalid: undefined
+            };
+        case LOGOUT_WITH_NOTE:
+            return {
+                ...state,
+                notifications: [
+                    ...state.notifications,
+                    action.notification
+                ],
+                bearer: '',
+                loginvalid: undefined
             };
         case GROUPS_FETCH:
         case GROUPS_LIST_FETCH:
@@ -178,6 +200,33 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                 ...state,
                 responsesbycardloading: false,
                 responsesbycard: action.cards
+            };
+        case CARDS_FETCH:
+            return {
+                ...state,
+                cardsloading: true,
+                skip: action.skip,
+                take: action.take
+            };
+        case CARDS_FETCH_FULFILLED:
+            return {
+                ...state,
+                cardsloading: false,
+                cards: action.cards
+            };
+        case CARD_FETCH:
+            return {
+                ...state,
+                cardloading: true
+            };
+        case CARD_FETCH_FULFILLED:
+            return {
+                ...state,
+                fullcards: [
+                    ...state.fullcards || [],
+                    action.card
+                ],
+                cardloading: false
             };
         default:
             return state;

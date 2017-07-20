@@ -21,19 +21,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace ohheck.help
-{
-    public class Startup
-    {
-        public Startup(IHostingEnvironment env)
-        {
+namespace ohheck.help {
+    public class Startup {
+        public Startup(IHostingEnvironment env) {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets<Startup>();
             }
@@ -46,8 +42,7 @@ namespace ohheck.help
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices(IServiceCollection services) {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("identity")));
 
@@ -58,8 +53,7 @@ namespace ohheck.help
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options =>
-            {
+            services.Configure<IdentityOptions>(options => {
                 options.User.RequireUniqueEmail = true;
                 options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents {
                     OnRedirectToLogin = context => {
@@ -77,8 +71,7 @@ namespace ohheck.help
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<PasswordHasher<ApplicationUser>>();
 
-            services.AddMvc().AddJsonOptions(options =>
-            {
+            services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             });
@@ -92,55 +85,71 @@ namespace ohheck.help
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             loggerFactory.AddConsole();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true,
-                    ReactHotModuleReplacement = true
-                });
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseStaticFiles();
 
             var secretKey = Configuration["secretkey"];
             var signingkey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = new TokenValidationParameters {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = signingkey,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = false
-                },
-                Events = new JwtBearerEvents {
-                    OnAuthenticationFailed = context => {
-                        context.Response.Clear();
-                        context.Response.StatusCode = 401;
+            if (env.IsDevelopment()) {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
 
-                        return Task.FromResult(0);
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
+                    HotModuleReplacement = true,
+                    ReactHotModuleReplacement = true
+                });
+
+                app.UseJwtBearerAuthentication(new JwtBearerOptions {
+                    AutomaticAuthenticate = true,
+                    AutomaticChallenge = true,
+                    TokenValidationParameters = new TokenValidationParameters {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = signingkey,
+                        ValidateIssuer = false,
+                        ValidateLifetime = false,
+                        ValidateAudience = false,
+                    },
+                    Events = new JwtBearerEvents {
+                        OnAuthenticationFailed = context => {
+                            context.Response.Clear();
+                            context.Response.StatusCode = 401;
+
+                            return Task.FromResult(0);
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                app.UseExceptionHandler("/Home/Error");
+
+                app.UseJwtBearerAuthentication(new JwtBearerOptions {
+                    AutomaticAuthenticate = true,
+                    AutomaticChallenge = true,
+                    TokenValidationParameters = new TokenValidationParameters {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = signingkey,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateAudience = true,
+                        ValidIssuer = Configuration.GetSection("SiteConfig:url").Value,
+                        ValidAudience = Configuration.GetSection("SiteConfig:url").Value,
+                    },
+                    Events = new JwtBearerEvents {
+                        OnAuthenticationFailed = context => {
+                            context.Response.Clear();
+                            context.Response.StatusCode = 401;
+
+                            return Task.FromResult(0);
+                        }
+                    }
+                });
+            }
+
+            app.UseStaticFiles();
 
             app.UseIdentity();
 
-            app.UseMvc(routes =>
-            {
+            app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "admin",
                     template: "admin/{action}/{id?}",
