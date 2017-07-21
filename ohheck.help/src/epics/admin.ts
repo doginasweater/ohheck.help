@@ -13,7 +13,8 @@ import {
     RESPONSES_FETCH,
     RESPONSES_BYCARD_FETCH,
     CARDS_FETCH,
-    CARD_FETCH
+    CARD_FETCH,
+    IDOL_FETCH
 } from 'constants/admin';
 
 import {
@@ -29,7 +30,8 @@ import {
     setNotification,
     logoutWithNote,
     cardsFetchFulfilled,
-    cardFetchFulFilled
+    cardFetchFulFilled,
+    idolFetchFulfilled
 } from 'actions/admin';
 
 export const fetchGroupsEpic = (action$, state) =>
@@ -59,7 +61,7 @@ export const fetchResponsesEpic = (action$, state) =>
 
 export const fetchResponsesByCardEpic = (action$, state) =>
     action$.ofType(RESPONSES_BYCARD_FETCH).mergeMap(action =>
-        genInner<ResponseByCard[]>(action, state, `/admin/responsesbycard/${action.id}`, responsesByCardFetchFulfilled, 'Responses download failed'));
+        genInner<ResponseByCard[]>(action, state, `/admin/surveysbycard/${action.id}`, responsesByCardFetchFulfilled, 'Responses download failed'));
 
 export const fetchCardsEpic = (action$, state) =>
     action$.ofType(CARDS_FETCH).mergeMap(action =>
@@ -68,3 +70,7 @@ export const fetchCardsEpic = (action$, state) =>
 export const fetchCardEpic = (action$, state) =>
     action$.ofType(CARD_FETCH).mergeMap(action =>
         genInner<Card>(action, state, `/admin/card?id=${action.id}`, cardFetchFulFilled, 'Card download failed'));
+
+export const fetchIdolEpic = (action$, state) =>
+    action$.ofType(IDOL_FETCH).mergeMap(action =>
+        genInner<Idol>(action, state, `/admin/idol?id=${action.id}`, idolFetchFulfilled, 'Idol download failed'));

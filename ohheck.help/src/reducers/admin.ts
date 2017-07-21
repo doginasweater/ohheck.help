@@ -11,33 +11,17 @@ import {
 } from 'types/admin';
 
 import {
-    AUTHENTICATE,
-    LOGOUT,
-    LOGOUT_WITH_NOTE,
-    GROUPS_FETCH,
-    GROUPS_FETCH_FULFILLED,
-    GROUPS_LIST_FETCH,
-    GROUPS_LIST_FETCH_FULFILLED,
-    SUBUNITS_FETCH,
-    SUBUNITS_FETCH_FULFILLED,
-    SUBUNITS_LIST_FETCH,
-    SUBUNITS_LIST_FETCH_FULFILLED,
-    IDOLS_FETCH,
-    IDOLS_FETCH_FULFILLED,
-    IDOLS_LIST_FETCH,
-    IDOLS_LIST_FETCH_FULFILLED,
-    SURVEYS_FETCH,
-    SURVEYS_FETCH_FULFILLED,
-    RESPONSES_FETCH,
-    RESPONSES_FETCH_FULFILLED,
-    RESPONSES_BYCARD_FETCH,
-    RESPONSES_BYCARD_FETCH_FULFILLED,
-    SET_NOTIFICATION,
-    DISMISS_NOTIFICATION,
-    CARDS_FETCH,
-    CARDS_FETCH_FULFILLED,
-    CARD_FETCH,
-    CARD_FETCH_FULFILLED
+    AUTHENTICATE, LOGOUT, LOGOUT_WITH_NOTE,
+    GROUPS_FETCH, GROUPS_FETCH_FULFILLED, GROUPS_LIST_FETCH, GROUPS_LIST_FETCH_FULFILLED,
+    SUBUNITS_FETCH, SUBUNITS_FETCH_FULFILLED, SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED, IDOLS_FETCH,
+    IDOLS_FETCH_FULFILLED, IDOLS_LIST_FETCH, IDOLS_LIST_FETCH_FULFILLED,
+    SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED,
+    RESPONSES_FETCH, RESPONSES_FETCH_FULFILLED,
+    RESPONSES_BYCARD_FETCH, RESPONSES_BYCARD_FETCH_FULFILLED,
+    SET_NOTIFICATION, DISMISS_NOTIFICATION,
+    CARDS_FETCH, CARDS_FETCH_FULFILLED,
+    CARD_FETCH, CARD_FETCH_FULFILLED,
+    IDOL_FETCH, IDOL_FETCH_FULFILLED
 } from 'constants/admin';
 
 const storage = window.localStorage;
@@ -69,7 +53,9 @@ const AdminInitial: IAdminStore = {
     skip: 0,
     take: 50,
     fullcards: [],
-    cardloading: true
+    cardloading: true,
+    fullidols: [],
+    idolloading: false
 };
 
 export const admin = (state = AdminInitial, action): IAdminStore => {
@@ -226,6 +212,20 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                     action.card
                 ],
                 cardloading: false
+            };
+        case IDOL_FETCH:
+            return {
+                ...state,
+                idolloading: true
+            };
+        case IDOL_FETCH_FULFILLED:
+            return {
+                ...state,
+                idolloading: false,
+                fullidols: [
+                    ...state.fullidols,
+                    action.idol
+                ]
             };
         default:
             return state;

@@ -1,5 +1,5 @@
 ﻿import { Notification } from 'types/admin';
-import { Card } from "types/commontypes";
+import { Card, Idol } from "types/commontypes";
 
 import {
     AUTHENTICATE,
@@ -28,7 +28,9 @@ import {
     CARDS_FETCH,
     CARDS_FETCH_FULFILLED,
     CARD_FETCH,
-    CARD_FETCH_FULFILLED
+    CARD_FETCH_FULFILLED,
+    IDOL_FETCH,
+    IDOL_FETCH_FULFILLED
 } from 'constants/admin';
 
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
@@ -93,3 +95,6 @@ export const cardsFetchFulfilled = (cards: Card[]) => ({ type: CARDS_FETCH_FULFI
 
 export const cardFetch = (id: number) => ({ type: CARD_FETCH, id });
 export const cardFetchFulFilled = (card: Card) => ({ type: CARD_FETCH_FULFILLED, card });
+
+export const idolFetch = (id: number) => ({ type: IDOL_FETCH, id });
+export const idolFetchFulfilled = (idol: Idol) => ({ type: IDOL_FETCH_FULFILLED, idol });

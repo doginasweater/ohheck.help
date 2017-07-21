@@ -29,4 +29,6 @@ export interface IAdminStore {
     take: number;
     fullcards: Card[] | null;
     cardloading: boolean;
+    fullidols: Idol[];
+    idolloading: boolean;
 }

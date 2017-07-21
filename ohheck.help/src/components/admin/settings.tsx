@@ -27,88 +27,12 @@ export default class Settings extends React.Component<ISettingsProps, any> {
         });
     }
 
-    save = event => {
+    save = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
     }
 
     runSync = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-    }
-
-    logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        event.preventDefault();
-
-        const { dispatch } = this.props;
-
-        dispatch(logout());
-    }
-
-    loadNotifications = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        event.preventDefault();
-
-        const { dispatch } = this.props;
-
-        const notes = [
-            new Notification({
-                id: 1,
-                level: 'info',
-                text: 'It is 7/15, new cards are expected in the api. Go to settings to sync them.',
-                seen: false,
-                action: {
-                    type: 'link',
-                    location: '/dashboard/settings',
-                    text: 'Settings'
-                },
-                created: new Date('2017-07-13 00:00'),
-                createdby: 'kevin',
-                modified: new Date('2017-07-13 00:00'),
-                modifiedby: 'kevin',
-            }),
-            new Notification({
-                id: 2,
-                level: 'error',
-                text: 'Last sync failed!',
-                seen: false,
-                created: new Date('2017-07-13 00:00'),
-                createdby: 'kevin',
-                modified: new Date('2017-07-13 00:00'),
-                modifiedby: 'kevin',
-            }),
-            new Notification({
-                id: 3,
-                level: 'success',
-                text: 'Card/idol sync succeeded',
-                seen: false,
-                action: {
-                    text: 'View cards',
-                    location: '/dashboard/cards',
-                    type: 'link'
-                },
-                created: new Date('2017-07-13 00:00'),
-                createdby: 'kevin',
-                modified: new Date('2017-07-13 00:00'),
-                modifiedby: 'kevin',
-            }),
-            new Notification({
-                id: 4,
-                level: 'warning',
-                text: 'Card/idol sync succeeded with errors',
-                seen: false,
-                action: {
-                    text: 'View errors',
-                    location: '/dashboard/cards',
-                    type: 'link'
-                },
-                created: new Date('2017-07-13 00:00'),
-                createdby: 'kevin',
-                modified: new Date('2017-07-13 00:00'),
-                modifiedby: 'kevin',
-            })
-        ];
-
-        for (let n of notes) {
-            dispatch(setNotification(n));
-        }
     }
 
     render() {
@@ -162,22 +86,6 @@ export default class Settings extends React.Component<ISettingsProps, any> {
 
                         <button className="pure-button button-primary" onClick={this.runSync} onSubmit={this.runSync}>
                             <Icon icon="update" /> Sync Now
-                        </button>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Notification Test</legend>
-
-                        <button className="pure-button button-primary" onClick={this.loadNotifications} onSubmit={this.loadNotifications}>
-                            <Icon icon="announcement" /> Notification Test
-                        </button>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Auth test</legend>
-
-                        <button className="pure-button button-primary" onClick={this.logout} onSubmit={this.logout} type="button">
-                            <Icon icon="close" /> Auth test
                         </button>
                     </fieldset>
                 </form>
