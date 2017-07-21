@@ -1,10 +1,11 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { Question } from 'types/admin';
+import { Question, Group, Subunit } from 'types/admin';
 import { Icon } from 'components/common';
 import { IReduxProps, IAdminStore, ISurveyMgmt } from 'types/redux';
 import { newSetCardFilter, newCardsFetch, newSelectCard, newUnselectCard } from 'actions/surveymgmt';
 import { ChooserList } from './chooserlist';
+import { Card, Idol } from 'types/commontypes';
 
 interface CardChooserProps {
     question: Question;
@@ -55,35 +56,8 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         dispatch(newCardsFetch(Number(event.currentTarget.value), name));
     }
 
-    renderGroupOptions = () => {
-        const { groupslight } = this.props.admin;
-
-        if (!groupslight) {
-            return null;
-        }
-
-        return groupslight.map((item, index) => <option value={item.id} key={index}>{item.name}</option>);
-    }
-
-    renderSubunitOptions = () => {
-        const { subunitslight } = this.props.admin;
-
-        if (!subunitslight) {
-            return null;
-        }
-
-        return subunitslight.map((item, index) => <option value={item.id} key={index}>{item.name}</option>);
-    }
-
-    renderIdolOptions = () => {
-        const { idolslight } = this.props.admin;
-
-        if (!idolslight) {
-            return null;
-        }
-
-        return idolslight.map((item, index) => <option value={item.id} key={index}>{item.name}</option>);
-    }
+    renderOptions = (items: (Group | Subunit | Idol)[]): JSX.Element[] => 
+        items.map((item, index) => <option value={item.id} key={index}>{item.name}</option>);
 
     myVal = (type: string): string => {
         const { cardfilter, cardfiltertype } = this.props.mgmt;
@@ -120,6 +94,8 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
     }
 
     render() {
+        const { groupslight, subunitslight, idolslight } = this.props.admin;
+
         return (
             <fieldset>
                 <legend>Cards</legend>
@@ -132,7 +108,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     <label htmlFor="group">Group</label>
                     <select name="group" className="pure-u-20-24" value={this.myVal('group')} onChange={this.handleSelect}>
                         <option value="">Choose One...</option>
-                        {this.renderGroupOptions()}
+                        {this.renderOptions(groupslight)}
                     </select>
                 </div>
 
@@ -140,7 +116,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     <label htmlFor="subunit">Subunit</label>
                     <select name="subunit" className="pure-u-20-24" value={this.myVal('subunit')} onChange={this.handleSelect}>
                         <option value="">Choose One...</option>
-                        {this.renderSubunitOptions()}
+                        {this.renderOptions(subunitslight)}
                     </select>
                 </div>
 
@@ -148,13 +124,13 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     <label htmlFor="idol">Idol</label>
                     <select name="idol" className="pure-u-20-24" value={this.myVal('idol')} onChange={this.handleSelect}>
                         <option value="">Choose One...</option>
-                        {this.renderIdolOptions()}
+                        {this.renderOptions(idolslight)}
                     </select>
                 </div>
 
                 <div className="pure-u-1">
                     <div className="pure-u-1-2">
-                        Possible cards for <b>{this.props.mgmt.cardfiltertype}</b>: <b>{this.filterVal()}</b>
+                        Possible cards for {this.props.mgmt.cardfiltertype}: {this.filterVal()}
 
                         <ChooserList dir="left" items={this.props.mgmt.cards} choose={this.choose} />
                     </div>

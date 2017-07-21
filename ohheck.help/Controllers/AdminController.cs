@@ -202,6 +202,7 @@ namespace ohheck.help.Controllers {
 
         public async Task<List<Group>> GroupList() =>
             await _db.Groups
+                .Where(x => !string.IsNullOrEmpty(x.name))
                 .OrderBy(x => x.name)
                 .ToListAsync();
 

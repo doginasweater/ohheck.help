@@ -7,13 +7,13 @@ export interface IAdminStore {
     error: boolean;
     errorMessage: string;
     groups: Group[] | null;
-    groupslight: Group[] | null;
+    groupslight: Group[];
     groupsloading: boolean;
     subunits: Subunit[] | null;
-    subunitslight: Subunit[] | null;
+    subunitslight: Subunit[];
     subunitsloading: boolean;
     idols: Idol[] | null;
-    idolslight: Idol[] | null;
+    idolslight: Idol[];
     idolsloading: boolean;
     surveys: Survey[] | null;
     surveysloading: boolean;

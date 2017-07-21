@@ -2,9 +2,15 @@
 import { connect } from 'react-redux';
 import { Icon } from 'components/common';
 import { Link } from 'react-router-dom';
-import { Card } from 'types/commontypes';
+import { Card, ModelBase } from 'types/commontypes';
 
-export class ChooserList extends React.Component<any, any> {
+interface ChooserListProps {
+    items: any[];
+    choose: (id: number, dir: string) => void;
+    dir: 'left' | 'right';
+}
+
+export class ChooserList extends React.Component<ChooserListProps, any> {
     constructor(props) {
         super(props);
     }
@@ -25,14 +31,17 @@ export class ChooserList extends React.Component<any, any> {
     }
 
     chooseAll = (id: number): void => {
-
+        this.props.items.map(item => this.choose(item.id));
     }
 
     render() {
         return (
-            <div className="card-chooser">
-                <ChooserListItem name="Select all from this list" bold={true} dir={this.props.dir} choose={this.chooseAll} id={0} />
-                {this.renderItems()}
+            <div>
+                <b>Total Cards</b>: {this.props.items.length}
+                <div className="card-chooser">
+                    <ChooserListItem name="Select all from this list" bold={true} dir={this.props.dir} choose={this.chooseAll} id={0} />
+                    {this.renderItems()}
+                </div>
             </div>
         );
     }
@@ -54,7 +63,7 @@ export class ChooserListItem extends React.Component<ChooserListItemProps, any> 
     }
 
     leftOrRight = () =>
-        <Icon icon={`chevron_${this.props.dir === 'left' ? 'right' : 'left' }`} />;
+        <Icon icon={`chevron_${this.props.dir === 'left' ? 'right' : 'left'}`} />;
 
     render() {
         return (
