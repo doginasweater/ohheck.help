@@ -1,7 +1,7 @@
 ﻿import { Survey, Question } from 'types/admin';
 import { ISurveyMgmt } from 'types/redux';
 
-import { 
+import {
     SURVEY_FETCH,
     SURVEY_FETCH_FULFILLED,
     EDIT_SURVEY_START,
@@ -12,7 +12,11 @@ import {
     NEW_SET_SLUG,
     NEW_SET_TITLE,
     NEW_SET_QUESTIONS,
-    NEW_SET_CARD_FILTER
+    NEW_SET_CARD_FILTER,
+    NEW_CARDS_FETCH,
+    NEW_CARDS_FETCH_FULFILLED,
+    NEW_SELECT_CARD,
+    NEW_UNSELECT_CARD
 } from 'constants/surveymgmt';
 
 const initialState: ISurveyMgmt = {
@@ -22,7 +26,10 @@ const initialState: ISurveyMgmt = {
     editable: false,
     newsurvey: new Survey({}),
     cardfilter: '',
-    cardfiltertype: ''
+    cardfiltertype: '',
+    cardsloading: false,
+    cards: [],
+    selectedcards: []
 };
 
 export const surveymgmt = (state = initialState, action): ISurveyMgmt => {
@@ -104,6 +111,51 @@ export const surveymgmt = (state = initialState, action): ISurveyMgmt => {
                 cardfilter: action.filter,
                 cardfiltertype: action.filtertype
             };
+        case NEW_CARDS_FETCH:
+            return {
+                ...state,
+                cardsloading: true
+            };
+        case NEW_CARDS_FETCH_FULFILLED:
+            return {
+                ...state,
+                cardsloading: false,
+                cards: action.cards
+            };
+        case NEW_SELECT_CARD:
+            const card = state.cards.find(item => item.id === action.id);
+            let newState = {
+                ...state,
+                cards: [
+                    ...state.cards.filter(item => item.id !== action.id)
+                ]
+            };
+
+            if (card) {
+                newState.selectedcards = [
+                    ...state.selectedcards,
+                    card
+                ];
+            }
+
+            return newState;
+        case NEW_UNSELECT_CARD:
+            const selectedcard = state.selectedcards.find(item => item.id === action.id);
+            let newUnselectState = {
+                ...state,
+                selectedcards: [
+                    ...state.selectedcards.filter(item => item.id !== action.id)
+                ]
+            };
+
+            if (selectedcard) {
+                newUnselectState.cards = [
+                    ...state.cards,
+                    selectedcard
+                ]
+            }
+
+            return newUnselectState;
         default:
             return state;
     }

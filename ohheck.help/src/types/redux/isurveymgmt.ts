@@ -1,4 +1,5 @@
 ﻿import { Survey } from 'types/admin';
+import { Card } from 'types/commontypes';
 
 export interface ISurveyMgmt {
     surveyid: number;
@@ -8,4 +9,7 @@ export interface ISurveyMgmt {
     newsurvey: Survey;
     cardfilter: string;
     cardfiltertype: 'group' | 'subunit' | 'idol' | 'tag' | '';
+    cardsloading: boolean;
+    cards: Card[];
+    selectedcards: Card[];
 }

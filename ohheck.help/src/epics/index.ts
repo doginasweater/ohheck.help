@@ -20,7 +20,8 @@ import {
 } from './admin';
 
 import {
-    fetchMgmtSurveyEpic
+    fetchMgmtSurveyEpic,
+    fetchPossibleCardsEpic
 } from './surveymgmt';
 
 export const rootEpic = combineEpics(
@@ -37,5 +38,6 @@ export const rootEpic = combineEpics(
     fetchSurveyEpic,
     fetchCardsEpic,
     fetchCardEpic,
+    fetchPossibleCardsEpic,
     submitSurveyEpic
 );

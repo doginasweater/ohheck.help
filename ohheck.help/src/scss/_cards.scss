@@ -3,6 +3,8 @@
     width: 90%;
     display: flex;
     flex-flow: row wrap;
+    max-height: 500px;
+    overflow: auto;
 
     .card-chooser-item {
         width: 100%;

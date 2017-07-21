@@ -1,8 +1,6 @@
 ﻿import { Group, Subunit, Survey, Response, ResponseByCard, Notification } from 'types/admin';
 import { Card, Idol } from 'types/commontypes';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/Observable/of';
-import { get } from './utils';
+import { get, genEpic, genInner } from './utils';
 
 import {
     GROUPS_FETCH,
@@ -33,22 +31,6 @@ import {
     cardsFetchFulfilled,
     cardFetchFulFilled
 } from 'actions/admin';
-
-const genInner = <T>(action, state, endpoint: string, callback, errortext: string) =>
-    get<T>(endpoint, state.getState().admin.bearer)
-        .map(response => callback(response))
-        .catch(error => {
-            if (error.message === '401') {
-                return Observable.of(logoutWithNote(Notification.info('Session expired. Please log in again.', 'epics', 'epics')));
-            } else {
-                return Observable.of(setNotification(Notification.error(errortext, 'epics', 'epics')))
-            }
-        });
-
-const genEpic = <T>(action$, state, type: string, endpoint: string, callback, errortext: string) =>
-    action$.ofType(type).mergeMap(action => genInner(action, state, endpoint, callback, errortext));
-
-const makeHeaders = (state) => ({ 'Authorization': `bearer ${state.getState().admin.bearer}`})
 
 export const fetchGroupsEpic = (action$, state) =>
     genEpic<Group[]>(action$, state, GROUPS_FETCH, '/admin/groups', groupsFetchFulfilled, 'Groups download failed');

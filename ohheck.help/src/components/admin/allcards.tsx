@@ -43,7 +43,7 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
         dispatch(cardsFetch(skip, take));
     }
 
-    renderCards = (cards: Card[]) => cards.map(
+    renderCards = (cards: Card[]): JSX.Element[] => cards.map(
         (item: Card, index: number) =>
             <div className="pure-u-1-4" key={index}>
                 <Link to={`/dashboard/cards/${item.id}`}>

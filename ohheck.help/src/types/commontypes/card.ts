@@ -1,5 +1,6 @@
 ﻿import { ModelBase } from './modelbase';
-
+import { Idol } from './idol';
+ 
 export class Card extends ModelBase {
     gameid: number;
     rarity: string;
@@ -7,6 +8,7 @@ export class Card extends ModelBase {
     imageurl: string;
     ispromo: boolean;
     isidol: boolean;
+    idol?: Idol;
 
     constructor(json) {
         super(json);
@@ -17,5 +19,6 @@ export class Card extends ModelBase {
         this.imageurl = json.imageurl;
         this.ispromo = json.ispromo;
         this.isidol = json.isidol;
+        this.idol = json.idol;
     }
 }

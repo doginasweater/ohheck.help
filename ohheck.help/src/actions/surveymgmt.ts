@@ -1,4 +1,5 @@
-﻿import {
+﻿import { Card } from 'types/commontypes';
+import {
     SURVEY_FETCH,
     SURVEY_FETCH_FULFILLED,
     EDIT_SURVEY_START,
@@ -9,7 +10,11 @@
     NEW_SET_SLUG,
     NEW_SET_TITLE,
     NEW_SET_QUESTIONS,
-    NEW_SET_CARD_FILTER
+    NEW_SET_CARD_FILTER,
+    NEW_CARDS_FETCH,
+    NEW_CARDS_FETCH_FULFILLED,
+    NEW_SELECT_CARD,
+    NEW_UNSELECT_CARD
 } from 'constants/surveymgmt';
 
 export const surveyFetch = id => ({ type: SURVEY_FETCH, id });
@@ -26,3 +31,7 @@ export const newSetTitle = (title: string) => ({ type: NEW_SET_TITLE, title });
 export const newSetQuestions = questions => ({ type: NEW_SET_QUESTIONS, questions });
 
 export const newSetCardFilter = (filter: string, filtertype: 'group' | 'subunit' | 'idol' | 'tag' | '') => ({ type: NEW_SET_CARD_FILTER, filter, filtertype });
+export const newCardsFetch = (id: number, filtertype: 'group' | 'subunit' | 'idol' | 'tag' | '') => ({ type: NEW_CARDS_FETCH, id, filtertype });
+export const newCardsFetchFulfilled = (cards: Card[]) => ({ type: NEW_CARDS_FETCH_FULFILLED, cards });
+export const newSelectCard = (id: number) => ({ type: NEW_SELECT_CARD, id });
+export const newUnselectCard = (id: number) => ({ type: NEW_UNSELECT_CARD, id });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Question } from 'types/admin';
 import { Icon } from 'components/common';
 import { IReduxProps, IAdminStore, ISurveyMgmt } from 'types/redux';
-import { newSetCardFilter } from 'actions/surveymgmt';
+import { newSetCardFilter, newCardsFetch, newSelectCard, newUnselectCard } from 'actions/surveymgmt';
 import { ChooserList } from './chooserlist';
 
 interface CardChooserProps {
@@ -17,8 +17,16 @@ interface CardChooserProps {
 class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, any> {
     constructor(props) {
         super(props);
+    }
 
-        console.log('props', props);
+    choose = (id: number, dir: string) => {
+        const { dispatch } = this.props;
+
+        if (dir === 'left') {
+            dispatch(newSelectCard(id));
+        } else if (dir === 'right') {
+            dispatch(newUnselectCard(id));
+        }
     }
 
     handleSelect = (event: React.FormEvent<HTMLSelectElement>): void => {
@@ -44,6 +52,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         }
 
         dispatch(newSetCardFilter(event.currentTarget.value, name));
+        dispatch(newCardsFetch(Number(event.currentTarget.value), name));
     }
 
     renderGroupOptions = () => {
@@ -89,6 +98,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
     filterVal = (): string => {
         const { groupslight, subunitslight, idolslight } = this.props.admin;
         const { cardfilter, cardfiltertype } = this.props.mgmt;
+        const { dispatch } = this.props;
 
         if (!groupslight || !subunitslight || !idolslight || !cardfilter || !cardfiltertype) {
             return '';
@@ -118,7 +128,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     Please choose a set of cards to add to the list of choices
                 </div>
 
-                <div className="pure-u-1-4">
+                <div className="pure-u-1-3">
                     <label htmlFor="group">Group</label>
                     <select name="group" className="pure-u-20-24" value={this.myVal('group')} onChange={this.handleSelect}>
                         <option value="">Choose One...</option>
@@ -126,7 +136,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     </select>
                 </div>
 
-                <div className="pure-u-1-4">
+                <div className="pure-u-1-3">
                     <label htmlFor="subunit">Subunit</label>
                     <select name="subunit" className="pure-u-20-24" value={this.myVal('subunit')} onChange={this.handleSelect}>
                         <option value="">Choose One...</option>
@@ -134,7 +144,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     </select>
                 </div>
 
-                <div className="pure-u-1-4">
+                <div className="pure-u-1-3">
                     <label htmlFor="idol">Idol</label>
                     <select name="idol" className="pure-u-20-24" value={this.myVal('idol')} onChange={this.handleSelect}>
                         <option value="">Choose One...</option>
@@ -142,24 +152,16 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
                     </select>
                 </div>
 
-                {/*<div className="pure-u-1-4">
-                    <label htmlFor="tag">Tag</label>
-                    <select name="tag" className="pure-u-20-24">
-                        <option value="">Choose One...</option>
-                        <option value="">Favourites</option>
-                    </select>
-                </div>*/}
-
                 <div className="pure-u-1">
                     <div className="pure-u-1-2">
                         Possible cards for <b>{this.props.mgmt.cardfiltertype}</b>: <b>{this.filterVal()}</b>
 
-                        <ChooserList dir="left" />
+                        <ChooserList dir="left" items={this.props.mgmt.cards} choose={this.choose} />
                     </div>
                     <div className="pure-u-1-2">
                         Selected
 
-                        <ChooserList dir="right" />
+                        <ChooserList dir="right" items={this.props.mgmt.selectedcards} choose={this.choose} />
                     </div>
                 </div>
             </fieldset>

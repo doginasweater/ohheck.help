@@ -260,6 +260,49 @@ namespace ohheck.help.Controllers {
                 .Take(take)
                 .ToListAsync();
 
+        public async Task<List<Card>> CardList(string filter, int id) {
+            var query = _db.Cards
+                .Where(x => x.ispromo == false);
+
+            switch (filter) {
+                case "group":
+                    query = query
+                        .Include(x => x.idol)
+                        .ThenInclude(x => x.group)
+                        .Where(x => x.idol.group.id == id);
+                    break;
+                case "idol":
+                    query = query
+                        .Include(x => x.idol)
+                        .Where(x => x.idol.id == id);
+                    break;
+                case "subunit":
+                    query = query
+                        .Include(x => x.idol)
+                        .ThenInclude(x => x.subunit)
+                        .Where(x => x.idol.subunit.id == id);
+                    break;
+            }
+
+            var results = await query
+                .OrderBy(x => x.gameid)
+                .ThenBy(x => x.isidol)
+                .Select(x => new Card {
+                    id = x.id,
+                    gameid = x.gameid,
+                    rarity = x.rarity,
+                    attribute = x.attribute,
+                    imageurl = x.imageurl,
+                    isidol = x.isidol,
+                    idol = new Idol {
+                        name = x.idol.name
+                    }
+                })
+                .ToListAsync();
+
+            return results;
+        }
+
         public async Task<Card> Card(int id) =>
             await _db.Cards.SingleOrDefaultAsync(x => x.id == id);
 

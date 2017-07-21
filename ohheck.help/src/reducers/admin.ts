@@ -87,7 +87,6 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                 ...state,
                 notifications: [
                     ...state.notifications.filter((item: Notification) => item.id !== action.notification.id),
-                    action.notification
                 ]
             };
         case AUTHENTICATE:
