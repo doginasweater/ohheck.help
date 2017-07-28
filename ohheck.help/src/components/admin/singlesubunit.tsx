@@ -1,76 +1,55 @@
 ﻿import * as React from 'react';
-import { Subunit, Group } from 'types/admin';
+import { connect } from 'react-redux';
+import { Subunit, Group, Notification } from 'types/admin';
 import { Idol } from 'types/commontypes';
 import { Link } from 'react-router-dom';
+import { IAdminStore, IReduxProps } from 'types/redux';
+import { setNotification, subunitFetch } from 'actions/admin';
 
-interface SingleSubunitState {
-    subunit: Subunit;
-    loading: boolean;
+interface SingleSubunitProps {
+    admin: IAdminStore;
 }
 
-export default class SingleSubunit extends React.Component<any, SingleSubunitState> {
+@connect(state => ({ admin: state.admin }))
+export default class SingleSubunit extends React.Component<SingleSubunitProps & IReduxProps, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            subunit: new Subunit({}),
-            loading: true
-        };
     }
 
     componentDidMount() {
-        if (!this.props.location.state) {
-            this.getData(this.props.match.params.id);
-        } else if (this.props.location.state.id != this.props.match.params.id) {
-            this.getData(this.props.match.params.id);
-        } else {
-            this.setState({
-                subunit: new Subunit(this.props.location.state),
-                loading: false
-            });
+        const id = this.props.match.params.id;
+        const { dispatch } = this.props;
+
+        if (!id) {
+            dispatch(setNotification(Notification.error('No id given. Cannot download subunit.', 'singlesubunit', 'singlesubunit')));
+
+            return;
+        }
+
+
+        if (!this.props.admin.fullidols) {
+            dispatch(subunitFetch(Number(id)));
+
+            return;
+        }
+
+        const subunit = this.props.admin.fullsubunits.find(item => item.id === id);
+
+        if (!subunit) {
+            dispatch(subunitFetch(Number(id)));
         }
     }
 
-    getData = id => {
-        fetch(`/admin/subunit/${id}`, {
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                this.setState({
-                    loading: false
-                });
-
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error(response.statusText);
-                }
-            })
-            .then((json: any) => {
-                let data: Subunit = new Subunit(json);
-
-                this.setState({
-                    subunit: data
-                });
-            })
-            .catch(ex => console.log(ex));
-    }
-
-    renderIdols = () => {
-        const { idols } = this.state.subunit;
-
+    renderIdols = (idols: Idol[]) => {
         if (!idols) {
             return [<div></div>];
         }
 
         return idols.map((item: Idol, index: number) =>
             <div className="pure-u-1-3" key={index}>
-                <Link to={{
-                    pathname: `/dashboard/idols/${item.id}`,
-                    state: item
-                }}>
+                <a href={`/dashboard/idols/${item.id}`}>
                     {item.name}
-                </Link>
+                </a>
                 <p>
                     <b>Number of cards</b>: {item.cards ? item.cards.length : 0}
                 </p>
@@ -79,20 +58,28 @@ export default class SingleSubunit extends React.Component<any, SingleSubunitSta
     }
 
     render() {
-        if (this.state.loading) {
+        if (this.props.admin.subunitloading || !this.props.admin.fullsubunits) {
             return (
                 <div className="pure-u-1">
-                    Loading...
+                    <h3>Loading...</h3>
                 </div>
             );
         }
 
-        const { subunit } = this.state;
+        const subunit = this.props.admin.fullsubunits.find(item => item.id === Number(this.props.match.params.id));
+
+        if (!subunit) {
+            return (
+                <div className="pure-u-1">
+                    <h3>Idol not found!</h3>
+                </div>
+            );
+        }
 
         return (
             <div className="pure-u-1 slide-in">
                 <h3>{subunit.name}</h3>
-                {subunit.idols && subunit.idols.length > 0 ? this.renderIdols() : <div>No data to display</div>}
+                {subunit.idols && subunit.idols.length > 0 ? this.renderIdols(subunit.idols) : <div>No data to display</div>}
             </div>
         );
     }

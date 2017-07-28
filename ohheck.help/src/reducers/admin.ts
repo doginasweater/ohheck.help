@@ -21,7 +21,8 @@ import {
     SET_NOTIFICATION, DISMISS_NOTIFICATION,
     CARDS_FETCH, CARDS_FETCH_FULFILLED,
     CARD_FETCH, CARD_FETCH_FULFILLED,
-    IDOL_FETCH, IDOL_FETCH_FULFILLED
+    IDOL_FETCH, IDOL_FETCH_FULFILLED,
+    SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED
 } from 'constants/admin';
 
 const storage = window.localStorage;
@@ -53,9 +54,11 @@ const AdminInitial: IAdminStore = {
     skip: 0,
     take: 50,
     fullcards: [],
-    cardloading: true,
+    cardloading: false,
     fullidols: [],
-    idolloading: false
+    idolloading: false,
+    fullsubunits: [],
+    subunitloading: false
 };
 
 export const admin = (state = AdminInitial, action): IAdminStore => {
@@ -225,6 +228,20 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                 fullidols: [
                     ...state.fullidols,
                     action.idol
+                ]
+            };
+        case SUBUNIT_FETCH:
+            return {
+                ...state,
+                subunitloading: true
+            };
+        case SUBUNIT_FETCH_FULFILLED:
+            return {
+                ...state,
+                subunitloading: false,
+                fullsubunits: [
+                    ...state.fullsubunits,
+                    action.subunit
                 ]
             };
         default:

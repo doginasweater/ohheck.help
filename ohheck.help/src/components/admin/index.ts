@@ -1,6 +1,7 @@
 ﻿import Admin from './admin';
 import AdminHome from './adminhome';
 import AdminNav from './adminnav';
+import AkiEdit from './akiedit';
 import AllCards from './allcards';
 import Editor from './editor';
 import Groups from './groups';
@@ -21,6 +22,7 @@ export {
     Admin,
     AdminHome,
     AdminNav,
+    AkiEdit,
     AllCards,
     Editor,
     Groups,

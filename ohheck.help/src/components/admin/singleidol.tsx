@@ -14,10 +14,6 @@ interface SingleIdolProps {
 export default class SingleIdol extends React.Component<SingleIdolProps & IReduxProps, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            idol: null
-        };
     }
 
     componentDidMount() {

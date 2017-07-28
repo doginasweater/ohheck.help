@@ -2,4 +2,23 @@
 
 const ReactMarkdown: any = require('react-markdown');
 
-export const MDown = ({ text }: { text: string; }): JSX.Element => <ReactMarkdown escapeHtml={true} source={text} />;
+interface MDownProps {
+    text: string;
+    escapeHtml?: boolean;
+}
+
+export class MDown extends React.Component<MDownProps, any> {
+    escapeHtml = true;
+
+    constructor(props) {
+        super(props);
+
+        if (typeof props.escapeHtml != 'undefined') {
+            this.escapeHtml = props.escapeHtml;
+        }
+    }
+
+    render() {
+        return <ReactMarkdown escapeHtml={this.escapeHtml} source={this.props.text} />;
+    }
+}

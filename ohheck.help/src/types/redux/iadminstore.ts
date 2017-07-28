@@ -31,4 +31,8 @@ export interface IAdminStore {
     cardloading: boolean;
     fullidols: Idol[];
     idolloading: boolean;
+    fullsubunits: Subunit[];
+    subunitloading: boolean;
+    akipage: string;
+    akipageloading: boolean;
 }

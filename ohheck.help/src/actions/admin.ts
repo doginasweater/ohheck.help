@@ -1,4 +1,4 @@
-﻿import { Notification } from 'types/admin';
+﻿import { Notification, Subunit } from 'types/admin';
 import { Card, Idol } from "types/commontypes";
 
 import {
@@ -30,7 +30,9 @@ import {
     CARD_FETCH,
     CARD_FETCH_FULFILLED,
     IDOL_FETCH,
-    IDOL_FETCH_FULFILLED
+    IDOL_FETCH_FULFILLED,
+    SUBUNIT_FETCH,
+    SUBUNIT_FETCH_FULFILLED
 } from 'constants/admin';
 
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
@@ -98,3 +100,6 @@ export const cardFetchFulFilled = (card: Card) => ({ type: CARD_FETCH_FULFILLED,
 
 export const idolFetch = (id: number) => ({ type: IDOL_FETCH, id });
 export const idolFetchFulfilled = (idol: Idol) => ({ type: IDOL_FETCH_FULFILLED, idol });
+
+export const subunitFetch = (id: number) => ({ type: SUBUNIT_FETCH, id });
+export const subunitFetchFulfilled = (subunit: Subunit) => ({ type: SUBUNIT_FETCH_FULFILLED, subunit });

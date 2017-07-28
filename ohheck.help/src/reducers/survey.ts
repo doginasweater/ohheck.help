@@ -18,7 +18,8 @@ const SurveyInitial: ISurveyStore = {
     error: false,
     message: '',
     displayedcards: [],
-    submitting: false
+    submitting: false,
+    aki: '# Aki the Home Page\n\n## hello, yes, this is kevin\n\nyou, too, can do this\n\n<center>centered?</center>'
 };
 
 export const survey = (state = SurveyInitial, action): ISurveyStore => {

@@ -25,46 +25,53 @@ export default class AdminNav extends React.Component<any, any> {
                         <Icon icon="home" />
                         <Link to="/dashboard">
                             Admin Home
-                    </Link>
+                        </Link>
                     </li>
                     <li className="divider" />
                     <li>
                         <Icon icon="create" />
                         <Link to="/dashboard/survey">
                             New Survey
-                    </Link>
+                        </Link>
                     </li>
                     <li className="divider" />
                     <li>
                         <Icon icon="group" />
                         <Link to="/dashboard/groups">
                             Groups
-                    </Link>
+                        </Link>
                     </li>
                     <li>
                         <Icon icon="group_work" />
                         <Link to="/dashboard/subunits">
                             Subunits
-                    </Link>
+                        </Link>
                     </li>
                     <li>
                         <Icon icon="person" />
                         <Link to="/dashboard/idols">
                             Idols
-                    </Link>
+                        </Link>
                     </li>
                     <li>
                         <Icon icon="view_carousel" />
                         <Link to="/dashboard/cards/0/48">
                             Cards
-                    </Link>
+                        </Link>
                     </li>
                     <li className="divider" />
                     <li>
                         <Icon icon="settings" />
                         <Link to="/dashboard/settings">
                             Settings
-                    </Link>
+                        </Link>
+                    </li>
+                    <li className="divider" />
+                    <li>
+                        <Icon icon="person" />
+                        <Link to="/dashboard/akiedit">
+                            Edit Aki Page
+                        </Link>
                     </li>
                     <li className="divider" />
                     <li>

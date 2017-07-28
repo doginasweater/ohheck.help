@@ -14,7 +14,8 @@ import {
     RESPONSES_BYCARD_FETCH,
     CARDS_FETCH,
     CARD_FETCH,
-    IDOL_FETCH
+    IDOL_FETCH,
+    SUBUNIT_FETCH
 } from 'constants/admin';
 
 import {
@@ -31,7 +32,8 @@ import {
     logoutWithNote,
     cardsFetchFulfilled,
     cardFetchFulFilled,
-    idolFetchFulfilled
+    idolFetchFulfilled,
+    subunitFetchFulfilled
 } from 'actions/admin';
 
 export const fetchGroupsEpic = (action$, state) =>
@@ -74,3 +76,7 @@ export const fetchCardEpic = (action$, state) =>
 export const fetchIdolEpic = (action$, state) =>
     action$.ofType(IDOL_FETCH).mergeMap(action =>
         genInner<Idol>(action, state, `/admin/idol?id=${action.id}`, idolFetchFulfilled, 'Idol download failed'));
+
+export const fetchSubunitEpic = (action$, state) =>
+    action$.ofType(SUBUNIT_FETCH).mergeMap(action =>
+        genInner<Subunit>(action, state, `/admin/subunit?id=${action.id}`, subunitFetchFulfilled, 'Subunit download failed'));
