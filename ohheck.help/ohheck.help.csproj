@@ -9,6 +9,8 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="src\components\akiedit.tsx" />
+    <None Remove="src\components\common\aki.tsx" />
     <None Remove="src\types\commontypes\storage.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +41,8 @@
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\components\admin\akiedit.tsx" />
+    <TypeScriptCompile Include="src\components\common\aki.tsx" />
     <TypeScriptCompile Include="src\epics\utils.ts" />
     <TypeScriptCompile Include="src\types\commontypes\storage.ts" />
   </ItemGroup>
