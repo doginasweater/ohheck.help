@@ -53,16 +53,36 @@ namespace ohheck.help {
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options => {
-                options.User.RequireUniqueEmail = true;
-                options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents {
-                    OnRedirectToLogin = context => {
+            var secretKey = Configuration["secretkey"];
+            var signingkey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options => new JwtBearerOptions {
+                Events = new JwtBearerEvents {
+                    OnAuthenticationFailed = context => {
                         context.Response.Clear();
                         context.Response.StatusCode = 401;
 
                         return Task.FromResult(0);
                     }
-                };
+                },
+                TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuerSigningKey = false,
+                    IssuerSigningKey = signingkey,
+                    ValidateIssuer = false,
+                    ValidateLifetime = false,
+                    ValidateAudience = false,
+                    ValidIssuer = Configuration.GetSection("SiteConfig:url").Value,
+                    ValidAudience = Configuration.GetSection("SiteConfig:url").Value,
+                }
+            });
+
+            services.Configure<IdentityOptions>(options => {
+                options.User.RequireUniqueEmail = true;
             });
 
             services.Configure<Secrets>(Configuration);
@@ -99,55 +119,11 @@ namespace ohheck.help {
                     HotModuleReplacement = true,
                     ReactHotModuleReplacement = true
                 });
-
-                app.UseJwtBearerAuthentication(new JwtBearerOptions {
-                    AutomaticAuthenticate = true,
-                    AutomaticChallenge = true,
-                    TokenValidationParameters = new TokenValidationParameters {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = signingkey,
-                        ValidateIssuer = false,
-                        ValidateLifetime = false,
-                        ValidateAudience = false,
-                    },
-                    Events = new JwtBearerEvents {
-                        OnAuthenticationFailed = context => {
-                            context.Response.Clear();
-                            context.Response.StatusCode = 401;
-
-                            return Task.FromResult(0);
-                        }
-                    }
-                });
-            } else {
-                app.UseExceptionHandler("/Home/Error");
-
-                app.UseJwtBearerAuthentication(new JwtBearerOptions {
-                    AutomaticAuthenticate = true,
-                    AutomaticChallenge = true,
-                    TokenValidationParameters = new TokenValidationParameters {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = signingkey,
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateAudience = true,
-                        ValidIssuer = Configuration.GetSection("SiteConfig:url").Value,
-                        ValidAudience = Configuration.GetSection("SiteConfig:url").Value,
-                    },
-                    Events = new JwtBearerEvents {
-                        OnAuthenticationFailed = context => {
-                            context.Response.Clear();
-                            context.Response.StatusCode = 401;
-
-                            return Task.FromResult(0);
-                        }
-                    }
-                });
             }
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
             app.UseMvc(routes => {
                 routes.MapRoute(

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication;
 using ohheck.help.Models;
 using ohheck.help.Models.AccountViewModels;
 using ohheck.help.Services;
@@ -24,14 +25,12 @@ namespace ohheck.help.Controllers {
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly string _externalCookieScheme;
         private readonly PasswordHasher<ApplicationUser> _passwordHasher;
         private readonly Secrets _secrets;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
@@ -39,7 +38,6 @@ namespace ohheck.help.Controllers {
             IOptions<Secrets> secrets) {
             _userManager = userManager;
             _signInManager = signInManager;
-            _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
@@ -53,7 +51,7 @@ namespace ohheck.help.Controllers {
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null) {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+            await HttpContext.SignOutAsync();
 
             ViewData["ReturnUrl"] = returnUrl;
 
