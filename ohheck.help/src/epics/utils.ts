@@ -4,21 +4,29 @@ import { Observable } from 'rxjs/Observable';
 import { logoutWithNote, setNotification } from 'actions/admin';
 import { Notification } from 'types/admin';
 
-const makeHeader = (token?: string) => {
-    return token ? {
-        'Authorization': `bearer ${token}`
-    } : {};
+const makeHeader = (token?: string, contenttype?: string, accept?: string) => {
+    let headers = new Headers();
+    
+    if (token) {
+        headers.append('Authorization', `bearer ${token}`);
+    }
+    
+    if (contenttype) {
+        headers.append('Content-Type', contenttype);
+    }
+
+    if (accept) {
+        headers.append('Accept', accept);
+    }
+
+    return headers;
 }
 
 export const get = <T>(endpoint: string, authToken?: string): Observable<T> =>
     Observable.from(
         fetch(endpoint, {
             method: 'GET',
-            headers: {
-                ...makeHeader(authToken),
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
+            headers: makeHeader(authToken, 'application/json', 'application/json')
         }).then<T>(response => {
             if (response.ok) {
                 return response.json();
@@ -34,11 +42,7 @@ export const post = <T>(endpoint: string, body?: {}, authToken?: string): Observ
     Observable.from(
         fetch(endpoint, {
             method: 'POST',
-            headers: {
-                ...makeHeader(authToken),
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
+            headers: makeHeader(authToken, 'application/json', 'application/json'),
             body: JSON.stringify(body)
         }).then<T>(response => {
             if (response.ok) {

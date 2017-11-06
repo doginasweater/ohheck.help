@@ -21,20 +21,19 @@ export default class Login extends React.Component<any, any> {
     submit = event => {
         event.preventDefault();
 
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
         fetch('/account/connect', {
             method: 'POST',
             body: JSON.stringify({
                 Username: this.state.username,
                 Password: this.state.password
             }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
+            headers: headers
+        }).then(response => {
             return response.json();
-        })
-        .then((data: any) => {
+        }).then((data: any) => {
             if (data) {
                 this.props.authenticate(data.token, new Date(data.expiration));
             } else {

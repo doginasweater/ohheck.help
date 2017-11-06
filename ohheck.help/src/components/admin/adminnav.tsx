@@ -61,16 +61,22 @@ export default class AdminNav extends React.Component<any, any> {
                     </li>
                     <li className="divider" />
                     <li>
-                        <Icon icon="settings" />
-                        <Link to="/dashboard/settings">
-                            Settings
+                        <Icon icon="person" />
+                        <Link to="/dashboard/akiedit">
+                            Edit Aki Page
+                        </Link>
+                    </li>
+                    <li>
+                        <Icon icon="comment" />
+                        <Link to="/dashboard/comments">
+                            Comments
                         </Link>
                     </li>
                     <li className="divider" />
                     <li>
-                        <Icon icon="person" />
-                        <Link to="/dashboard/akiedit">
-                            Edit Aki Page
+                        <Icon icon="settings" />
+                        <Link to="/dashboard/settings">
+                            Settings
                         </Link>
                     </li>
                     <li className="divider" />

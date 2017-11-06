@@ -61,24 +61,28 @@ namespace ohheck.help {
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options => new JwtBearerOptions {
-                Events = new JwtBearerEvents {
+            .AddJwtBearer(options => {
+                options.Events = new JwtBearerEvents {
                     OnAuthenticationFailed = context => {
                         context.Response.Clear();
                         context.Response.StatusCode = 401;
 
                         return Task.FromResult(0);
                     }
-                },
-                TokenValidationParameters = new TokenValidationParameters {
+                };
+
+                options.TokenValidationParameters = new TokenValidationParameters {
                     ValidateIssuerSigningKey = false,
-                    IssuerSigningKey = signingkey,
                     ValidateIssuer = false,
                     ValidateLifetime = false,
                     ValidateAudience = false,
+                    ValidateActor = false,
+                    IssuerSigningKey = signingkey,
                     ValidIssuer = Configuration.GetSection("SiteConfig:url").Value,
-                    ValidAudience = Configuration.GetSection("SiteConfig:url").Value,
-                }
+                    ValidAudience = Configuration.GetSection("SiteConfig:url").Value
+                };
+
+                options.Audience = Configuration.GetSection("SiteConfig:url").Value;
             });
 
             services.Configure<IdentityOptions>(options => {
@@ -108,17 +112,14 @@ namespace ohheck.help {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             loggerFactory.AddConsole();
 
-            var secretKey = Configuration["secretkey"];
-            var signingkey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
 
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
+                app.UseWebpackDevMiddleware(/*new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true,
                     ReactHotModuleReplacement = true
-                });
+                }*/);
             }
 
             app.UseStaticFiles();

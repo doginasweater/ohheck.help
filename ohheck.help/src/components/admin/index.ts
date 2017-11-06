@@ -1,4 +1,5 @@
 ﻿import Admin from './admin';
+import AdminComments from './comments';
 import AdminHome from './adminhome';
 import AdminNav from './adminnav';
 import AkiEdit from './akiedit';
@@ -20,6 +21,7 @@ import SurveyView from './surveyview';
 
 export {
     Admin,
+    AdminComments,
     AdminHome,
     AdminNav,
     AkiEdit,

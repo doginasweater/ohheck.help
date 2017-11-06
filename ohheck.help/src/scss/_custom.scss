@@ -224,6 +224,20 @@ ol.horizontal {
     }
 }
 
+.tab-row {
+    border-bottom: 1px solid black;
+    margin-bottom: 2em;
+}
+
+.tab {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.tab:hover {
+    background-color: #ececec;
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

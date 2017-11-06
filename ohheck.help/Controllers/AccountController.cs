@@ -173,12 +173,13 @@ namespace ohheck.help.Controllers {
         }
 
         private async Task<JwtSecurityToken> GetJwtSecurityToken(ApplicationUser user) {
+            _logger.LogInformation($"Secret key: {_secrets.secretkey}");
             var signingkey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secrets.secretkey));
             var userClaims = await _userManager.GetClaimsAsync(user);
 
             return new JwtSecurityToken(
-                audience: "http://localhost:55555",
-                issuer: "http://localhost:55555",
+                audience: "http://localhost:5000",
+                issuer: "http://localhost:5000",
                 claims: GetTokenClaims(user).Union(userClaims),
                 expires: DateTime.UtcNow.AddDays(1),
                 signingCredentials: new SigningCredentials(signingkey, SecurityAlgorithms.HmacSha256)

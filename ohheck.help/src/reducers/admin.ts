@@ -58,7 +58,9 @@ const AdminInitial: IAdminStore = {
     fullidols: [],
     idolloading: false,
     fullsubunits: [],
-    subunitloading: false
+    subunitloading: false,
+    akipage: '',
+    akipageloading: false
 };
 
 export const admin = (state = AdminInitial, action): IAdminStore => {
