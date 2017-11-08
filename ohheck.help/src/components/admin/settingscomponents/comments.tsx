@@ -30,25 +30,25 @@ export class CommentsSettings extends React.Component<CommentsProps & IReduxProp
 
     render() {
         return (
-            <div className="pure-u-1 slide-in">
+            <div>
                 <fieldset>
                     <legend>Settings</legend>
                     <div className="pure-control-group inline">
                         <span className="label">Turn Comments on?</span>
                         <div className="pure-u-1-4">
                             <label htmlFor="on" className="pure-radio">
-                                <input type="radio" name="status" id="on" value="on" checked={true} /> On
-                                </label>
+                                <input type="radio" name="status" id="on" value="on" defaultChecked={true} /> On
+                            </label>
                             <label htmlFor="off" className="pure-radio">
                                 <input type="radio" name="status" id="off" value="off" /> Off
-                                </label>
+                            </label>
                         </div>
                     </div>
                     <div className="pure-control-group inline">
                         <span className="label">Allow Anonymous?</span>
                         <div className="pure-u-1-4">
                             <label htmlFor="anonon" className="pure-radio">
-                                <input type="radio" name="anon" id="anonon" value="on" checked={true} /> On
+                                <input type="radio" name="anon" id="anonon" value="on" defaultChecked={true} /> On
                             </label>
                             <label htmlFor="anonoff" className="pure-radio">
                                 <input type="radio" name="anon" id="anonoff" value="off" /> Off
@@ -63,8 +63,8 @@ export class CommentsSettings extends React.Component<CommentsProps & IReduxProp
                 <fieldset>
                     <legend>Save</legend>
                     <button className="pure-button button-primary" type="button" onClick={this.save}>
-                        <Icon icon="done" /> Save Changes
-                        </button>
+                        <Icon icon="done" /> Save
+                    </button>
                 </fieldset>
             </div>
         );

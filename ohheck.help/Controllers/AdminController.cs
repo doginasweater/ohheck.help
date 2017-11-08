@@ -30,8 +30,7 @@ namespace ohheck.help.Controllers
             _db.user = User?.Identity?.Name ?? "admin panel";
         }
 
-        public async Task<Result> Sync()
-        {
+        public async Task<Result> Sync() {
             var url = "api/cacheddata/";
 
             var response = await client.GetAsync(url);
@@ -41,14 +40,14 @@ namespace ohheck.help.Controllers
                 var content = await response.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<CachedResponse>(content);
 
-                var units = obj.cards_info.sub_units.Select(x => new Subunit
-                {
+                var units = obj.cards_info.sub_units.Select(x => new Subunit {
                     name = x
                 });
 
-                foreach (var su in units)
-                {
-                    _db.Subunits.Add(su);
+                foreach (var su in units) {
+                    if (!_db.Subunits.Any(x => x.name == su.name)) {
+                        _db.Subunits.Add(su);
+                    }
                 }
 
                 var result = await _db.SaveChangesAsync();
@@ -62,15 +61,12 @@ namespace ohheck.help.Controllers
 
                     url = respObj.next;
 
-                    foreach (var card in respObj.results)
-                    {
-                        if (_db.Cards.Any(x => x.apiid == card.id))
-                        {
+                    foreach (var card in respObj.results) {
+                        if (_db.Cards.Any(x => x.apiid == card.id)) {
                             continue;
                         }
 
-                        var c = new Card
-                        {
+                        var c = new Card {
                             apiid = card.id,
                             gameid = card.game_id,
                             rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
@@ -80,8 +76,7 @@ namespace ohheck.help.Controllers
                             isidol = false
                         };
 
-                        var c2 = new Card
-                        {
+                        var c2 = new Card {
                             apiid = card.id,
                             gameid = card.game_id,
                             rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
@@ -93,22 +88,36 @@ namespace ohheck.help.Controllers
 
                         var idol = _db.Idols.FirstOrDefault(x => x.name == card.idol.name);
 
-                        if (idol == null)
-                        {
-                            var g = _db.Groups.FirstOrDefault(x => x.name == card.idol.main_unit);
+                        if (idol == null) {
+                            var g = _db.Groups.Include(x => x.subunits).FirstOrDefault(x => x.name == card.idol.main_unit);
+                            var su = _db.Subunits.Include(x => x.idols).FirstOrDefault(x => x.name == card.idol.sub_unit);
 
-                            if (g == null)
-                            {
-                                g = new Group
-                                {
-                                    name = card.idol.main_unit
+                            if (g == null) {
+                                g = new Group {
+                                    name = card.idol.main_unit,
                                 };
+
+                                if (su != null) {
+                                    g.subunits = new List<Subunit> {
+                                        su
+                                    };
+                                }
+
+                                _db.Groups.Add(g);
+                                _db.SaveChanges();
+                            } else if (su != null) {
+                                if (g.subunits == null) {
+                                    g.subunits = new List<Subunit>();
+                                }
+
+                                if (!g.subunits.Any(x => x.id == su.id)) {
+                                    g.subunits.Add(su);
+                                }
                             }
 
-                            idol = new Idol
-                            {
+                            idol = new Idol {
                                 name = card.idol.name,
-                                subunit = _db.Subunits.Include(x => x.idols).FirstOrDefault(x => x.name == card.idol.sub_unit),
+                                subunit = su,
                                 group = g
                             };
                         }

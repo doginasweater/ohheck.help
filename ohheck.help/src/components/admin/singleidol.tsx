@@ -5,6 +5,7 @@ import { IAdminStore, IReduxProps } from 'types/redux';
 import { Notification } from 'types/admin';
 import { Idol } from 'types/commontypes';
 import { idolFetch, setNotification } from 'actions/admin';
+import * as moment from 'moment';
 
 interface SingleIdolProps {
     admin: IAdminStore
@@ -74,7 +75,7 @@ export default class SingleIdol extends React.Component<SingleIdolProps & IRedux
                         </tr>
                         <tr>
                             <td><b>Last import</b></td>
-                            <td>{idol.modified}</td>
+                            <td>{moment(idol.modified).format('lll')}</td>
                         </tr>
                         <tr>
                             <td><b>Cards</b></td>

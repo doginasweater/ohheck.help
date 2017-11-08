@@ -1,8 +1,15 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Icon } from 'components/common';
+import { IAdminStore, IReduxProps } from 'types/redux';
 import 'whatwg-fetch';
 
-export class Sync extends React.Component<any, any> {
+interface ISyncProps {
+    admin: IAdminStore
+}
+
+@connect(state => ({ admin: state.admin }))
+export class Sync extends React.Component<ISyncProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }

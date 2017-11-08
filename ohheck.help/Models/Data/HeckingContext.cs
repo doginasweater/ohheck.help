@@ -11,8 +11,7 @@ namespace ohheck.help.Models.Data
         public HeckingContext(DbContextOptions<HeckingContext> options)
           : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
+        protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
             builder.Entity<AnswerCard>()
@@ -73,16 +72,12 @@ namespace ohheck.help.Models.Data
 
         public string user { get; set; } = "anonymous";
 
-        public override int SaveChanges()
-        {
+        public override int SaveChanges() {
             var changeSet = ChangeTracker.Entries<Common>();
 
-            if (changeSet != null)
-            {
-                foreach (var entry in changeSet.Where(x => x.State != EntityState.Unchanged))
-                {
-                    if (entry.State == EntityState.Added)
-                    {
+            if (changeSet != null) {
+                foreach (var entry in changeSet.Where(x => x.State != EntityState.Unchanged)) {
+                    if (entry.State == EntityState.Added) {
                         entry.Entity.created = DateTime.Now;
                         entry.Entity.createdby = user;
                     }
@@ -95,16 +90,12 @@ namespace ohheck.help.Models.Data
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) {
             var changeSet = ChangeTracker.Entries<Common>();
 
-            if (changeSet != null)
-            {
-                foreach (var entry in changeSet.Where(x => x.State != EntityState.Unchanged))
-                {
-                    if (entry.State == EntityState.Added)
-                    {
+            if (changeSet != null) {
+                foreach (var entry in changeSet.Where(x => x.State != EntityState.Unchanged)) {
+                    if (entry.State == EntityState.Added) {
                         entry.Entity.created = DateTime.Now;
                         entry.Entity.createdby = user;
                     }

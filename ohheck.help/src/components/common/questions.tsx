@@ -17,7 +17,7 @@ export class Questions extends React.Component<QuestionsProps, any> {
         super(props);
     }
 
-    renderQuestions = () => this.props.questions.map((item: Question, index: number) => {
+    renderQuestions = (): JSX.Element[] => this.props.questions.map((item: Question, index: number) => {
         switch (item.type) {
             case 'SingleLineText':
                 return <SingleLineText

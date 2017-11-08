@@ -116,10 +116,10 @@ namespace ohheck.help {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
 
-                app.UseWebpackDevMiddleware(/*new WebpackDevMiddlewareOptions {
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true,
                     ReactHotModuleReplacement = true
-                }*/);
+                });
             }
 
             app.UseStaticFiles();

@@ -4,6 +4,7 @@ import { Card } from 'types/commontypes';
 import { IReduxProps, IAdminStore } from 'types/redux';
 import { cardFetch, setNotification } from 'actions/admin';
 import { Notification } from 'types/admin';
+import * as moment from 'moment';
 
 interface SingleCardProps {
     admin: IAdminStore;
@@ -78,7 +79,7 @@ export default class SingleCard extends React.Component<SingleCardProps & IRedux
                     <b>Promo</b>: {card.ispromo ? "Yes" : "No"}
                 </div>
                 <div className="pure-u-1-4">
-                    <b>Last Modified</b>: {card.modified}
+                    <b>Last Modified</b>: {moment(card.modified).format('lll')}
                 </div>
                 <div className="pure-u-1">
                     <b>Tags</b>: (coming soon)

@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ohheck.help.Models.Data
 {
     public abstract class Common
     {
+        [Key]
         public int id { get; set; }
 
         public DateTime created { get; set; }

@@ -41,14 +41,14 @@ export default class Settings extends React.Component<ISettingsProps, any> {
 
                 <form className="pure-form pure-form-aligned">
                     <div className="pure-u-1 tab-row">
-                        <div className="pure-u-1-4 tab">
-                            <a href="#" onClick={() => this.changeTab("HomeSettings")}>Home Page</a>
+                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab("HomeSettings")}>
+                            Home Page
                         </div>
-                        <div className="pure-u-1-4 tab">
-                            <a href="#" onClick={() => this.changeTab("CommentsSettings")}>Comments</a>
+                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab("CommentsSettings")}>
+                            Comments
                         </div>
-                        <div className="pure-u-1-4 tab">
-                            <a href="#" onClick={() => this.changeTab("Sync")}>Sync</a>
+                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab("Sync")}>
+                            Card Sync
                         </div>
                     </div>
                     <CurTab />
