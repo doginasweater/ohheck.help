@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { Question, Group, Subunit } from 'types/admin';
+import { Question, Group, Subunit, Answer } from 'types/admin';
 import { Icon } from 'components/common';
 import { IReduxProps, IAdminStore, ISurveyMgmt } from 'types/redux';
 import { newSetCardFilter, newCardsFetch, newSelectCard, newUnselectCard } from 'actions/surveymgmt';
@@ -24,9 +24,9 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         const { dispatch } = this.props;
 
         if (dir === 'left') {
-            dispatch(newSelectCard(id));
+            dispatch(newSelectCard(id, this.props.index));
         } else if (dir === 'right') {
-            dispatch(newUnselectCard(id));
+            dispatch(newUnselectCard(id, this.props.index));
         }
     }
 
@@ -56,7 +56,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         dispatch(newCardsFetch(Number(event.currentTarget.value), name));
     }
 
-    renderOptions = (items: (Group | Subunit | Idol)[]): JSX.Element[] => 
+    renderOptions = (items: (Group | Subunit | Idol)[]): JSX.Element[] =>
         items.map((item, index) => <option value={item.id} key={index}>{item.name}</option>);
 
     myVal = (type: string): string => {

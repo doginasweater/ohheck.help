@@ -345,5 +345,38 @@ namespace ohheck.help.Controllers {
         }
 
         public IActionResult Error() => NotFound();
+
+        public async Task<Result> SaveSurvey([FromBody] NewSurveyViewModel newSurvey) {
+            var survey = new Survey {
+                active = newSurvey.active,
+                title = newSurvey.title,
+                slug = newSurvey.slug,
+                name = newSurvey.name,
+                comments = newSurvey.comments,
+                questions = newSurvey.questions.Select(x => new Question {
+                    text = x.text,
+                    sortorder = x.sortorder,
+                    required = x.required,
+                    type = (AnswerType)Enum.Parse(typeof(AnswerType), x.type),
+                    answers = x.answers.Select(y => new Answer {
+                        sortorder = y.sortorder,
+                        text = y.text,
+                        value = y.value,
+                        answercards = y.cards == null ? new List<AnswerCard>() : y.cards.Select(z => new AnswerCard {
+                            cardid = z.id
+                        }).ToList()
+                    }).ToList()
+                }).ToList()
+            };
+
+            try {
+                _db.Surveys.Add(survey);
+                await _db.SaveChangesAsync();
+
+                return Result.Success();
+            } catch (Exception ex) {
+                return Result.Failure(ex.Message);
+            }
+        }
     }
 }

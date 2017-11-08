@@ -26,7 +26,6 @@ export default class NewSelectBox extends React.Component<NewSelectBoxProps, any
     handleChange = event => {
         const q: Question = {
             ...this.props.question,
-            type: 'SelectBox',
             text: event.target.value
         };
 
@@ -161,7 +160,7 @@ export default class NewSelectBox extends React.Component<NewSelectBoxProps, any
     render() {
         return (
             <fieldset>
-                <legend>Select Box</legend>
+                <legend>Select Box - Allows for a single choice from a dropdown list</legend>
 
                 <label htmlFor={`box-${this.props.question.id}`}>
                     Please enter your question text

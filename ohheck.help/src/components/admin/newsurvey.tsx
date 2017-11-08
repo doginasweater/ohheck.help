@@ -4,7 +4,7 @@ import { Survey, Question, Answer } from 'types/admin';
 import { IAdminStore, ISurveyMgmt, IReduxProps } from 'types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
-import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle } from 'actions/surveymgmt';
+import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle, saveSurvey } from 'actions/surveymgmt';
 import { idolsListFetch, subunitsListFetch, groupsListFetch } from 'actions/admin';
 import { Icon } from 'components/common';
 
@@ -142,7 +142,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         const { questions } = this.props.surveymgmt.newsurvey;
         const newQuestions = questions
             .filter(question => question.id !== Number(event.currentTarget.id))
-            .map((item: Question, index: number) => ({ ...item, sortorder: index }));
+            .map((item: Question, index: number) => ({ ...item, sortorder: index + 1 }));
 
         dispatch(newSetQuestions(newQuestions));
     }
@@ -164,7 +164,11 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
     }
 
     save = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
 
+        const { dispatch } = this.props;
+
+        dispatch(saveSurvey(this.props.surveymgmt.newsurvey));
     }
 
     render() {

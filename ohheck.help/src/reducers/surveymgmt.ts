@@ -1,4 +1,4 @@
-﻿import { Survey, Question } from 'types/admin';
+﻿import { Survey, Question, Answer } from 'types/admin';
 import { ISurveyMgmt } from 'types/redux';
 
 import {
@@ -16,7 +16,9 @@ import {
     NEW_CARDS_FETCH,
     NEW_CARDS_FETCH_FULFILLED,
     NEW_SELECT_CARD,
-    NEW_UNSELECT_CARD
+    NEW_UNSELECT_CARD,
+    SAVE_SURVEY,
+    SAVE_SURVEY_FULFILLED
 } from 'constants/surveymgmt';
 
 const initialState: ISurveyMgmt = {
@@ -136,6 +138,17 @@ export const surveymgmt = (state = initialState, action): ISurveyMgmt => {
                     ...state.selectedcards,
                     card
                 ];
+
+                let q = newState.newsurvey.questions[action.index];
+
+                if (q.answers.length === 0) {
+                    q.answers.push(new Answer({ cards: [] }));
+                }
+
+                newState.newsurvey.questions[action.index].answers[0].cards = [
+                    ...q.answers[0].cards!,
+                    card
+                ];
             }
 
             return newState;
@@ -152,10 +165,23 @@ export const surveymgmt = (state = initialState, action): ISurveyMgmt => {
                 newUnselectState.cards = [
                     ...state.cards,
                     selectedcard
-                ]
+                ];
+
+                newUnselectState.newsurvey.questions[action.index].answers[0].cards =
+                    newUnselectState.newsurvey.questions[action.index].answers[0].cards!.filter(item => item.id !== action.id);
             }
 
             return newUnselectState;
+        case SAVE_SURVEY:
+            return {
+                ...state,
+                surveyloading: true
+            };
+        case SAVE_SURVEY_FULFILLED:
+            return {
+                ...state,
+                surveyloading: false
+            };
         default:
             return state;
     }
