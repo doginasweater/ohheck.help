@@ -7,14 +7,11 @@ using ohheck.help.Models;
 using ohheck.help.Models.Data;
 using ohheck.help.Models.ViewModels;
 
-namespace ohheck.help.Controllers
-{
-    public class ApiController : Controller
-    {
+namespace ohheck.help.Controllers {
+    public class ApiController : Controller {
         private readonly HeckingContext _db;
 
-        public ApiController(HeckingContext ctx)
-        {
+        public ApiController(HeckingContext ctx) {
             _db = ctx;
             _db.user = User?.Identity?.Name ?? "web";
         }
@@ -29,8 +26,7 @@ namespace ohheck.help.Controllers
                 .Prettify(false);
 
         [HttpPost]
-        public async Task<Result> Submit([FromBody] SurveySubmission response)
-        {
+        public async Task<Result> Submit([FromBody] SurveySubmission response) {
             var survey = await _db.Surveys
                 .Include(x => x.questions)
                 .ThenInclude(x => x.answers)
@@ -39,18 +35,15 @@ namespace ohheck.help.Controllers
                 .SingleOrDefaultAsync(x => x.id == response.surveyid);
 
             var choices = survey.questions
-                .Select(x =>
-                {
-                    var c = new Choice
-                    {
+                .Select(x => {
+                    var c = new Choice {
                         question = x,
                         type = x.type
                     };
 
                     var q_and_a = response.choices.SingleOrDefault(y => y.Key == x.id);
 
-                    switch (x.type)
-                    {
+                    switch (x.type) {
                         case AnswerType.MultiLineText:
                         case AnswerType.SingleLineText:
                             c.text = q_and_a.Value;
@@ -69,8 +62,7 @@ namespace ohheck.help.Controllers
                 })
                 .ToList();
 
-            var submission = new Submission
-            {
+            var submission = new Submission {
                 surveyid = survey.id,
                 answers = choices
             };
@@ -83,8 +75,7 @@ namespace ohheck.help.Controllers
 
             var cards = response.cards
                 .Where(x => x.Value == true)
-                .Select(x => new CardChoice
-                {
+                .Select(x => new CardChoice {
                     cardid = x.Key,
                     choiceid = choiceid.id
                 })

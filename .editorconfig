@@ -42,4 +42,4 @@ dotnet_style_null_propagation                         = true : suggestion
 dotnet_style_explicit_tuple_names                     = true : suggestion
 
 [*.{cshtml,json,js,jsx,ts,tsx}]
-indent_size = 2
+indent_size = 4

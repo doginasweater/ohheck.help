@@ -117,7 +117,11 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
 
         const unmoved = questions[index];
 
-        let toSwap = questions.filter(item => item.sortorder === movedQuestion.sortorder)[0];
+        let toSwap = questions.find(item => item.sortorder === movedQuestion.sortorder);
+
+        if (!toSwap) {
+            return;
+        }
 
         const toSwapIndex = questions.indexOf(toSwap);
 
@@ -136,8 +140,11 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
 
         const { dispatch } = this.props;
         const { questions } = this.props.surveymgmt.newsurvey;
+        const newQuestions = questions
+            .filter(question => question.id !== Number(event.currentTarget.id))
+            .map((item: Question, index: number) => ({ ...item, sortorder: index }));
 
-        dispatch(newSetQuestions(questions.filter(question => question.id !== Number(event.currentTarget.id))));
+        dispatch(newSetQuestions(newQuestions));
     }
 
     addQuestion = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -149,10 +156,15 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         let newquestion = new Question({
             id: questions.length + 1,
             text: '',
-            sortorder: questions.length + 1
+            sortorder: questions.length + 1,
+            answers: []
         });
 
         dispatch(newSetQuestions(questions.concat([newquestion])));
+    }
+
+    save = (event: React.MouseEvent<HTMLButtonElement>): void => {
+
     }
 
     render() {
@@ -227,6 +239,13 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
                                 <Icon icon="add" /> Add a new question
                             </button>
                         </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Save Survey</legend>
+
+                        <button className="pure-button button-primary" type="button" onClick={this.save}>
+                            <Icon icon="done" /> Save
+                        </button>
                     </fieldset>
                 </form>
             </div>

@@ -13,17 +13,14 @@ using ohheck.help.Models.ApiModels;
 using Newtonsoft.Json;
 using ohheck.help.Models.ViewModels;
 
-namespace ohheck.help.Controllers
-{
+namespace ohheck.help.Controllers {
     [Authorize]
-    public class AdminController : Controller
-    {
+    public class AdminController : Controller {
         private readonly ILogger _logger;
         private readonly HeckingContext _db;
         private readonly HttpClient client;
 
-        public AdminController(ILoggerFactory factory, HeckingContext ctx, HttpClient _client)
-        {
+        public AdminController(ILoggerFactory factory, HeckingContext ctx, HttpClient _client) {
             _logger = factory.CreateLogger<AdminController>();
             _db = ctx;
             client = _client;
@@ -35,8 +32,7 @@ namespace ohheck.help.Controllers
 
             var response = await client.GetAsync(url);
 
-            if (response.IsSuccessStatusCode)
-            {
+            if (response.IsSuccessStatusCode) {
                 var content = await response.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<CachedResponse>(content);
 
@@ -54,8 +50,7 @@ namespace ohheck.help.Controllers
 
                 url = "api/cards/";
 
-                do
-                {
+                do {
                     var resp = await client.GetStringAsync(url);
                     var respObj = JsonConvert.DeserializeObject<ApiResponse>(resp);
 
@@ -138,8 +133,7 @@ namespace ohheck.help.Controllers
             return Result.Failure(response.ReasonPhrase);
         }
 
-        public IActionResult Responses(int id)
-        {
+        public IActionResult Responses(int id) {
             var submissions = _db.Submissions
                 .Include(x => x.answers)
                     .ThenInclude(x => x.question)
@@ -155,8 +149,7 @@ namespace ohheck.help.Controllers
                 .Where(x => x.answers.Any())
                 .SelectMany(x => x.answers)
                 .OrderBy(x => x.question.sortorder)
-                .Select(x => new
-                {
+                .Select(x => new {
                     question = x.question.sortorder,
                     answer = x.answer.text,
                     text = x.text,
@@ -167,8 +160,7 @@ namespace ohheck.help.Controllers
                 })
                 .GroupBy(x => x.submissionid)
                 .ToList()
-                .Select(x => new
-                {
+                .Select(x => new {
                     submissionid = x.Key,
                     submitted = x.First().submitted.ToString("g"),
                     questions = x.OrderBy(y => y.question)
@@ -178,8 +170,7 @@ namespace ohheck.help.Controllers
             return Json(submissions);
         }
 
-        public IActionResult SurveysByCard(int id)
-        {
+        public IActionResult SurveysByCard(int id) {
             var responses = from cc in _db.CardChoices
                             join c in _db.Choices on cc.choiceid equals c.id
                             join s in _db.Submissions on c.submissionid equals s.id
@@ -188,8 +179,7 @@ namespace ohheck.help.Controllers
 
             var molded = responses
                 .GroupBy(x => x.id)
-                .Select(x => new
-                {
+                .Select(x => new {
                     count = x.Count(),
                     imageurl = x.FirstOrDefault().imageurl,
                     id = x.FirstOrDefault().id
@@ -281,13 +271,11 @@ namespace ohheck.help.Controllers
                 .Take(take)
                 .ToListAsync();
 
-        public async Task<List<Card>> CardList(string filter, int id)
-        {
+        public async Task<List<Card>> CardList(string filter, int id) {
             var query = _db.Cards
                 .Where(x => x.ispromo == false);
 
-            switch (filter)
-            {
+            switch (filter) {
                 case "group":
                     query = query
                         .Include(x => x.idol)
@@ -310,16 +298,14 @@ namespace ohheck.help.Controllers
             var results = await query
                 .OrderBy(x => x.gameid)
                 .ThenBy(x => x.isidol)
-                .Select(x => new Card
-                {
+                .Select(x => new Card {
                     id = x.id,
                     gameid = x.gameid,
                     rarity = x.rarity,
                     attribute = x.attribute,
                     imageurl = x.imageurl,
                     isidol = x.isidol,
-                    idol = new Idol
-                    {
+                    idol = new Idol {
                         name = x.idol.name
                     }
                 })
@@ -339,10 +325,8 @@ namespace ohheck.help.Controllers
                 .Select(x => new NotificationViewModel(x))
                 .ToList();
 
-        public async Task<Result> AddNotification(NotificationViewModel n)
-        {
-            var note = new Notification
-            {
+        public async Task<Result> AddNotification(NotificationViewModel n) {
+            var note = new Notification {
                 level = (Level)Enum.Parse(typeof(Level), n.level),
                 text = n.text,
                 action = n.action,
@@ -350,13 +334,10 @@ namespace ohheck.help.Controllers
                 seen = false
             };
 
-            try
-            {
+            try {
                 await _db.Notifications.AddAsync(note);
                 await _db.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 return Result.Failure(ex.Message);
             }
 
