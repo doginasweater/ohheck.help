@@ -6,7 +6,7 @@ import { IAdminStore, ISurveyMgmt, IReduxProps } from 'types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
 import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle, saveSurvey, surveyFetch } from 'actions/surveymgmt';
-import { idolsListFetch, subunitsListFetch, groupsListFetch, surveysFetch } from 'actions/admin';
+import { idolsListFetch, subunitsListFetch, groupsListFetch, surveysFetch, setNotification, clearNotifications } from 'actions/admin';
 import { Icon } from 'components/common';
 import { Notification } from 'types/admin/notification';
 
@@ -30,6 +30,11 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(idolsListFetch());
         dispatch(subunitsListFetch());
         dispatch(groupsListFetch());
+    }
+
+    error = (text: string): void => {
+        window.scrollTo(0, 0);
+        this.props.dispatch(setNotification(Notification.error(text, 'web', 'web')));
     }
 
     handleChange = (event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): void => {
@@ -165,10 +170,86 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(newSetQuestions(questions.concat([newquestion])));
     }
 
+    validateQuestions = (questions: Question[]): boolean => {
+        for (let i = 0; i < questions.length; i++) {
+            const current = questions[i];
+
+            switch (current.type) {
+                case 'Cards':
+                    if (!current.answers || !current.answers[0] || !current.answers[0].cards || current.answers[0].cards!.length === 0) {
+                        this.error(`You must select at least one card for question ${current.sortorder}`);
+                        return false;
+                    }
+                    break;
+                case 'MultiLineText':
+                case 'SingleLineText':
+                    if (!current.text) {
+                        this.error(`You must enter question text for question ${current.sortorder}`);
+                        return false;
+                    }
+                    break;
+                case 'SelectBox':
+                case 'RadioButtons':
+                case 'Checkbox':
+                    if (!current.text) {
+                        this.error(`You must enter question text for question ${current.sortorder}`);
+                        return false;
+                    }
+
+                    if (!current.answers || current.answers.length === 0) {
+                        this.error(`You must put in at least one answer for question ${current.sortorder}`);
+                        return false;
+                    }
+
+                    for (let j = 0; j < current.answers.length; j++) {
+                        const cura = current.answers[j];
+
+                        if (!cura.text) {
+                            this.error(`You must enter text for ${current.sortorder} answer ${j + 1}`);
+                            return false;
+                        }
+                    }
+                    break;
+                default:
+                    this.error(`Question ${current.sortorder} is an unknown type`);
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     save = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
+        const { newsurvey } = this.props.surveymgmt;
+
+        dispatch(clearNotifications());
+
+        if (!newsurvey.name) {
+            this.error('Your survey must have a name');
+            return;
+        }
+
+        if (!newsurvey.title) {
+            this.error('Your survey must have a title');
+            return;
+        }
+
+        if (!newsurvey.slug) {
+            this.error('You must provide a slug for your survey. This determines the url.');
+            return;
+        }
+
+        if (!newsurvey.questions || newsurvey.questions.length === 0) {
+            this.error('You must provide at least one question');
+            return;
+        }
+
+        if (!this.validateQuestions(newsurvey.questions)) {
+            return;
+        }
 
         dispatch(saveSurvey(this.props.surveymgmt.newsurvey));
     }
@@ -180,9 +261,10 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         if (!this.props.surveymgmt.surveyloading && !this.props.surveymgmt.savesuccess) {
             const { savemessage } = this.props.surveymgmt;
 
-            Notification.error(savemessage ? savemessage : 'Server error', 'server', 'server');
+            this.error(savemessage ? savemessage : 'Server error');
         } else if (!this.props.surveymgmt.surveyloading && this.props.surveymgmt.savesuccess) {
             dispatch(surveysFetch());
+
             return <Redirect to="/dashboard" />;
         }
 
@@ -196,7 +278,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
 
                         <div className="pure-control-group">
                             <label htmlFor="name">Name</label>
-                            <input type="text" name="name" value={newsurvey.name} onChange={this.handleChange} className="pure-u-1-4" />
+                            <input type="text" name="name" value={newsurvey.name} onChange={this.handleChange} className="pure-u-1-4" required />
                             <span className="pure-form-message-inline">
                                 This is for your purposes.
                             </span>
@@ -204,7 +286,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
 
                         <div className="pure-control-group">
                             <label htmlFor="title">Title</label>
-                            <input type="text" name="title" value={newsurvey.title} onChange={this.handleChange} className="pure-u-1-4" />
+                            <input type="text" name="title" value={newsurvey.title} onChange={this.handleChange} className="pure-u-1-4" required />
                             <span className="pure-form-message-inline">
                                 The name you want the world to see
                             </span>
@@ -214,7 +296,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
                             <label htmlFor="slug">
                                 Slug
                             </label>
-                            <input type="text" name="slug" value={newsurvey.slug} onChange={this.handleSlug} className="pure-u-1-4" />
+                            <input type="text" name="slug" value={newsurvey.slug} onChange={this.handleSlug} className="pure-u-1-4" required />
                             <span className="pure-form-message-inline">
                                 This will determine the survey URL. Lowercase letters, numbers, or hyphens <b>only</b>.
                             </span>
@@ -259,7 +341,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
                     <fieldset>
                         <legend>Save Survey</legend>
 
-                        <button className="pure-button button-primary" type="button" onClick={this.save}>
+                        <button className="pure-button button-primary" type="button" onClick={this.save} disabled={!this.props.surveymgmt.newsurvey}>
                             <Icon icon="done" /> Save
                         </button>
                     </fieldset>

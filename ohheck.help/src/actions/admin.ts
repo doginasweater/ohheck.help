@@ -32,11 +32,13 @@ import {
     IDOL_FETCH,
     IDOL_FETCH_FULFILLED,
     SUBUNIT_FETCH,
-    SUBUNIT_FETCH_FULFILLED
+    SUBUNIT_FETCH_FULFILLED,
+    CLEAR_NOTIFICATIONS
 } from 'constants/admin';
 
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
 export const dismissNotification = (notification: Notification) => ({ type: DISMISS_NOTIFICATION, notification });
+export const clearNotifications = () => ({ type: CLEAR_NOTIFICATIONS });
 
 export const authenticate = (token: string, expiration: Date) => {
     window.localStorage.setItem('bearer', token);

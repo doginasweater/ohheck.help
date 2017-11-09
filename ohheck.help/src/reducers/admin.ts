@@ -22,7 +22,7 @@ import {
     CARDS_FETCH, CARDS_FETCH_FULFILLED,
     CARD_FETCH, CARD_FETCH_FULFILLED,
     IDOL_FETCH, IDOL_FETCH_FULFILLED,
-    SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED
+    SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED, CLEAR_NOTIFICATIONS
 } from 'constants/admin';
 
 const storage = window.localStorage;
@@ -79,6 +79,11 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                 notifications: [
                     ...state.notifications.filter((item: Notification) => item.id !== action.notification.id),
                 ]
+            };
+        case CLEAR_NOTIFICATIONS:
+            return {
+                ...state,
+                notifications: []
             };
         case AUTHENTICATE:
             return {

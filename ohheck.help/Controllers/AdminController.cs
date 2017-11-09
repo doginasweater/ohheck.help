@@ -353,6 +353,12 @@ namespace ohheck.help.Controllers {
         public IActionResult Error() => NotFound();
 
         public async Task<Result> SaveSurvey([FromBody] NewSurveyViewModel newSurvey) {
+            var exists = _db.Surveys.Any(x => x.slug == newSurvey.slug);
+
+            if (exists) {
+                return Result.Failure("A survey with this slug already exists.");
+            }
+
             var survey = new Survey {
                 active = newSurvey.active,
                 title = newSurvey.title,
