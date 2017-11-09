@@ -14,6 +14,7 @@ import {
     newCardsFetchFulfilled,
     saveSurveyFulfilled
 } from 'actions/surveymgmt';
+import { Observable } from 'rxjs/Observable';
 
 export const fetchMgmtSurveyEpic = (action$, state) =>
     action$.ofType(SURVEY_FETCH).mergeMap(action =>
@@ -26,4 +27,5 @@ export const fetchPossibleCardsEpic = (action$, state) =>
 export const saveSurveyEpic = (action$, state) =>
     action$.ofType(SAVE_SURVEY).mergeMap(action =>
         post<serverResp>('/admin/savesurvey', action.survey, state.getState().admin.bearer)
-            .map(resp => saveSurveyFulfilled(resp.success, resp.message)));
+            .map(resp => saveSurveyFulfilled(resp.success, resp.message))
+            .catch(err => Observable.of(saveSurveyFulfilled(false, 'A server error occurred.'))));

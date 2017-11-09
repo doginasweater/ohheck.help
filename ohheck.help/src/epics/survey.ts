@@ -11,6 +11,7 @@ import { post, serverResp } from './utils';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { Survey } from 'types/admin';
 import 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 
 export const fetchSurveyEpic = action$ =>
@@ -26,4 +27,4 @@ export const submitSurveyEpic = (action$, state) =>
         .mergeMap(action =>
             post<serverResp>('/api/submit', action.submission, state.getState().admin.bearer)
                 .map(resp => submitSurveyFulfilled(resp.success, resp.message))
-        );
+                .catch(err => Observable.of(submitSurveyFulfilled(false, 'A server error occurred.'))));

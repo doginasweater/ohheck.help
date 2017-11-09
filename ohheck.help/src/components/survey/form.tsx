@@ -90,6 +90,15 @@ export default class Form extends React.Component<IFormProps, any> {
             );
         }
 
+        let error = <span></span>;
+
+        if (!form.submitting && !form.submitsuccess && form.submitresponse) {
+            error =
+                <p style={{ 'color': 'red' }}>
+                    There was an error submitting your survey: {form.submitresponse}
+                </p>;
+        }
+
         return (
             <div className="pure-u-1">
                 <h1>{form.survey.title}</h1>
@@ -107,6 +116,7 @@ export default class Form extends React.Component<IFormProps, any> {
                             <Icon icon="done" /> submit!
                         </button>
                     </p>
+                    {error}
                 </form>
             </div>
         );

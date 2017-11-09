@@ -55,7 +55,7 @@ export const post = <T>(endpoint: string, body?: {}, authToken?: string): Observ
             } else if (response.status === 401) {
                 throw new Error(response.status.toString());
             } else {
-                throw new Error(response.statusText);
+                throw new Error(response.statusText.toString());
             }
         })
     );
