@@ -150,7 +150,9 @@ namespace ohheck.help.Controllers {
                 .SelectMany(x => x.answers)
                 .OrderBy(x => x.question.sortorder)
                 .Select(x => new {
+                    id = x.id,
                     question = x.question.sortorder,
+                    type = x.question.type.ToString(),
                     answer = x.answer.text,
                     text = x.text,
                     cards = string.Join(", ", x.cardchoices.Select(y => y.card.gameid)),
@@ -189,7 +191,11 @@ namespace ohheck.help.Controllers {
             return Json(molded);
         }
 
-        public List<SurveyViewModel> AllSurveys() => _db.Surveys.Select(x => x.Prettify()).ToList();
+        public List<SurveyViewModel> AllSurveys() =>
+            _db.Surveys
+                .Include(x => x.questions)
+                .Select(x => x.Prettify())
+                .ToList();
 
         public SurveyViewModel Survey(int id) =>
             _db.Surveys

@@ -1,12 +1,14 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Survey, Question, Answer } from 'types/admin';
 import { IAdminStore, ISurveyMgmt, IReduxProps } from 'types/redux';
 import { NewQuestion } from './questions';
 import { Editor } from '.';
-import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle, saveSurvey } from 'actions/surveymgmt';
-import { idolsListFetch, subunitsListFetch, groupsListFetch } from 'actions/admin';
+import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle, saveSurvey, surveyFetch } from 'actions/surveymgmt';
+import { idolsListFetch, subunitsListFetch, groupsListFetch, surveysFetch } from 'actions/admin';
 import { Icon } from 'components/common';
+import { Notification } from 'types/admin/notification';
 
 interface NewSurveyProps extends IReduxProps {
     admin: IAdminStore;
@@ -173,6 +175,16 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
 
     render() {
         const { newsurvey } = this.props.surveymgmt;
+        const { dispatch } = this.props;
+
+        if (!this.props.surveymgmt.surveyloading && !this.props.surveymgmt.savesuccess) {
+            const { savemessage } = this.props.surveymgmt;
+
+            Notification.error(savemessage ? savemessage : 'Server error', 'server', 'server');
+        } else if (!this.props.surveymgmt.surveyloading && this.props.surveymgmt.savesuccess) {
+            dispatch(surveysFetch());
+            return <Redirect to="/dashboard" />;
+        }
 
         return (
             <div className="pure-u-1 slide-in">

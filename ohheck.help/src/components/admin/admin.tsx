@@ -106,8 +106,6 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
                         <Route path="/dashboard/settings" component={a.Settings} />
 
                         <Route path="/dashboard/akiedit" component={a.AkiEdit} />
-
-                        <Route path="/dashboard/comments" component={a.AdminComments} />
                     </div>
                 </div>
             );

@@ -1,5 +1,5 @@
 ﻿import { Survey } from 'types/admin';
-import { get, genInner, genEpic } from './utils';
+import { get, genInner, genEpic, post, serverResp } from './utils';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import 'rxjs';
 
@@ -25,9 +25,5 @@ export const fetchPossibleCardsEpic = (action$, state) =>
 
 export const saveSurveyEpic = (action$, state) =>
     action$.ofType(SAVE_SURVEY).mergeMap(action =>
-        ajax.post('/admin/savesurvey', action.survey, { 'Content-Type': 'application/json', 'Authorization': `bearer ${state.getState().admin.bearer}` })
-            .map(response => {
-                const result = JSON.parse(response.responseText);
-
-                saveSurveyFulfilled(result.success, result.message);
-            }));
+        post<serverResp>('/admin/savesurvey', action.survey, state.getState().admin.bearer)
+            .map(resp => saveSurveyFulfilled(resp.success, resp.message)));

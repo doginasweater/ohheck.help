@@ -71,19 +71,21 @@ namespace ohheck.help.Controllers {
 
             await _db.SaveChangesAsync();
 
-            var choiceid = submission.answers.SingleOrDefault(x => x.type == AnswerType.Cards);
+            if (response.cards != null && response.cards.Any()) {
+                var choiceid = submission.answers.SingleOrDefault(x => x.type == AnswerType.Cards);
 
-            var cards = response.cards
-                .Where(x => x.Value == true)
-                .Select(x => new CardChoice {
-                    cardid = x.Key,
-                    choiceid = choiceid.id
-                })
-                .ToList();
+                var cards = response.cards
+                    .Where(x => x.Value == true)
+                    .Select(x => new CardChoice {
+                        cardid = x.Key,
+                        choiceid = choiceid.id
+                    })
+                    .ToList();
 
-            choiceid.cardchoices = cards;
+                choiceid.cardchoices = cards;
 
-            await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
+            }
 
             return Result.Success();
         }

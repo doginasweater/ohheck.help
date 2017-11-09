@@ -12,4 +12,6 @@ export interface ISurveyMgmt {
     cardsloading: boolean;
     cards: Card[];
     selectedcards: Card[];
+    savesuccess?: boolean;
+    savemessage?: string;
 }

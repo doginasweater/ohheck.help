@@ -4,13 +4,18 @@ import { Observable } from 'rxjs/Observable';
 import { logoutWithNote, setNotification } from 'actions/admin';
 import { Notification } from 'types/admin';
 
+export type serverResp = {
+    success: boolean;
+    message: string;
+};
+
 const makeHeader = (token?: string, contenttype?: string, accept?: string) => {
     let headers = new Headers();
-    
+
     if (token) {
         headers.append('Authorization', `bearer ${token}`);
     }
-    
+
     if (contenttype) {
         headers.append('Content-Type', contenttype);
     }

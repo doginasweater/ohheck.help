@@ -19,7 +19,6 @@ export default class Settings extends React.Component<ISettingsProps, any> {
         this.state = {
             tab: 'HomeSettings',
             tabs: {
-                'CommentsSettings': CommentsSettings,
                 'HomeSettings': HomeSettings,
                 'Sync': Sync
             }
@@ -43,9 +42,6 @@ export default class Settings extends React.Component<ISettingsProps, any> {
                     <div className="pure-u-1 tab-row">
                         <div className="pure-u-1-4 tab" onClick={() => this.changeTab("HomeSettings")}>
                             Home Page
-                        </div>
-                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab("CommentsSettings")}>
-                            Comments
                         </div>
                         <div className="pure-u-1-4 tab" onClick={() => this.changeTab("Sync")}>
                             Card Sync

@@ -175,12 +175,16 @@ export const surveymgmt = (state = initialState, action): ISurveyMgmt => {
         case SAVE_SURVEY:
             return {
                 ...state,
-                surveyloading: true
+                surveyloading: true,
+                savemessage: '',
+                savesuccess: false
             };
         case SAVE_SURVEY_FULFILLED:
             return {
                 ...state,
-                surveyloading: false
+                surveyloading: false,
+                savemessage: action.message,
+                savesuccess: action.success
             };
         default:
             return state;

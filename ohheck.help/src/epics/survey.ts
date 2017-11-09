@@ -7,15 +7,11 @@ import {
     submitSurveyFulfilled
 } from 'actions/survey';
 
-import { post } from './utils';
+import { post, serverResp } from './utils';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { Survey } from 'types/admin';
 import 'rxjs';
 
-type serverResp = {
-    success: boolean;
-    message: string;
-};
 
 export const fetchSurveyEpic = action$ =>
     action$.ofType(FETCH_SURVEY)
