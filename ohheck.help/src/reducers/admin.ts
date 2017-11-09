@@ -22,7 +22,8 @@ import {
     CARDS_FETCH, CARDS_FETCH_FULFILLED,
     CARD_FETCH, CARD_FETCH_FULFILLED,
     IDOL_FETCH, IDOL_FETCH_FULFILLED,
-    SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED, CLEAR_NOTIFICATIONS
+    SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED, CLEAR_NOTIFICATIONS,
+    SETTINGS_FETCH, SETTINGS_FETCH_FULFILLED, SETTINGS_UPDATE, SETTINGS_UPDATE_FULFILLED
 } from 'constants/admin';
 
 const storage = window.localStorage;
@@ -59,8 +60,10 @@ const AdminInitial: IAdminStore = {
     idolloading: false,
     fullsubunits: [],
     subunitloading: false,
-    akipage: '',
-    akipageloading: false
+    settings: {},
+    settingsloading: false,
+    settingsubmitsuccess: false,
+    settingsubmitmessage: ''
 };
 
 export const admin = (state = AdminInitial, action): IAdminStore => {
@@ -250,6 +253,31 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                     ...state.fullsubunits,
                     action.subunit
                 ]
+            };
+        case SETTINGS_FETCH:
+            return {
+                ...state,
+                settingsloading: true
+            };
+        case SETTINGS_FETCH_FULFILLED:
+            return {
+                ...state,
+                settingsloading: false,
+                settings: action.settings
+            };
+        case SETTINGS_UPDATE:
+            return {
+                ...state,
+                settingsloading: true,
+                settingsubmitmessage: '',
+                settingsubmitsuccess: false
+            };
+        case SETTINGS_UPDATE_FULFILLED:
+            return {
+                ...state,
+                settingsloading: false,
+                settingsubmitmessage: action.message,
+                settingsubmitsuccess: action.success
             };
         default:
             return state;

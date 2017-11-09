@@ -33,6 +33,8 @@ export interface IAdminStore {
     idolloading: boolean;
     fullsubunits: Subunit[];
     subunitloading: boolean;
-    akipage: string;
-    akipageloading: boolean;
+    settings: object;
+    settingsloading: boolean;
+    settingsubmitsuccess: boolean;
+    settingsubmitmessage: string;
 }

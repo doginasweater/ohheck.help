@@ -352,6 +352,7 @@ namespace ohheck.help.Controllers {
 
         public IActionResult Error() => NotFound();
 
+        [HttpPost]
         public async Task<Result> SaveSurvey([FromBody] NewSurveyViewModel newSurvey) {
             var exists = _db.Surveys.Any(x => x.slug == newSurvey.slug);
 
@@ -390,5 +391,37 @@ namespace ohheck.help.Controllers {
                 return Result.Failure(ex.Message);
             }
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<Result> UpdateSetting([FromBody] Setting s) {
+            var page = await _db.Settings.SingleOrDefaultAsync(x => x.key == s.key);
+
+            if (page == null) {
+                page = new Setting {
+                    key = s.key,
+                    value = s.value
+                };
+
+                _db.Settings.Add(page);
+            } else {
+                page.value = s.value;
+            }
+
+            try {
+                await _db.SaveChangesAsync();
+
+                return Result.Success();
+            } catch (Exception ex) {
+                return Result.Failure(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        public Dictionary<string, string> Settings() =>
+            _db.Settings.ToList().Aggregate(new Dictionary<string, string>(), (acc, item) => {
+                acc.Add(item.key, item.value);
+                return acc;
+            });
     }
 }

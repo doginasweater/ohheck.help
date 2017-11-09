@@ -18,7 +18,9 @@ import {
     fetchCardsEpic,
     fetchCardEpic,
     fetchIdolEpic,
-    fetchSubunitEpic
+    fetchSubunitEpic,
+    fetchSettingsEpic,
+    submitSettingEpic
 } from './admin';
 
 import {
@@ -45,5 +47,7 @@ export const rootEpic = combineEpics(
     fetchIdolEpic,
     fetchSubunitEpic,
     submitSurveyEpic,
-    saveSurveyEpic
+    saveSurveyEpic,
+    fetchSettingsEpic,
+    submitSettingEpic
 );

@@ -1,6 +1,6 @@
 ﻿import { Group, Subunit, Survey, Response, ResponseByCard, Notification } from 'types/admin';
 import { Card, Idol } from 'types/commontypes';
-import { get, genEpic, genInner } from './utils';
+import { get, genEpic, genInner, post, serverResp } from './utils';
 
 import {
     GROUPS_FETCH,
@@ -15,7 +15,9 @@ import {
     CARDS_FETCH,
     CARD_FETCH,
     IDOL_FETCH,
-    SUBUNIT_FETCH
+    SUBUNIT_FETCH,
+    SETTINGS_FETCH,
+    SETTINGS_UPDATE
 } from 'constants/admin';
 
 import {
@@ -33,7 +35,9 @@ import {
     cardsFetchFulfilled,
     cardFetchFulFilled,
     idolFetchFulfilled,
-    subunitFetchFulfilled
+    subunitFetchFulfilled,
+    settingsFetchFulFilled,
+    settingsUpdateFulfilled
 } from 'actions/admin';
 
 export const fetchGroupsEpic = (action$, state) =>
@@ -56,6 +60,9 @@ export const fetchIdolsListEpic = (action$, state) =>
 
 export const fetchSurveysEpic = (action$, state) =>
     genEpic<Survey[]>(action$, state, SURVEYS_FETCH, '/admin/allsurveys', surveysFetchFulfilled, 'Surveys download failed');
+
+export const fetchSettingsEpic = (action$, state) =>
+    genEpic(action$, state, SETTINGS_FETCH, '/admin/settings', settingsFetchFulFilled, 'Settings download failed');
 
 export const fetchResponsesEpic = (action$, state) =>
     action$.ofType(RESPONSES_FETCH).mergeMap(action =>
@@ -80,3 +87,8 @@ export const fetchIdolEpic = (action$, state) =>
 export const fetchSubunitEpic = (action$, state) =>
     action$.ofType(SUBUNIT_FETCH).mergeMap(action =>
         genInner<Subunit>(action, state, `/admin/subunit?id=${action.id}`, subunitFetchFulfilled, 'Subunit download failed'));
+
+export const submitSettingEpic = (action$, state) =>
+    action$.ofType(SETTINGS_UPDATE).mergeMap(action =>
+        post<serverResp>('/admin/updatesetting', { key: action.key, value: action.value }, state.getState().admin.bearer)
+            .map(resp => settingsUpdateFulfilled(resp.success, resp.message)));

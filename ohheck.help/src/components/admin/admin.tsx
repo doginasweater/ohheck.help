@@ -15,10 +15,6 @@ interface IAdminProps {
 export default class Admin extends React.Component<IAdminProps & IReduxProps, any> {
     constructor(props: IAdminProps & IReduxProps) {
         super(props);
-
-        /*if (props.admin.bearer && props.admin.loginvalid && props.admin.loginvalid > new Date()) {
-            props.dispatch(authenticate(props.admin.bearer, props.admin.loginvalid));
-        }*/
     }
 
     auth = (token: string, expiration: Date): void => {
