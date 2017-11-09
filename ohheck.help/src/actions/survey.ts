@@ -18,4 +18,4 @@ export const setChoice = (name: string, value: string) => ({ type: SET_CHOICE, n
 export const displayCard = (card: JSX.Element) => ({ type: DISPLAY_CARD, card });
 
 export const submitSurvey = (submission: SurveySubmission) => ({ type: SUBMIT_SURVEY, submission });
-export const submitSurveyFulfilled = (response: { success: boolean; message: string; }) => ({ type: SUBMIT_SURVEY_FULFILLED, response });
+export const submitSurveyFulfilled = (success: boolean, message: string) => ({ type: SUBMIT_SURVEY_FULFILLED, success, message });

@@ -2,7 +2,7 @@
 import { Subunit } from 'components/survey';
 import { Idol } from 'components/common';
 import { Survey } from 'types/admin';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchSurvey, submitSurvey } from 'actions/survey';
 import { IReduxProps, ISurveyStore } from 'types/redux';
@@ -57,6 +57,10 @@ export default class Form extends React.Component<IFormProps, any> {
     }
 
     render() {
+        if (this.props.form.submitsuccess) {
+            return <Redirect to="/thanks" />;
+        }
+
         if (this.props.form.loading) {
             return (
                 <div className="pure-u-1">

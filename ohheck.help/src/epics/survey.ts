@@ -7,9 +7,15 @@ import {
     submitSurveyFulfilled
 } from 'actions/survey';
 
+import { post } from './utils';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { Survey } from 'types/admin';
 import 'rxjs';
+
+type serverResp = {
+    success: boolean;
+    message: string;
+};
 
 export const fetchSurveyEpic = action$ =>
     action$.ofType(FETCH_SURVEY)
@@ -19,12 +25,9 @@ export const fetchSurveyEpic = action$ =>
                 .map(survey => fetchSurveyFulfilled(survey))
         );
 
-export const submitSurveyEpic = action$ =>
+export const submitSurveyEpic = (action$, state) =>
     action$.ofType(SUBMIT_SURVEY)
         .mergeMap(action =>
-            ajax.post('/api/submit', action.submission, { 'Content-Type': 'application/json' })
-                .map(response => {
-                    const result = JSON.parse(response.responseText);
-
-                    submitSurveyFulfilled({ success: result.success, message: result.message });
-                }));
+            post<serverResp>('/api/submit', action.submission, state.getState().admin.bearer)
+                .map(resp => submitSurveyFulfilled(resp.success, resp.message))
+        );

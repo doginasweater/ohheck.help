@@ -69,7 +69,8 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
             return {
                 ...state,
                 submitting: false,
-                submitresponse: action.response
+                submitresponse: action.message,
+                submitsuccess: action.success
             };
         default:
             return state;

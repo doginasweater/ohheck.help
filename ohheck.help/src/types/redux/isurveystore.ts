@@ -10,5 +10,6 @@ export interface ISurveyStore {
     displayedcards: JSX.Element[];
     submitting: boolean;
     submitresponse?: string;
+    submitsuccess?: boolean;
     aki: string;
 }
