@@ -1,12 +1,12 @@
-﻿import * as React from 'react';
-import { Question } from 'types/admin';
+﻿import * as React from "react";
+import { Question } from "types/admin";
 
 export default class MultilineText extends React.Component<any, any> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
     }
 
-    render() {
+    render(): JSX.Element {
         return (
             <div>
                 <label htmlFor={this.props.id.toString()}>{this.props.text}</label>
