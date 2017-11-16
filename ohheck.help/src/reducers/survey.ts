@@ -1,6 +1,8 @@
 ﻿import {
     CLEAR_SURVEY_ERROR,
     DISPLAY_CARD,
+    FETCH_AKI_PAGE,
+    FETCH_AKI_PAGE_FULFILLED,
     FETCH_SURVEY,
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
@@ -22,7 +24,7 @@ const SurveyInitial: ISurveyStore = {
     message: '',
     displayedcards: [],
     submitting: false,
-    aki: '# Aki the Home Page\n\n## hello, yes, this is kevin\n\nyou, too, can do this\n\n<center>centered?</center>'
+    aki: ''
 };
 
 export const survey = (state = SurveyInitial, action): ISurveyStore => {
@@ -101,6 +103,18 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
             return {
                 ...state,
                 submitresponse: ''
+            };
+        case FETCH_AKI_PAGE:
+            return {
+                ...state,
+                loading: true
+            };
+        case FETCH_AKI_PAGE_FULFILLED:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+                aki: action.data
             };
         default:
             return state;

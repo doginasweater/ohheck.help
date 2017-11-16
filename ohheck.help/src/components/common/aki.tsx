@@ -1,19 +1,40 @@
-﻿import * as React from 'react';
+﻿import { fetchAkiPage } from 'actions/survey';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { ISurveyStore, IReduxProps } from 'types/redux';
+import { IReduxProps, ISurveyStore } from 'types/redux';
 import { MDown } from './mdown';
 
-interface AkiProps {
-    survey: ISurveyStore
+interface IAkiProps {
+    survey: ISurveyStore;
 }
 
 @connect(state => ({ survey: state.survey }))
-export class Aki extends React.Component<AkiProps & IReduxProps, any> {
-    constructor(props) {
+export class Aki extends React.Component<IAkiProps & IReduxProps, any> {
+    constructor(props: IAkiProps & IReduxProps) {
         super(props);
     }
 
-    render() {
+    public componentWillMount() {
+        this.props.dispatch(fetchAkiPage());
+    }
+
+    public render() {
+        if (this.props.survey.loading) {
+            return (
+                <div className="pure-u-1">
+                    loading...
+                </div>
+            );
+        }
+
+        if (this.props.survey.error) {
+            return (
+                <div className="pure-u-1">
+                    There was an error loading the page
+                </div>
+            );
+        }
+
         return (
             <div className="pure-u-1">
                 <MDown text={this.props.survey.aki} escapeHtml={false} />

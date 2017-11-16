@@ -23,7 +23,7 @@ import {
     SETTINGS_FETCH_FULFILLED, SETTINGS_UPDATE,
     SETTINGS_UPDATE_FULFILLED, SUBUNIT_FETCH,
     SUBUNIT_FETCH_FULFILLED, SUBUNITS_FETCH, SUBUNITS_FETCH_FULFILLED,
-    SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED, SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED
+    SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED, SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED, UPDATE_AKI_PAGE
 } from 'constants/admin';
 
 const storage = window.localStorage;
@@ -294,6 +294,13 @@ export const admin = (state = AdminInitial, action): IAdminStore => {
                 settingsloading: false,
                 settingsubmitmessage: action.message,
                 settingsubmitsuccess: action.success
+            };
+        case UPDATE_AKI_PAGE:
+            return {
+                ...state,
+                settings: {
+                    akipage: action.text
+                }
             };
         default:
             return state;

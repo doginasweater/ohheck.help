@@ -1,43 +1,43 @@
-﻿import { Group, Subunit, Survey, Response, ResponseByCard, Notification } from 'types/admin';
+﻿import { Group, Notification, Response, ResponseByCard, Subunit, Survey } from 'types/admin';
 import { Card, Idol } from 'types/commontypes';
-import { get, genEpic, genInner, post, serverResp } from './utils';
+import { genEpic, genInner, get, IserverResp, post } from './utils';
 
 import {
+    CARD_FETCH,
+    CARDS_FETCH,
     GROUPS_FETCH,
     GROUPS_LIST_FETCH,
-    SUBUNITS_FETCH,
-    SUBUNITS_LIST_FETCH,
+    IDOL_FETCH,
     IDOLS_FETCH,
     IDOLS_LIST_FETCH,
-    SURVEYS_FETCH,
-    RESPONSES_FETCH,
     RESPONSES_BYCARD_FETCH,
-    CARDS_FETCH,
-    CARD_FETCH,
-    IDOL_FETCH,
-    SUBUNIT_FETCH,
+    RESPONSES_FETCH,
     SETTINGS_FETCH,
-    SETTINGS_UPDATE
+    SETTINGS_UPDATE,
+    SUBUNIT_FETCH,
+    SUBUNITS_FETCH,
+    SUBUNITS_LIST_FETCH,
+    SURVEYS_FETCH
 } from 'constants/admin';
 
 import {
+    cardFetchFulFilled,
+    cardsFetchFulfilled,
     groupsFetchFulfilled,
     groupsListFetchFulfilled,
-    subunitsFetchFulfilled,
-    subunitsListFetchFulfilled,
+    idolFetchFulfilled,
     idolsFetchFulfilled,
     idolsListFetchFulfilled,
-    surveysFetchFulfilled,
-    responsesFetchFulfilled,
-    responsesByCardFetchFulfilled,
-    setNotification,
     logoutWithNote,
-    cardsFetchFulfilled,
-    cardFetchFulFilled,
-    idolFetchFulfilled,
-    subunitFetchFulfilled,
+    responsesByCardFetchFulfilled,
+    responsesFetchFulfilled,
+    setNotification,
     settingsFetchFulFilled,
-    settingsUpdateFulfilled
+    settingsUpdateFulfilled,
+    subunitFetchFulfilled,
+    subunitsFetchFulfilled,
+    subunitsListFetchFulfilled,
+    surveysFetchFulfilled
 } from 'actions/admin';
 
 export const fetchGroupsEpic = (action$, state) =>
@@ -90,5 +90,5 @@ export const fetchSubunitEpic = (action$, state) =>
 
 export const submitSettingEpic = (action$, state) =>
     action$.ofType(SETTINGS_UPDATE).mergeMap(action =>
-        post<serverResp>('/admin/updatesetting', { key: action.key, value: action.value }, state.getState().admin.bearer)
+        post<IserverResp>('/admin/updatesetting', { key: action.key, value: action.value }, state.getState().admin.bearer)
             .map(resp => settingsUpdateFulfilled(resp.success, resp.message)));

@@ -16,6 +16,30 @@ namespace ohheck.help.Controllers {
             _db.user = User?.Identity?.Name ?? "web";
         }
 
+        public async Task<IActionResult> AkiPage() {
+            try {
+                var page = await _db.Settings.SingleOrDefaultAsync(x => x.key == "akipage");
+
+                if (page == null) {
+                    return Json(new {
+                        success = false,
+                        message = "Page not found"
+                    });
+                }
+
+                return Json(new {
+                    success = true,
+                    message = "",
+                    data = page.value
+                });
+            } catch {
+                return Json(new {
+                    success = false,
+                    message = "A server error occurred."
+                });
+            }
+        }
+
         public SurveyViewModel Survey(string id) =>
             _db.Surveys
                 .Include(x => x.questions)

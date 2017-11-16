@@ -14,7 +14,7 @@ import {
     SETTINGS_UPDATE, SETTINGS_UPDATE_FULFILLED,
     SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED,
     SUBUNITS_FETCH, SUBUNITS_FETCH_FULFILLED,
-    SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED, SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED
+    SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED, SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED, UPDATE_AKI_PAGE
 } from 'constants/admin';
 
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
@@ -91,3 +91,4 @@ export const settingsFetch = () => ({ type: SETTINGS_FETCH });
 export const settingsFetchFulFilled = settings => ({ type: SETTINGS_FETCH_FULFILLED, settings });
 export const settingsUpdate = (key: string, value: string) => ({ type: SETTINGS_UPDATE, key, value });
 export const settingsUpdateFulfilled = (success: boolean, message: string) => ({ type: SETTINGS_UPDATE_FULFILLED, success, message });
+export const updateAkiPage = (text: string) => ({ type: UPDATE_AKI_PAGE, text });

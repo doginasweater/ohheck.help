@@ -68,22 +68,17 @@ export default class Form extends React.Component<IFormProps, any> {
 
             if (q.required) {
                 if (!a) {
-                    console.log('error on', q.id);
                     dispatch(setSurveyError('You have to answer all required questions!'));
                     return;
                 }
 
                 if (q.type !== 'Checkbox') {
                     if (!a.choice) {
-                        console.log('missing choice on', q.id);
-                        console.log('answer', a);
                         dispatch(setSurveyError('You have to answer all required questions!'));
                         return;
                     }
                 } else if (q.type === 'Checkbox') {
                     if (!a.selections || !Object.keys(a.selections).some(item => a.selections![item] === true)) {
-                        console.log('missing choice on', q.id);
-                        console.log('answer', a);
                         dispatch(setSurveyError('You must select at least one checkbox'));
                         return;
                     }

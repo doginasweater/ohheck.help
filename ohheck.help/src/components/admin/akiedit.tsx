@@ -1,63 +1,62 @@
-﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { IReduxProps, IAdminStore } from 'types/redux';
-import { Editor } from '.';
+﻿import { settingsFetch, settingsUpdate, updateAkiPage } from 'actions/admin';
 import { Icon } from 'components/common';
-import { settingsFetch, settingsUpdate } from 'actions/admin';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { IAdminStore, IReduxProps } from 'types/redux';
+import { Editor } from '.';
 
-interface AkiEditProps {
-    admin: IAdminStore
+interface IAkiEditProps {
+    admin: IAdminStore;
 }
 
 @connect(state => ({ admin: state.admin }))
-export default class AkiEdit extends React.Component<AkiEditProps & IReduxProps, any> {
+export default class AkiEdit extends React.Component<IAkiEditProps & IReduxProps, any> {
     constructor(props) {
         super(props);
-
-        this.state = {
-            akiedit: ''
-        };
 
         const { dispatch } = props;
 
         dispatch(settingsFetch());
     }
 
-    componentDidMount() {
-        this.setState({
-            akiedit: this.props.admin.settings['akipage']
-        });
-    }
+    public handleChange = (event: React.FormEvent<HTMLTextAreaElement>): void =>
+        this.props.dispatch(updateAkiPage(event.currentTarget.value))
 
-    handleChange = (event: React.FormEvent<HTMLTextAreaElement>): void => {
-        this.setState({
-            akiedit: event.currentTarget.value
-        });
-    }
-
-    save = (event: React.FormEvent<HTMLButtonElement>): void => {
+    public save = (event: React.FormEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
 
-        dispatch(settingsUpdate('akipage', this.state.akiedit));
+        // tslint:disable-next-line:no-string-literal
+        dispatch(settingsUpdate('akipage', this.props.admin.settings['akipage']));
         dispatch(settingsFetch());
     }
 
-    render() {
-        let error = <span></span>;
+    public render() {
+        let error = <span />;
+
+        if (this.props.admin.settingsloading) {
+            return (
+                <div className="pure-u-1 slide-in">
+                    Loading...
+                </div>
+            );
+        }
 
         if (!this.props.admin.settingsloading && !this.props.admin.settingsubmitsuccess && this.props.admin.settingsubmitmessage) {
             error =
-                <p style={{ 'color': 'red' }}>
-                    There was an error submitting your survey: {this.props.admin.settingsubmitmessage}
+                <p style={{ color: 'red' }}>
+                    There was an error submitting your change: {this.props.admin.settingsubmitmessage}
                 </p>;
         } else if (!this.props.admin.settingsloading && this.props.admin.settingsubmitsuccess) {
             error =
-                <p style={{ 'color': '#3c763d' }}>
+                <p style={{ color: '#3c763d' }}>
                     Updated successfully!
                 </p>;
         }
+
+        // tslint:disable-next-line:no-string-literal
+        const text = this.props.admin.settings['akipage'];
 
         return (
             <div className="pure-u-1 slide-in">
@@ -66,7 +65,7 @@ export default class AkiEdit extends React.Component<AkiEditProps & IReduxProps,
                 <form className="pure-form pure-form-stacked">
                     <fieldset>
                         <legend>Page contents</legend>
-                        <Editor name="akiedit" value={this.state.akiedit} handleChange={this.handleChange} disabled={false} />
+                        <Editor name="akiedit" value={text} handleChange={this.handleChange} disabled={false} escapeHtml={false} />
                     </fieldset>
                     <fieldset>
                         <legend>Save</legend>

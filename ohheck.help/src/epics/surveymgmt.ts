@@ -1,18 +1,18 @@
-﻿import { Survey } from 'types/admin';
-import { get, genInner, genEpic, post, serverResp } from './utils';
+﻿import 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
-import 'rxjs';
+import { Survey } from 'types/admin';
+import { genEpic, genInner, get, IserverResp, post } from './utils';
 
 import {
-    SURVEY_FETCH,
     NEW_CARDS_FETCH,
-    SAVE_SURVEY
+    SAVE_SURVEY,
+    SURVEY_FETCH
 } from 'constants/surveymgmt';
 
 import {
-    surveyFetchFulfilled,
     newCardsFetchFulfilled,
-    saveSurveyFulfilled
+    saveSurveyFulfilled,
+    surveyFetchFulfilled
 } from 'actions/surveymgmt';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,6 +26,6 @@ export const fetchPossibleCardsEpic = (action$, state) =>
 
 export const saveSurveyEpic = (action$, state) =>
     action$.ofType(SAVE_SURVEY).mergeMap(action =>
-        post<serverResp>('/admin/savesurvey', action.survey, state.getState().admin.bearer)
+        post<IserverResp>('/admin/savesurvey', action.survey, state.getState().admin.bearer)
             .map(resp => saveSurveyFulfilled(resp.success, resp.message))
             .catch(err => Observable.of(saveSurveyFulfilled(false, 'A server error occurred.'))));

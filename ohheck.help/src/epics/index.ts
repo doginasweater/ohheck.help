@@ -1,25 +1,26 @@
 ﻿import { combineEpics } from 'redux-observable';
 
 import {
+    fetchAkiPageEpic,
     fetchSurveyEpic,
     submitSurveyEpic
 } from './survey';
 
 import {
+    fetchCardEpic,
+    fetchCardsEpic,
     fetchGroupsEpic,
     fetchGroupsListEpic,
-    fetchSubunitsEpic,
-    fetchSubunitsListEpic,
+    fetchIdolEpic,
     fetchIdolsEpic,
     fetchIdolsListEpic,
-    fetchSurveysEpic,
-    fetchResponsesEpic,
     fetchResponsesByCardEpic,
-    fetchCardsEpic,
-    fetchCardEpic,
-    fetchIdolEpic,
-    fetchSubunitEpic,
+    fetchResponsesEpic,
     fetchSettingsEpic,
+    fetchSubunitEpic,
+    fetchSubunitsEpic,
+    fetchSubunitsListEpic,
+    fetchSurveysEpic,
     submitSettingEpic
 } from './admin';
 
@@ -49,5 +50,6 @@ export const rootEpic = combineEpics(
     submitSurveyEpic,
     saveSurveyEpic,
     fetchSettingsEpic,
-    submitSettingEpic
+    submitSettingEpic,
+    fetchAkiPageEpic
 );

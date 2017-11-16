@@ -1,16 +1,17 @@
-﻿import 'whatwg-fetch';
-import { ModelBase } from 'types/commontypes';
+﻿import { logoutWithNote, setNotification } from 'actions/admin';
 import { Observable } from 'rxjs/Observable';
-import { logoutWithNote, setNotification } from 'actions/admin';
 import { Notification } from 'types/admin';
+import { ModelBase } from 'types/commontypes';
+import 'whatwg-fetch';
 
-export type serverResp = {
+export interface IserverResp {
     success: boolean;
     message: string;
-};
+    data?: string;
+}
 
 const makeHeader = (token?: string, contenttype?: string, accept?: string) => {
-    let headers = new Headers();
+    const headers = new Headers();
 
     if (token) {
         headers.append('Authorization', `bearer ${token}`);
@@ -25,7 +26,7 @@ const makeHeader = (token?: string, contenttype?: string, accept?: string) => {
     }
 
     return headers;
-}
+};
 
 export const get = <T>(endpoint: string, authToken?: string): Observable<T> =>
     Observable.from(
@@ -67,7 +68,7 @@ export const genInner = <T>(action, state, endpoint: string, callback, errortext
             if (error.message === '401') {
                 return Observable.of(logoutWithNote(Notification.info('Session expired. Please log in again.', 'epics', 'epics')));
             } else {
-                return Observable.of(setNotification(Notification.error(errortext, 'epics', 'epics')))
+                return Observable.of(setNotification(Notification.error(errortext, 'epics', 'epics')));
             }
         });
 

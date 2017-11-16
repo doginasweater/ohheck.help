@@ -1,6 +1,8 @@
 ﻿import {
     CLEAR_SURVEY_ERROR,
     DISPLAY_CARD,
+    FETCH_AKI_PAGE,
+    FETCH_AKI_PAGE_FULFILLED,
     FETCH_SURVEY,
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
@@ -26,3 +28,6 @@ export const submitSurveyFulfilled = (success: boolean, message: string) => ({ t
 
 export const setSurveyError = (error: string) => ({ type: SET_SURVEY_ERROR, error });
 export const clearSurveyError = () => ({ type: CLEAR_SURVEY_ERROR });
+
+export const fetchAkiPage = () => ({ type: FETCH_AKI_PAGE });
+export const fetchAkiPageFulfilled = (success: boolean, error: string, data: string) => ({ type: FETCH_AKI_PAGE_FULFILLED, success, error, data });
