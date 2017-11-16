@@ -4,6 +4,7 @@ import {
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
     SET_CHOICE,
+    SET_SELECTION,
     DISPLAY_CARD,
     SUBMIT_SURVEY,
     SUBMIT_SURVEY_FULFILLED
@@ -14,6 +15,7 @@ export const fetchSurveyFulfilled = survey => ({ type: FETCH_SURVEY_FULFILLED, s
 
 export const setCard = (id: number, status: boolean) => ({ type: SET_CARD, id, status });
 export const setChoice = (name: string, value: string) => ({ type: SET_CHOICE, name, value });
+export const setSelection = (questionid: string, answerid: string, value: boolean) => ({ type: SET_SELECTION, questionid, answerid, value });
 
 export const displayCard = (card: JSX.Element) => ({ type: DISPLAY_CARD, card });
 

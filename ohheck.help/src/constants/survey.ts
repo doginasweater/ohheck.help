@@ -3,6 +3,7 @@ export const FETCH_SURVEY_FULFILLED = 'FETCH_SURVEY_FULFILLED';
 
 export const SET_CHOICE = 'SET_CHOICE';
 export const SET_CARD = 'SET_CARD';
+export const SET_SELECTION = 'SET_SELECTION';
 
 export const DISPLAY_CARD = 'DISPLAY_CARD';
 

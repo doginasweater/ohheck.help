@@ -156,7 +156,7 @@ namespace ohheck.help.Controllers {
                     answer = x.answer.text,
                     text = x.text,
                     cards = string.Join(", ", x.cardchoices.Select(y => y.card.gameid)),
-                    selections = x.choiceanswers.Select(y => y.answer),
+                    selections = string.Join(", ", x.choiceanswers.Select(y => y.answer.text)),
                     submissionid = x.submissionid,
                     submitted = x.created
                 })

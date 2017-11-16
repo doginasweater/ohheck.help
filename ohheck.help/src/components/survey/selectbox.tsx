@@ -10,8 +10,7 @@ export default class SelectBox extends React.Component<any, any> {
         (item: Answer, index: number) =>
             <option value={item.id} key={index}>
                 {item.text}
-            </option>
-    )
+            </option>)
 
     render(): JSX.Element {
         return (
@@ -21,7 +20,7 @@ export default class SelectBox extends React.Component<any, any> {
                     name={this.props.id.toString()}
                     style={{ "height": "auto" }}
                     onChange={this.props.handleChange}
-                    value={this.props.choices[this.props.id]}>
+                    value={this.props.choices[this.props.id] ? this.props.choices[this.props.id].choice : ''}>
                     <option value="">Select One</option>
                     {this.renderAnswers()}
                 </select>

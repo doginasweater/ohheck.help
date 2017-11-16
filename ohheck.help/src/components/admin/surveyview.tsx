@@ -55,6 +55,10 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         });
     }
 
+    handleCheckbox = (questionid: string, answerid: string, value: boolean): void => {
+
+    }
+
     toggleEdit = event => {
         event.preventDefault();
 
@@ -114,6 +118,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
                                 ispublic={false}
                                 handleClick={this.handleClick}
                                 handleChange={this.handleChange}
+                                handleCheckbox={this.handleCheckbox}
                                 choices={this.state.choices}
                                 cards={this.state.cards} />
                         </form>

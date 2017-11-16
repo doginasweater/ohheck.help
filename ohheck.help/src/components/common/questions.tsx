@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { Survey, Question } from 'types/admin';
-import { SingleLineText, MultilineText, SelectBox, PublicCards } from 'components/survey';
+import { SingleLineText, MultilineText, SelectBox, PublicCards, RadioButtons, Checkboxes } from 'components/survey';
 import { Cards } from 'components/common';
 
 interface QuestionsProps {
@@ -9,6 +9,7 @@ interface QuestionsProps {
     choices?: any;
     cards?: any;
     handleChange: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    handleCheckbox: (questionid: string, answerid: string, value: boolean) => void;
     handleClick: (id: number) => void;
 }
 
@@ -36,6 +37,18 @@ export class Questions extends React.Component<QuestionsProps, any> {
                     {...item}
                     choices={this.props.choices}
                     handleChange={this.props.handleChange}
+                    key={index} />;
+            case 'RadioButtons':
+                return <RadioButtons
+                    {...item}
+                    choices={this.props.choices}
+                    handleChange={this.props.handleChange}
+                    key={index} />;
+            case 'Checkbox':
+                return <Checkboxes
+                    {...item}
+                    choices={this.props.choices}
+                    handleChange={this.props.handleCheckbox}
                     key={index} />;
             case 'Cards':
                 if (this.props.ispublic) {

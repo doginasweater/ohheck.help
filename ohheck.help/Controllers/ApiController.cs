@@ -46,13 +46,21 @@ namespace ohheck.help.Controllers {
                     switch (x.type) {
                         case AnswerType.MultiLineText:
                         case AnswerType.SingleLineText:
-                            c.text = q_and_a.Value;
+                            c.text = q_and_a.Value.choice;
                             break;
                         case AnswerType.SelectBox:
-                            int.TryParse(q_and_a.Value, out int result);
+                        case AnswerType.RadioButtons:
+                            int.TryParse(q_and_a.Value.choice, out int result);
 
                             c.answer = _db.Answers.SingleOrDefault(y => y.id == result);
 
+                            break;
+                        case AnswerType.Checkbox:
+                            c.choiceanswers = q_and_a.Value.selections
+                                .Where(y => y.Value)
+                                .Select(y => new ChoiceAnswer {
+                                    answerid = int.Parse(y.Key)
+                                }).ToList();
                             break;
                         default:
                             break;

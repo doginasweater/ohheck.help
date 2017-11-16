@@ -1,6 +1,6 @@
 ﻿export class SurveySubmission {
     surveyid: number;
-    choices: { [id: number]: string; }
+    choices: { [id: number]: { [id: number]: string }; }
     cards: { [id: number]: boolean; }
 
     constructor(data) {

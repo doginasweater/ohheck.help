@@ -6,6 +6,8 @@ import SelectBox from './selectbox';
 import SingleLineText from './singlelinetext';
 import Subunit from './subunit';
 import Thanks from './thanks';
+import { RadioButtons } from './radiobuttons';
+import { Checkboxes } from './checkboxes';
 
 export {
     Form,
@@ -15,5 +17,7 @@ export {
     SelectBox,
     SingleLineText,
     Subunit,
-    Thanks
+    Thanks,
+    RadioButtons,
+    Checkboxes
 };

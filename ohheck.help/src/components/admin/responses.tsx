@@ -38,7 +38,7 @@ export default class Responses extends React.Component<IResponsesProps & IReduxP
             case 'RadioButtons':
                 return q.answer;
             case 'Checkbox':
-                return q.selections.join(', ');
+                return q.selections;
             default:
                 return 'unknown answer';
         }

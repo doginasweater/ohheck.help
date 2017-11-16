@@ -5,6 +5,7 @@ import {
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
     SET_CHOICE,
+    SET_SELECTION,
     DISPLAY_CARD,
     SUBMIT_SURVEY,
     SUBMIT_SURVEY_FULFILLED
@@ -40,7 +41,9 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
                 ...state,
                 choices: {
                     ...state.choices,
-                    [action.name]: action.value
+                    [action.name]: {
+                        choice: action.value
+                    }
                 }
             };
         case SET_CARD:
@@ -49,6 +52,21 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
                 cards: {
                     ...state.cards,
                     [action.id]: action.status
+                }
+            };
+        case SET_SELECTION:
+            const choices_maybe = state.choices[action.questionid] ? { ...state.choices[action.questionid].selections } : {};
+
+            return {
+                ...state,
+                choices: {
+                    ...state.choices,
+                    [action.questionid]: {
+                        selections: {
+                            ...choices_maybe,
+                            [action.answerid]: action.value
+                        }
+                    }
                 }
             };
         case DISPLAY_CARD:

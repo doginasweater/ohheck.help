@@ -3,7 +3,12 @@
 export interface ISurveyStore {
     survey: Survey | null;
     loading: boolean;
-    choices: { [id: number]: string; };
+    choices: {
+        [id: number]: {
+            choice?: string;
+            selections?: { [id: string]: boolean; };
+        }
+    };
     cards: { [id: number]: boolean; };
     error: boolean;
     message: string;

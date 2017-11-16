@@ -4,7 +4,7 @@ import { Idol } from 'components/common';
 import { Survey } from 'types/admin';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchSurvey, submitSurvey } from 'actions/survey';
+import { fetchSurvey, submitSurvey, setSelection } from 'actions/survey';
 import { IReduxProps, ISurveyStore } from 'types/redux';
 import { setCard, setChoice } from 'actions/survey';
 import { Icon, MDown, Questions } from 'components/common';
@@ -36,6 +36,22 @@ export default class Form extends React.Component<IFormProps, any> {
         const { dispatch, form } = this.props;
 
         dispatch(setChoice(event.currentTarget.name, event.currentTarget.value));
+    }
+
+    handleCheckbox = (questionid: string, answerid: string, value: boolean): void => {
+        const { dispatch, form } = this.props;
+
+        let val = true;
+
+        if (form.choices[questionid]) {
+            if (form.choices[questionid].selections) {
+                if (form.choices[questionid].selections[answerid]) {
+                    val = !form.choices[questionid].selections[answerid];
+                }
+            }
+        }
+
+        dispatch(setSelection(questionid, answerid, val));
     }
 
     submit = event => {
@@ -109,6 +125,7 @@ export default class Form extends React.Component<IFormProps, any> {
                         ispublic={true}
                         handleClick={this.handleClick}
                         handleChange={this.handleChange}
+                        handleCheckbox={this.handleCheckbox}
                         choices={form.choices}
                         cards={form.cards} />
                     <p className="center">
