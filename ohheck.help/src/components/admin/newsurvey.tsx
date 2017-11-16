@@ -1,16 +1,16 @@
-﻿import * as React from 'react';
+﻿import { clearNotifications, groupsListFetch, idolsListFetch, setNotification, subunitsListFetch, surveysFetch } from 'actions/admin';
+import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle, saveSurvey, surveyFetch } from 'actions/surveymgmt';
+import { Icon } from 'components/common';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Survey, Question, Answer } from 'types/admin';
-import { IAdminStore, ISurveyMgmt, IReduxProps } from 'types/redux';
-import { NewQuestion } from './questions';
-import { Editor } from '.';
-import { newSetActive, newSetComments, newSetName, newSetQuestions, newSetSlug, newSetTitle, saveSurvey, surveyFetch } from 'actions/surveymgmt';
-import { idolsListFetch, subunitsListFetch, groupsListFetch, surveysFetch, setNotification, clearNotifications } from 'actions/admin';
-import { Icon } from 'components/common';
+import { Answer, Question, Survey } from 'types/admin';
 import { Notification } from 'types/admin/notification';
+import { IAdminStore, IReduxProps, ISurveyMgmt } from 'types/redux';
+import { Editor } from '.';
+import { NewQuestion } from './questions';
 
-interface NewSurveyProps extends IReduxProps {
+interface INewSurveyProps extends IReduxProps {
     admin: IAdminStore;
     surveymgmt: ISurveyMgmt;
 }
@@ -19,12 +19,12 @@ interface NewSurveyProps extends IReduxProps {
     admin: state.admin,
     surveymgmt: state.surveymgmt
 }))
-export default class NewSurvey extends React.Component<NewSurveyProps, any> {
+export default class NewSurvey extends React.Component<INewSurveyProps, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         dispatch(idolsListFetch());
@@ -32,12 +32,12 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(groupsListFetch());
     }
 
-    error = (text: string): void => {
+    public error = (text: string): void => {
         window.scrollTo(0, 0);
         this.props.dispatch(setNotification(Notification.error(text, 'web', 'web')));
     }
 
-    handleChange = (event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): void => {
+    public handleChange = (event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): void => {
         const { dispatch } = this.props;
 
         switch (event.currentTarget.name) {
@@ -58,7 +58,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         }
     }
 
-    handleSlug = (event: React.FormEvent<HTMLInputElement>): void => {
+    public handleSlug = (event: React.FormEvent<HTMLInputElement>): void => {
         const regex = /^[a-z0-9\-]*$/;
 
         if (regex.test(event.currentTarget.value)) {
@@ -68,7 +68,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         }
     }
 
-    questionSort = (q1: Question, q2: Question): number => {
+    public questionSort = (q1: Question, q2: Question): number => {
         if (q1.sortorder < q2.sortorder) {
             return -1;
         } else if (q1.sortorder > q2.sortorder) {
@@ -78,7 +78,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         }
     }
 
-    renderQuestions = (): JSX.Element[] => {
+    public renderQuestions = (): JSX.Element[] => {
         const { newsurvey } = this.props.surveymgmt;
 
         if (newsurvey) {
@@ -92,13 +92,14 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
                         save={this.saveQuestion}
                         index={index}
                         numquestions={newsurvey.questions.length}
-                        shiftQuestion={this.moveQuestion} />);
+                        shiftQuestion={this.moveQuestion}
+                    />);
         } else {
             return [];
         }
     }
 
-    saveQuestion = (question: Question, index: number): void => {
+    public saveQuestion = (question: Question, index: number): void => {
         const { dispatch } = this.props;
         const { newsurvey } = this.props.surveymgmt;
 
@@ -106,25 +107,25 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
             return;
         }
 
-        let { questions } = newsurvey;
+        const { questions } = newsurvey;
 
         questions[index] = question;
 
         dispatch(newSetQuestions(questions));
     }
 
-    moveQuestion = (movedQuestion: Question, index: number, up: boolean): void => {
+    public moveQuestion = (movedQuestion: Question, index: number, up: boolean): void => {
         const { newsurvey } = this.props.surveymgmt;
 
         if (!newsurvey) {
             return;
         }
 
-        let { questions } = newsurvey;
+        const { questions } = newsurvey;
 
         const unmoved = questions[index];
 
-        let toSwap = questions.find(item => item.sortorder === movedQuestion.sortorder);
+        const toSwap = questions.find(item => item.sortorder === movedQuestion.sortorder);
 
         if (!toSwap) {
             return;
@@ -142,7 +143,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(newSetQuestions(questions));
     }
 
-    deleteQuestion = (event: React.FormEvent<HTMLButtonElement>): void => {
+    public deleteQuestion = (event: React.FormEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
@@ -154,26 +155,25 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(newSetQuestions(newQuestions));
     }
 
-    addQuestion = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    public addQuestion = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
         const { questions } = this.props.surveymgmt.newsurvey;
 
-        let newquestion = new Question({
+        const newquestion = new Question({
             id: questions.length + 1,
             text: '',
             sortorder: questions.length + 1,
-            answers: []
+            answers: [],
+            required: false
         });
 
         dispatch(newSetQuestions(questions.concat([newquestion])));
     }
 
-    validateQuestions = (questions: Question[]): boolean => {
-        for (let i = 0; i < questions.length; i++) {
-            const current = questions[i];
-
+    public validateQuestions = (questions: Question[]): boolean => {
+        for (const current of questions) {
             switch (current.type) {
                 case 'Cards':
                     if (!current.answers || !current.answers[0] || !current.answers[0].cards || current.answers[0].cards!.length === 0) {
@@ -219,7 +219,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         return true;
     }
 
-    save = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    public save = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
@@ -254,7 +254,7 @@ export default class NewSurvey extends React.Component<NewSurveyProps, any> {
         dispatch(saveSurvey(this.props.surveymgmt.newsurvey));
     }
 
-    render() {
+    public render() {
         const { newsurvey } = this.props.surveymgmt;
         const { dispatch } = this.props;
 

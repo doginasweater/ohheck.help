@@ -56,7 +56,7 @@ namespace ohheck.help.Controllers {
 
                             break;
                         case AnswerType.Checkbox:
-                            c.choiceanswers = q_and_a.Value.selections
+                            c.choiceanswers = q_and_a.Value?.selections?
                                 .Where(y => y.Value)
                                 .Select(y => new ChoiceAnswer {
                                     answerid = int.Parse(y.Key)

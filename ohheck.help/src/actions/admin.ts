@@ -1,20 +1,20 @@
 ﻿import { Notification, Subunit } from 'types/admin';
-import { Card, Idol } from "types/commontypes";
+import { Card, Idol } from 'types/commontypes';
 
 import {
-    AUTHENTICATE, LOGOUT, LOGOUT_WITH_NOTE,
+    AUTHENTICATE, CARD_FETCH, CARD_FETCH_FULFILLED,
+    CARDS_FETCH, CARDS_FETCH_FULFILLED, CLEAR_NOTIFICATIONS, DISMISS_NOTIFICATION,
     GROUPS_FETCH, GROUPS_FETCH_FULFILLED, GROUPS_LIST_FETCH, GROUPS_LIST_FETCH_FULFILLED,
-    SUBUNITS_FETCH, SUBUNITS_FETCH_FULFILLED, SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED,
-    IDOLS_FETCH, IDOLS_FETCH_FULFILLED, IDOLS_LIST_FETCH, IDOLS_LIST_FETCH_FULFILLED,
-    SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED,
-    RESPONSES_FETCH, RESPONSES_FETCH_FULFILLED,
+    IDOL_FETCH, IDOL_FETCH_FULFILLED, IDOLS_FETCH, IDOLS_FETCH_FULFILLED,
+    IDOLS_LIST_FETCH, IDOLS_LIST_FETCH_FULFILLED,
+    LOGOUT, LOGOUT_WITH_NOTE,
     RESPONSES_BYCARD_FETCH, RESPONSES_BYCARD_FETCH_FULFILLED,
-    SET_NOTIFICATION, DISMISS_NOTIFICATION, CLEAR_NOTIFICATIONS,
-    CARDS_FETCH, CARDS_FETCH_FULFILLED,
-    CARD_FETCH, CARD_FETCH_FULFILLED,
-    IDOL_FETCH, IDOL_FETCH_FULFILLED,
+    RESPONSES_FETCH, RESPONSES_FETCH_FULFILLED, SET_NOTIFICATION,
+    SETTINGS_FETCH, SETTINGS_FETCH_FULFILLED,
+    SETTINGS_UPDATE, SETTINGS_UPDATE_FULFILLED,
     SUBUNIT_FETCH, SUBUNIT_FETCH_FULFILLED,
-    SETTINGS_FETCH, SETTINGS_FETCH_FULFILLED, SETTINGS_UPDATE, SETTINGS_UPDATE_FULFILLED
+    SUBUNITS_FETCH, SUBUNITS_FETCH_FULFILLED,
+    SUBUNITS_LIST_FETCH, SUBUNITS_LIST_FETCH_FULFILLED, SURVEYS_FETCH, SURVEYS_FETCH_FULFILLED
 } from 'constants/admin';
 
 export const setNotification = (notification: Notification) => ({ type: SET_NOTIFICATION, notification });
@@ -29,8 +29,8 @@ export const authenticate = (token: string, expiration: Date) => {
         type: AUTHENTICATE,
         token,
         expiration
-    }
-}
+    };
+};
 
 export const logout = () => {
     window.localStorage.setItem('bearer', '');
@@ -38,8 +38,8 @@ export const logout = () => {
 
     return {
         type: LOGOUT
-    }
-}
+    };
+};
 
 export const logoutWithNote = (notification: Notification) => {
     window.localStorage.setItem('bearer', '');
@@ -49,7 +49,7 @@ export const logoutWithNote = (notification: Notification) => {
         type: LOGOUT_WITH_NOTE,
         notification
     };
-}
+};
 
 export const groupsFetch = () => ({ type: GROUPS_FETCH });
 export const groupsFetchFulfilled = groups => ({ type: GROUPS_FETCH_FULFILLED, groups });

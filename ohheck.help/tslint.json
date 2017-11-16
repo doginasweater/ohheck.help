@@ -58,7 +58,9 @@
         "arrow-parens": false,
         "max-line-length": false,
         "jsx-no-lambda": false,
-        "jsx-boolean-value": false
+        "jsx-boolean-value": false,
+        "no-console": false,
+        "jsx-wrap-multiline": false
     },
     "rulesDirectory": []
 }

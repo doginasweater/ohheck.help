@@ -1,11 +1,12 @@
-﻿import { ModelBase } from '../commontypes/modelbase';
-import { Answer } from 'types/admin';
+﻿import { Answer } from 'types/admin';
+import { ModelBase } from '../commontypes/modelbase';
 
 export class Question extends ModelBase {
-    text: string;
-    type: string;
-    sortorder: number;
-    answers: Answer[];
+    public text: string;
+    public type: string;
+    public sortorder: number;
+    public answers: Answer[];
+    public required: boolean;
 
     constructor(json) {
         super(json);
@@ -14,5 +15,6 @@ export class Question extends ModelBase {
         this.type = json.type;
         this.sortorder = json.sortorder;
         this.answers = json.answers;
+        this.required = json.required;
     }
 }

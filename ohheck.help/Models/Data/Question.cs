@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ohheck.help.Models.Data
-{
-    public class Question : Common
-    {
-        public Question()
-        {
+namespace ohheck.help.Models.Data {
+    public class Question : Common {
+        public Question() {
             answers = new HashSet<Answer>();
         }
 
@@ -21,12 +18,11 @@ namespace ohheck.help.Models.Data
         public virtual ICollection<Answer> answers { get; set; }
 
         public QuestionViewModel Prettify() =>
-            new QuestionViewModel
-            {
+            new QuestionViewModel {
                 text = text,
                 type = type.ToString(),
                 sortorder = sortorder,
-                required = required ? "Yes" : "No",
+                required = required,
                 answers = answers?.Select(x => x.Prettify())?.OrderBy(x => x.sortorder),
                 id = id,
                 created = created.ToString("g"),
@@ -36,19 +32,17 @@ namespace ohheck.help.Models.Data
             };
 
         public QuestionViewModel Prettify(bool includeCommon) =>
-            new QuestionViewModel
-            {
+            new QuestionViewModel {
                 id = id,
                 text = text,
                 type = type.ToString(),
                 sortorder = sortorder,
-                required = required ? "Yes" : "No",
+                required = required,
                 answers = answers?.Select(x => x.Prettify(false))?.OrderBy(x => x.sortorder),
             };
     }
 
-    public enum AnswerType
-    {
+    public enum AnswerType {
         Cards,
         MultiLineText,
         SingleLineText,
@@ -57,12 +51,11 @@ namespace ohheck.help.Models.Data
         Checkbox
     }
 
-    public class QuestionViewModel : CommonViewModel
-    {
+    public class QuestionViewModel : CommonViewModel {
         public string text { get; set; }
         public string type { get; set; }
         public int sortorder { get; set; }
-        public string required { get; set; }
+        public bool required { get; set; }
 
         public virtual IEnumerable<AnswerViewModel> answers { get; set; }
     }

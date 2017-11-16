@@ -1,13 +1,11 @@
-﻿import * as React from 'react';
+﻿import { clearSurveyError, fetchSurvey, setCard, setChoice, setSelection, setSurveyError, submitSurvey } from 'actions/survey';
+import { Icon, Idol, MDown, Questions } from 'components/common';
 import { Subunit } from 'components/survey';
-import { Idol } from 'components/common';
-import { Survey } from 'types/admin';
-import { Link, Redirect } from 'react-router-dom';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { fetchSurvey, submitSurvey, setSelection } from 'actions/survey';
+import { Link, Redirect } from 'react-router-dom';
+import { Survey } from 'types/admin';
 import { IReduxProps, ISurveyStore } from 'types/redux';
-import { setCard, setChoice } from 'actions/survey';
-import { Icon, MDown, Questions } from 'components/common';
 import { SurveySubmission } from 'types/survey';
 
 interface IFormProps extends IReduxProps {
@@ -20,25 +18,25 @@ export default class Form extends React.Component<IFormProps, any> {
         super();
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         dispatch(fetchSurvey(this.props.match.params.id));
     }
 
-    handleClick = (id: number): void => {
+    public handleClick = (id: number): void => {
         const { dispatch, form } = this.props;
 
         dispatch(setCard(id, !form.cards[id]));
     }
 
-    handleChange = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    public handleChange = (event: React.KeyboardEvent<HTMLInputElement>): void => {
         const { dispatch, form } = this.props;
 
         dispatch(setChoice(event.currentTarget.name, event.currentTarget.value));
     }
 
-    handleCheckbox = (questionid: string, answerid: string, value: boolean): void => {
+    public handleCheckbox = (questionid: string, answerid: string, value: boolean): void => {
         const { dispatch, form } = this.props;
 
         let val = true;
@@ -54,13 +52,43 @@ export default class Form extends React.Component<IFormProps, any> {
         dispatch(setSelection(questionid, answerid, val));
     }
 
-    submit = event => {
+    public submit = event => {
         event.preventDefault();
 
         const { dispatch, form } = this.props;
 
+        dispatch(clearSurveyError());
+
         if (!form.survey) {
             return;
+        }
+
+        for (const q of form.survey.questions) {
+            const a = form.choices[q.id];
+
+            if (q.required) {
+                if (!a) {
+                    console.log('error on', q.id);
+                    dispatch(setSurveyError('You have to answer all required questions!'));
+                    return;
+                }
+
+                if (q.type !== 'Checkbox') {
+                    if (!a.choice) {
+                        console.log('missing choice on', q.id);
+                        console.log('answer', a);
+                        dispatch(setSurveyError('You have to answer all required questions!'));
+                        return;
+                    }
+                } else if (q.type === 'Checkbox') {
+                    if (!a.selections || !Object.keys(a.selections).some(item => a.selections![item] === true)) {
+                        console.log('missing choice on', q.id);
+                        console.log('answer', a);
+                        dispatch(setSurveyError('You must select at least one checkbox'));
+                        return;
+                    }
+                }
+            }
         }
 
         const toSubmit: SurveySubmission = {
@@ -72,7 +100,7 @@ export default class Form extends React.Component<IFormProps, any> {
         dispatch(submitSurvey(toSubmit));
     }
 
-    render() {
+    public render() {
         if (this.props.form.submitsuccess) {
             return <Redirect to="/thanks" />;
         }
@@ -106,11 +134,11 @@ export default class Form extends React.Component<IFormProps, any> {
             );
         }
 
-        let error = <span></span>;
+        let error = <span />;
 
         if (!form.submitting && !form.submitsuccess && form.submitresponse) {
             error =
-                <p style={{ 'color': 'red' }}>
+                <p style={{ color: 'red' }}>
                     There was an error submitting your survey: {form.submitresponse}
                 </p>;
         }

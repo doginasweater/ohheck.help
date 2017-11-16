@@ -1,15 +1,17 @@
-﻿import { Survey } from 'types/admin';
-import { ISurveyStore } from 'types/redux';
-import {
+﻿import {
+    CLEAR_SURVEY_ERROR,
+    DISPLAY_CARD,
     FETCH_SURVEY,
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
     SET_CHOICE,
     SET_SELECTION,
-    DISPLAY_CARD,
+    SET_SURVEY_ERROR,
     SUBMIT_SURVEY,
     SUBMIT_SURVEY_FULFILLED
 } from 'constants/survey';
+import { Survey } from 'types/admin';
+import { ISurveyStore } from 'types/redux';
 
 const SurveyInitial: ISurveyStore = {
     survey: null,
@@ -55,7 +57,7 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
                 }
             };
         case SET_SELECTION:
-            const choices_maybe = state.choices[action.questionid] ? { ...state.choices[action.questionid].selections } : {};
+            const choicesmaybe = state.choices[action.questionid] ? { ...state.choices[action.questionid].selections } : {};
 
             return {
                 ...state,
@@ -63,7 +65,7 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
                     ...state.choices,
                     [action.questionid]: {
                         selections: {
-                            ...choices_maybe,
+                            ...choicesmaybe,
                             [action.answerid]: action.value
                         }
                     }
@@ -90,7 +92,17 @@ export const survey = (state = SurveyInitial, action): ISurveyStore => {
                 submitresponse: action.message,
                 submitsuccess: action.success
             };
+        case SET_SURVEY_ERROR:
+            return {
+                ...state,
+                submitresponse: action.error
+            };
+        case CLEAR_SURVEY_ERROR:
+            return {
+                ...state,
+                submitresponse: ''
+            };
         default:
             return state;
     }
-}
+};

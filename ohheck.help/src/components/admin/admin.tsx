@@ -1,11 +1,12 @@
-﻿import * as React from 'react';
-import { Link, Route } from 'react-router-dom';
-import * as a from '.';
-import { connect } from 'react-redux';
-import { dismissNotification, authenticate } from 'actions/admin';
+﻿import { authenticate, dismissNotification } from 'actions/admin';
 import { Icon } from 'components/common';
-import { IReduxProps, IAdminStore } from 'types/redux';
+import * as moment from 'moment';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Link, Route } from 'react-router-dom';
 import { Notification } from 'types/admin';
+import { IAdminStore, IReduxProps } from 'types/redux';
+import * as a from '.';
 
 interface IAdminProps {
     admin: IAdminStore;
@@ -17,21 +18,27 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
         super(props);
     }
 
-    auth = (token: string, expiration: Date): void => {
+    public auth = (token: string, expiration: Date): void => {
         const { dispatch } = this.props;
 
         dispatch(authenticate(token, expiration));
     }
 
-    dismiss = (note: Notification) => {
+    public dismiss = (): void => {
         const { dispatch } = this.props;
+
+        const note = this.props.admin.notifications.find(item => !item.seen);
+
+        if (!note) {
+            return;
+        }
 
         note.seen = true;
 
         dispatch(dismissNotification(note));
     }
 
-    displayNotification = () => {
+    public displayNotification = (): JSX.Element => {
         const { notifications } = this.props.admin;
 
         if (notifications.length === 0) {
@@ -47,16 +54,16 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
         return (
             <div className="pure-u-15-24 item">
                 <div className={`pure-u-1 notification ${note.level}`}>
-                    <div className="pure-u-4-24">
-                        {note.created.toDateString()}
+                    <div className="pure-u-5-24">
+                        {moment(note.created).format('M/D/YYYY h:mm a')}
                     </div>
-                    <div className="pure-u-15-24">
+                    <div className="pure-u-14-24">
                         {note.text}
                     </div>
                     <div className="pure-u-4-24">
                         {note.action ? <Link to={`${note.action.location}`}>{note.action.text}</Link> : ' '}
                     </div>
-                    <div className="pure-u-1-24" onClick={event => { event.preventDefault(); this.dismiss(note); }} style={{ cursor: 'pointer' }}>
+                    <div className="pure-u-1-24" onClick={this.dismiss} style={{ cursor: 'pointer' }}>
                         <Icon icon="close" />
                     </div>
                 </div>
@@ -64,7 +71,7 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
         );
     }
 
-    displayLogin = () => {
+    public displayLogin = () => {
         if (!this.props.admin.bearer) {
             return (
                 <div className="pure-u-1">
@@ -108,7 +115,7 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
         }
     }
 
-    render() {
+    public render() {
         return (
             <div className="pure-u-1 some-space">
                 <div className="pure-u-1 flex-contain">

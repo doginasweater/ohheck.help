@@ -1,14 +1,16 @@
-﻿import { SurveySubmission } from 'types/survey';
-import {
+﻿import {
+    CLEAR_SURVEY_ERROR,
+    DISPLAY_CARD,
     FETCH_SURVEY,
     FETCH_SURVEY_FULFILLED,
     SET_CARD,
     SET_CHOICE,
     SET_SELECTION,
-    DISPLAY_CARD,
+    SET_SURVEY_ERROR,
     SUBMIT_SURVEY,
     SUBMIT_SURVEY_FULFILLED
 } from 'constants/survey';
+import { SurveySubmission } from 'types/survey';
 
 export const fetchSurvey = (slug: string) => ({ type: FETCH_SURVEY, slug });
 export const fetchSurveyFulfilled = survey => ({ type: FETCH_SURVEY_FULFILLED, survey });
@@ -21,3 +23,6 @@ export const displayCard = (card: JSX.Element) => ({ type: DISPLAY_CARD, card })
 
 export const submitSurvey = (submission: SurveySubmission) => ({ type: SUBMIT_SURVEY, submission });
 export const submitSurveyFulfilled = (success: boolean, message: string) => ({ type: SUBMIT_SURVEY_FULFILLED, success, message });
+
+export const setSurveyError = (error: string) => ({ type: SET_SURVEY_ERROR, error });
+export const clearSurveyError = () => ({ type: CLEAR_SURVEY_ERROR });

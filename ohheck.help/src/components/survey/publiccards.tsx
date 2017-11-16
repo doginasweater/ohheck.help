@@ -1,27 +1,27 @@
-﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { Card } from 'types/commontypes';
+﻿import { displayCard } from 'actions/survey';
 import { Idol } from 'components/common';
+import * as React from 'react';
+import { connect } from 'react-redux';
 import * as Rx from 'rxjs';
-import { displayCard } from 'actions/survey';
+import { Card } from 'types/commontypes';
 
-interface CardsState {
+interface ICardsState {
     cards: JSX.Element[];
     source$: Rx.Observable<any>;
 }
 
 @connect(state => ({ form: state.survey }))
-export default class PublicCards extends React.Component<any, CardsState> {
+export default class PublicCards extends React.Component<any, ICardsState> {
     constructor(props) {
         super(props);
 
         this.state = {
             cards: [],
             source$: Rx.Observable.interval(50).take(props.cards.length)
-        }
+        };
     }
 
-    renderCards = () => this.state.source$
+    public renderCards = () => this.state.source$
         .subscribe(val => {
             const { cards, dispatch } = this.props;
             const item: Card = cards[val];
@@ -34,15 +34,16 @@ export default class PublicCards extends React.Component<any, CardsState> {
                     selected={this.props.form.cards[item.id] || false}
                     handleClick={() => this.props.handleClick(item.id)}
                     name={item.id}
-                    key={item.id} />
+                    key={item.id}
+                />
             ));
-        });
+        })
 
-    componentDidMount() {
+    public componentDidMount() {
         this.renderCards();
     }
 
-    render() {
+    public render() {
         return (
             <span>
                 {this.props.form.displayedcards}

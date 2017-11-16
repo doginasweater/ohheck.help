@@ -1,11 +1,11 @@
-﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { Editor } from '.';
+﻿import { logout, setNotification } from 'actions/admin';
 import { Icon } from 'components/common';
+import * as React from 'react';
+import { connect } from 'react-redux';
 import { Notification } from 'types/admin';
-import { setNotification, logout } from 'actions/admin';
-import { IReduxProps, IAdminStore } from 'types/redux';
-import { CommentsSettings, HomeSettings, Sync } from './settingscomponents';
+import { IAdminStore, IReduxProps } from 'types/redux';
+import { Editor } from '.';
+import { CommentsSettings, DevTests, HomeSettings, Sync } from './settingscomponents';
 
 interface ISettingsProps extends IReduxProps {
     admin: IAdminStore;
@@ -19,19 +19,20 @@ export default class Settings extends React.Component<ISettingsProps, any> {
         this.state = {
             tab: 'HomeSettings',
             tabs: {
-                'HomeSettings': HomeSettings,
-                'Sync': Sync
+                DevTests,
+                HomeSettings,
+                Sync
             }
         };
     }
 
-    changeTab = (tab: string) => {
+    public changeTab = (tab: string) => {
         this.setState({
-            tab: tab
+            tab
         });
     }
 
-    render() {
+    public render() {
         const CurTab = this.state.tabs[this.state.tab];
 
         return (
@@ -40,11 +41,14 @@ export default class Settings extends React.Component<ISettingsProps, any> {
 
                 <form className="pure-form pure-form-aligned">
                     <div className="pure-u-1 tab-row">
-                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab("HomeSettings")}>
+                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab('HomeSettings')}>
                             Home Page
                         </div>
-                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab("Sync")}>
+                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab('Sync')}>
                             Card Sync
+                        </div>
+                        <div className="pure-u-1-4 tab" onClick={() => this.changeTab('DevTests')}>
+                            Dev Tests
                         </div>
                     </div>
                     <CurTab />
