@@ -1,9 +1,9 @@
-﻿import * as React from 'react';
+﻿import { surveysFetch } from 'actions/admin';
+import { Icon } from 'components/common';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { Survey } from 'types/admin';
-import { Icon } from 'components/common';
-import { surveysFetch } from 'actions/admin';
 
 @connect(state => ({ admin: state.admin }))
 export default class AdminHome extends React.Component<any, any> {
@@ -11,7 +11,7 @@ export default class AdminHome extends React.Component<any, any> {
         super(props);
     }
 
-    componentWillMount() {
+    public componentWillMount() {
         const { dispatch } = this.props;
 
         if (!this.props.admin.surveys) {
@@ -19,7 +19,7 @@ export default class AdminHome extends React.Component<any, any> {
         }
     }
 
-    renderBody = () => {
+    public renderBody = () => {
         if (this.props.admin.surveys) {
             return this.props.admin.surveys.map((item: Survey, index: number) =>
                 <tr key={index}>
@@ -45,18 +45,13 @@ export default class AdminHome extends React.Component<any, any> {
         } else {
             return (
                 <tr>
-                    <td>Loading...</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colSpan={6}>Loading...</td>
                 </tr>
             );
         }
     }
 
-    render() {
+    public render() {
         return (
             <div className="slide-in">
                 <h3>Home</h3>

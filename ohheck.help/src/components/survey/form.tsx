@@ -1,5 +1,5 @@
 ﻿import { clearSurveyError, fetchSurvey, setCard, setChoice, setSelection, setSurveyError, submitSurvey } from 'actions/survey';
-import { Icon, Idol, MDown, Questions } from 'components/common';
+import { ErrorBoundary, Icon, Idol, MDown, Questions } from 'components/common';
 import { Subunit } from 'components/survey';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -140,24 +140,26 @@ export default class Form extends React.Component<IFormProps, any> {
 
         return (
             <div className="pure-u-1">
-                <h1>{form.survey.title}</h1>
-                <MDown text={form.survey.comments} />
-                <form name="survey" className="pure-form pure-form-stacked">
-                    <Questions
-                        questions={form.survey.questions}
-                        ispublic={true}
-                        handleClick={this.handleClick}
-                        handleChange={this.handleChange}
-                        handleCheckbox={this.handleCheckbox}
-                        choices={form.choices}
-                        cards={form.cards} />
-                    <p className="center">
-                        <button className="pure-button button-primary" onSubmit={this.submit} onClick={this.submit}>
-                            <Icon icon="done" /> submit!
+                <ErrorBoundary isAdmin={false}>
+                    <h1>{form.survey.title}</h1>
+                    <MDown text={form.survey.comments} />
+                    <form name="survey" className="pure-form pure-form-stacked">
+                        <Questions
+                            questions={form.survey.questions}
+                            ispublic={true}
+                            handleClick={this.handleClick}
+                            handleChange={this.handleChange}
+                            handleCheckbox={this.handleCheckbox}
+                            choices={form.choices}
+                            cards={form.cards} />
+                        <p className="center">
+                            <button className="pure-button button-primary" onSubmit={this.submit} onClick={this.submit}>
+                                <Icon icon="done" /> submit!
                         </button>
-                    </p>
-                    {error}
-                </form>
+                        </p>
+                        {error}
+                    </form>
+                </ErrorBoundary>
             </div>
         );
     }

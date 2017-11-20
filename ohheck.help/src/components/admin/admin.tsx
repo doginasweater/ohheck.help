@@ -1,5 +1,5 @@
 ﻿import { authenticate, dismissNotification } from 'actions/admin';
-import { Icon } from 'components/common';
+import { ErrorBoundary, Icon } from 'components/common';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -83,32 +83,34 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
                 <div>
                     <a.AdminNav />
                     <div className="pure-u-3-4 slide-in-container">
-                        <Route exact path="/dashboard" component={a.AdminHome} />
+                        <ErrorBoundary isAdmin={true}>
+                            <Route exact path="/dashboard" component={a.AdminHome} />
 
-                        <Route path="/dashboard/responses/:id" component={a.Responses} />
-                        <Route exact path="/dashboard/responses" render={() => <h3>Please go back and select a survey.</h3>} />
+                            <Route path="/dashboard/responses/:id" component={a.Responses} />
+                            <Route exact path="/dashboard/responses" render={() => <h3>Please go back and select a survey.</h3>} />
 
-                        <Route path="/dashboard/bycard/:id" component={a.SurveysByCard} />
-                        <Route exact path="/dashboard/bycard" render={() => <h3>Please go back and select a survey.</h3>} />
+                            <Route path="/dashboard/bycard/:id" component={a.SurveysByCard} />
+                            <Route exact path="/dashboard/bycard" render={() => <h3>Please go back and select a survey.</h3>} />
 
-                        <Route path="/dashboard/groups/:id" component={a.SingleGroup} />
-                        <Route exact path="/dashboard/groups" component={a.Groups} />
+                            <Route path="/dashboard/groups/:id" component={a.SingleGroup} />
+                            <Route exact path="/dashboard/groups" component={a.Groups} />
 
-                        <Route path="/dashboard/subunits/:id" component={a.SingleSubunit} />
-                        <Route exact path="/dashboard/subunits" component={a.Subunits} />
+                            <Route path="/dashboard/subunits/:id" component={a.SingleSubunit} />
+                            <Route exact path="/dashboard/subunits" component={a.Subunits} />
 
-                        <Route path="/dashboard/idols/:id" component={a.SingleIdol} />
-                        <Route exact path="/dashboard/idols" component={a.Idols} />
+                            <Route path="/dashboard/idols/:id" component={a.SingleIdol} />
+                            <Route exact path="/dashboard/idols" component={a.Idols} />
 
-                        <Route exact path="/dashboard/cards/:id" component={a.SingleCard} />
-                        <Route exact path="/dashboard/cards/:skip/:take" component={a.AllCards} />
+                            <Route exact path="/dashboard/cards/:id" component={a.SingleCard} />
+                            <Route exact path="/dashboard/cards/:skip/:take" component={a.AllCards} />
 
-                        <Route path="/dashboard/survey/:id" component={a.SurveyView} />
-                        <Route exact path="/dashboard/survey" component={a.NewSurvey} />
+                            <Route path="/dashboard/survey/:id" component={a.SurveyView} />
+                            <Route exact path="/dashboard/survey" component={a.NewSurvey} />
 
-                        <Route path="/dashboard/settings" component={a.Settings} />
+                            <Route path="/dashboard/settings" component={a.Settings} />
 
-                        <Route path="/dashboard/akiedit" component={a.AkiEdit} />
+                            <Route path="/dashboard/akiedit" component={a.AkiEdit} />
+                        </ErrorBoundary>
                     </div>
                 </div>
             );
