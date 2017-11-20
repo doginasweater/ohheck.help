@@ -1,23 +1,23 @@
-﻿import * as React from 'react';
+﻿import { idolFetch, setNotification } from 'actions/admin';
+import * as moment from 'moment';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IAdminStore, IReduxProps } from 'types/redux';
 import { Notification } from 'types/admin';
-import { Idol } from 'types/commontypes';
-import { idolFetch, setNotification } from 'actions/admin';
-import * as moment from 'moment';
+import { Card, Idol } from 'types/commontypes';
+import { IAdminStore, IReduxProps } from 'types/redux';
 
-interface SingleIdolProps {
-    admin: IAdminStore
+interface ISingleIdolProps {
+    admin: IAdminStore;
 }
 
 @connect(state => ({ admin: state.admin }))
-export default class SingleIdol extends React.Component<SingleIdolProps & IReduxProps, any> {
+export default class SingleIdol extends React.Component<ISingleIdolProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const id = this.props.match.params.id;
         const { dispatch } = this.props;
 
@@ -26,7 +26,6 @@ export default class SingleIdol extends React.Component<SingleIdolProps & IRedux
 
             return;
         }
-
 
         if (!this.props.admin.fullidols) {
             dispatch(idolFetch(Number(id)));
@@ -41,7 +40,29 @@ export default class SingleIdol extends React.Component<SingleIdolProps & IRedux
         }
     }
 
-    render() {
+    public renderCards = (cards: Card[]): JSX.Element[] =>
+        cards
+            .filter((c: Card) => !(c.ispromo && !c.isidol))
+            .sort((a: Card, b: Card) => {
+                if (a.gameid < b.gameid) {
+                    return -1;
+                } else if (a.gameid > b.gameid) {
+                    return 1;
+                }
+
+                if (a.isidol) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }).map((item: Card, index: number) =>
+                <div className="pure-u-1-4" key={index}>
+                    <a href={`/dashboard/cards/${item.id}`} target="_blank">
+                        {item.isidol ? 'Idlz:' : 'Unidlz:'} {item.gameid}
+                    </a>
+                </div>)
+
+    public render() {
         if (this.props.admin.idolloading || !this.props.admin.fullidols) {
             return (
                 <div className="pure-u-1">
@@ -67,11 +88,11 @@ export default class SingleIdol extends React.Component<SingleIdolProps & IRedux
                     <tbody>
                         <tr>
                             <td><b>Group</b></td>
-                            <td>{idol.group ? idol.group.name : "None"}</td>
+                            <td>{idol.group ? idol.group.name : 'None'}</td>
                         </tr>
                         <tr>
                             <td><b>Subunit</b></td>
-                            <td>{idol.subunit ? idol.subunit.name : "None"}</td>
+                            <td>{idol.subunit ? idol.subunit.name : 'None'}</td>
                         </tr>
                         <tr>
                             <td><b>Last import</b></td>
@@ -80,13 +101,7 @@ export default class SingleIdol extends React.Component<SingleIdolProps & IRedux
                         <tr>
                             <td><b>Cards</b></td>
                             <td>
-                                {idol.cards && idol.cards.map((item, index) =>
-                                    <div className="pure-u-1-4" key={index}>
-                                        <a href={`/dashboard/cards/${item.id}`} target="_blank">
-                                            {item.isidol ? "Idlz:" : "Unidlz:"} {item.gameid}
-                                        </a>
-                                    </div>
-                                )}
+                                {idol.cards && this.renderCards(idol.cards)}
                             </td>
                         </tr>
                     </tbody>

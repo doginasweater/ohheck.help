@@ -61,26 +61,6 @@ namespace ohheck.help.Controllers {
                             continue;
                         }
 
-                        var c = new Card {
-                            apiid = card.id,
-                            gameid = card.game_id,
-                            rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
-                            attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
-                            imageurl = card.card_image,
-                            ispromo = card.is_promo,
-                            isidol = false
-                        };
-
-                        var c2 = new Card {
-                            apiid = card.id,
-                            gameid = card.game_id,
-                            rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
-                            attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
-                            imageurl = card.card_idolized_image,
-                            ispromo = card.is_promo,
-                            isidol = true
-                        };
-
                         var idol = _db.Idols.FirstOrDefault(x => x.name == card.idol.name);
 
                         if (idol == null) {
@@ -117,11 +97,34 @@ namespace ohheck.help.Controllers {
                             };
                         }
 
-                        c.idol = idol;
-                        c2.idol = idol;
+                        if (!card.is_promo) {
+                            var unidlz = new Card {
+                                apiid = card.id,
+                                gameid = card.game_id,
+                                rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
+                                attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
+                                imageurl = card.card_image,
+                                ispromo = card.is_promo,
+                                isidol = false
+                            };
 
-                        _db.Cards.Add(c);
-                        _db.Cards.Add(c2);
+                            unidlz.idol = idol;
+                            _db.Cards.Add(unidlz);
+                        }
+
+                        var idlz = new Card {
+                            apiid = card.id,
+                            gameid = card.game_id,
+                            rarity = (Rarity)Enum.Parse(typeof(Rarity), card.rarity),
+                            attribute = (IdolAttribute)Enum.Parse(typeof(IdolAttribute), card.attribute),
+                            imageurl = card.card_idolized_image,
+                            ispromo = card.is_promo,
+                            isidol = true
+                        };
+
+                        idlz.idol = idol;
+
+                        _db.Cards.Add(idlz);
 
                         _db.SaveChanges();
                     }
