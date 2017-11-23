@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+		<MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <AssetTargetFallback>$(AssetTargetFallback);net451</AssetTargetFallback>
+	</PropertyGroup>
+    <Import Project="fsc.props" />
+	<ItemGroup>
+		<Compile Include="Controllers/HomeController.fs" />
+        <Compile Include="Models/Context.fs" />
+		<Compile Include="Models/ErrorViewModel.fs" />
+		<Compile Include="Startup.fs" />
+		<Compile Include="Program.fs" />
+	</ItemGroup>
+    <ItemGroup><!-- Mono fix -->
+        <Reference Condition="'$(IsWindows)' != 'true'" Include="FSharp.Data.SqlProvider">
+            <HintPath>/Users/kevinbernfeld/.nuget/packages/sqlprovider/1.1.23/lib/net451/FSharp.Data.SqlProvider.dll</HintPath>
+        </Reference>
+    </ItemGroup>  
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+		<PackageReference Include="npgsql" Version="3.2.5" />
+	</ItemGroup>
+</Project>
