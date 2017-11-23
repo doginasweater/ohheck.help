@@ -20,7 +20,7 @@ class ErrorBoundaryInner extends React.Component<IErrorBoundaryProps & IReduxPro
         };
     }
 
-    public componentDidCatch(error, info) {
+    public componentDidCatch(error: Error, info: React.ErrorInfo) {
         this.setState({
             hasError: true
         });
@@ -28,13 +28,13 @@ class ErrorBoundaryInner extends React.Component<IErrorBoundaryProps & IReduxPro
         if (this.props.isAdmin) {
             const { dispatch } = this.props;
 
-            dispatch(setNotification(Notification.error('Oh heck, an error occurred. Please refresh the page.', 'web', 'web')));
+            dispatch(setNotification(Notification.error(`Tell kevin "${error.message}"`, 'web', 'web')));
         }
     }
 
     public render() {
         if (this.state.hasError) {
-            return <h3>Oh heck.</h3>;
+            return <h3>Oh heck, something went wrong. Please refresh the page.</h3>;
         }
 
         return this.props.children;

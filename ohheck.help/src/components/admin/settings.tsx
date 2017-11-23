@@ -1,4 +1,4 @@
-﻿import { logout, setNotification } from 'actions/admin';
+﻿import { logout, setNotification, settingsFetch } from 'actions/admin';
 import { Icon } from 'components/common';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -12,8 +12,8 @@ interface ISettingsProps extends IReduxProps {
 }
 
 @connect(state => ({ admin: state.admin }))
-export default class Settings extends React.Component<ISettingsProps, any> {
-    constructor(props) {
+export default class Settings extends React.Component<ISettingsProps & IReduxProps, any> {
+    constructor(props: ISettingsProps & IReduxProps) {
         super(props);
 
         this.state = {
@@ -24,6 +24,8 @@ export default class Settings extends React.Component<ISettingsProps, any> {
                 Sync
             }
         };
+
+        props.dispatch(settingsFetch());
     }
 
     public changeTab = (tab: string) => {

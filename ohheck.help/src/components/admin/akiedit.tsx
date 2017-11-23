@@ -1,4 +1,4 @@
-﻿import { settingsFetch, settingsUpdate, updateAkiPage } from 'actions/admin';
+﻿import { settingsFetch, settingsUpdate, updateSetting } from 'actions/admin';
 import { Icon } from 'components/common';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -20,7 +20,7 @@ export default class AkiEdit extends React.Component<IAkiEditProps & IReduxProps
     }
 
     public handleChange = (event: React.FormEvent<HTMLTextAreaElement>): void =>
-        this.props.dispatch(updateAkiPage(event.currentTarget.value))
+        this.props.dispatch(updateSetting('akipage', event.currentTarget.value))
 
     public save = (event: React.FormEvent<HTMLButtonElement>): void => {
         event.preventDefault();

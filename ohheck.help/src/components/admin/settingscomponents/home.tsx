@@ -1,43 +1,60 @@
-import * as React from 'react';
+import { surveysFetch } from 'actions/admin';
 import { Icon } from 'components/common';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Survey } from 'types/admin';
+import { IAdminStore, IReduxProps } from 'types/redux';
 import { Editor } from '..';
 
-export class HomeSettings extends React.Component<any, any> {
-    constructor(props) {
+interface IHomeSettingsProps {
+    admin: IAdminStore;
+}
+
+@connect(state => ({ admin: state.admin }))
+export class HomeSettings extends React.Component<IHomeSettingsProps & IReduxProps, any> {
+    constructor(props: IHomeSettingsProps & IReduxProps) {
         super(props);
 
-        this.state = {
-            textchoice: 'false',
-            hometext: ''
+        if (!props.admin.surveys) {
+            props.dispatch(surveysFetch());
         }
     }
 
-    handleChange = event => {
+    public handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
-    save = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    public save = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
     }
 
-    renderChoice = (): JSX.Element => {
-        if (this.state.textchoice === 'true') {
-            return <Editor handleChange={this.handleChange} value={this.state.hometext} name="hometext" />
-        } else {
+    public renderChoice = (): JSX.Element => {
+        if (this.props.admin.settings['homechoice'] === 'text') {
+            return <Editor handleChange={this.handleChange} value={this.props.admin.settings['hometext']} name="hometext" />;
+        } else if (this.props.admin.surveys) {
             return (
                 <div className="pure-control-group">
                     <label htmlFor="survey">Select Survey</label>
                     <select name="survey">
                         <option value="">Select One</option>
+                        {this.props.admin.surveys.map((s: Survey, i: number) => <option value={s.id.toString()} key={i}>{s.name}</option>)}
                     </select>
                 </div>
             );
+        } else {
+            return <div>uh oh</div>;
         }
     }
 
-    render() {
+    public render() {
+        if (this.props.admin.settingsloading) {
+            return <h3>loading...</h3>;
+        }
+
+        const homechoice = this.props.admin.settings['homechoice'];
+
         return (
             <div>
                 <fieldset>
@@ -47,11 +64,11 @@ export class HomeSettings extends React.Component<any, any> {
                         <span className="label">Home Page Content</span>
                         <div className="pure-u-1-2">
                             <label htmlFor="redirect" className="pure-radio">
-                                <input type="radio" name="textchoice" onChange={this.handleChange} value="false" checked={this.state.textchoice === 'false'} /> Redirect to a survey
+                                <input type="radio" name="textchoice" onChange={this.handleChange} value="survey" checked={homechoice !== 'text'} /> Redirect to a survey
                             </label>
 
                             <label htmlFor="redirect" className="pure-radio">
-                                <input type="radio" name="textchoice" onChange={this.handleChange} value="true" checked={this.state.textchoice === 'true'} /> Have text
+                                <input type="radio" name="textchoice" onChange={this.handleChange} value="text" checked={homechoice === 'text'} /> Have text
                             </label>
                         </div>
                     </div>
@@ -68,6 +85,6 @@ export class HomeSettings extends React.Component<any, any> {
                     </button>
                 </fieldset>
             </div>
-        )
+        );
     }
 }
