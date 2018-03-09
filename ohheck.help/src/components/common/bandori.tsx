@@ -40,73 +40,74 @@ export class Bandori extends React.Component<any, any> {
                     Age: 20<br />
                     Blood Type: O+<br />
                     Image Colour: Pine Green<br />
-                    Image Song: In the Picturesque Garden of Gods Design. Karen's reflection on her time with her previous company, and
-                    what she was moving towards in her music, her perfect life in music now. Favourite Food:
-                    Breadsticks, Lime Sorbet, Key Lime Pie, Pizza Least<br />
+                    Image Song: In the Picturesque Garden of Gods Design. Karen's reflection on her time with her
+                    previous company, and what she was moving towards in her music, her perfect life in music now.
+                    Favourite Food: Breadsticks, Lime Sorbet, Key Lime Pie, Pizza Least<br />
                     Favourite Food: Olives, Bell Peppers<br />
                     Hobbies: Attending rock concerts, country running, swimming<br />
                     Skills: Guitar making and fixing, metalworkas<br />
                     Starlight Stage Attribute: Cool, Vocal<br />
                     Charm Point: Eyes<br />
-                    Profile: An optimistic girl who first joined up with 629 in the hopes of finding more punk and rock idols. After finding two and having a
-                    falling out with the production company, Karen moved on with them to make their own band and perform
-                    at all the various gigs she would attend herself. She's spunky, quick witted, though often very
-                    ambitious, luckily her cousin Aria is there to remind her of the more realistic goals. Every morning
-                    she'll go out for a run around the edge of the nearby fields, often taking the time to think of
-                    inspiration for their next song. She is the groups main singer and guitarist, as well as their
-                    technician. She enjoys nothing more when performing than to see her crowd hyped and having a good
-                    time. She one day hopes that they will gain enough recognition to make it into the biggest gig of
-                    their country, 3 Nights Rock On. Until that day, she vows to carry on making rock music that
-                    everyone can enjoy, and to keep on enjoying her life.
+                    Profile: An optimistic girl who first joined up with 629 in the hopes of finding more punk and rock
+                    idols. After finding two and having a falling out with the production company, Karen moved on with
+                    them to make their own band and perform at all the various gigs she would attend herself. She's
+                    spunky, quick witted, though often very ambitious, luckily her cousin Aria is there to remind her of
+                    the more realistic goals. Every morning she'll go out for a run around the edge of the nearby
+                    fields, often taking the time to think of inspiration for their next song. She is the groups main
+                    singer and guitarist, as well as their technician. She enjoys nothing more when performing than to
+                    see her crowd hyped and having a good time. She one day hopes that they will gain enough recognition
+                    to make it into the biggest gig of their country, 3 Nights Rock On. Until that day, she vows to
+                    carry on making rock music that everyone can enjoy, and to keep on enjoying her life.
                 </p>
                 <p>
                     Idol Name: Aria Akamatsu<br />
                     Age: 21<br />
                     Blood Type: O+<br />
                     Image Colour: Orchid Purple<br />
-                    Image Song: The Scent of your World. A slow soft guitar ballad about the passing scent of the person Aria once loved, what it
-                    was like to be with them, enveloped by it.<br />
+                    Image Song: The Scent of your World. A slow soft guitar ballad about the passing scent of the person
+                    Aria once loved, what it was like to be with them, enveloped by it.<br />
                     Favourite Food: Sushi, Tuna, BBQ Chicken Least Favourite<br />
                     Food: Curry<br />
                     Hobbies: Drawing, costume design, swimming<br />
                     Skills: Sewing, leatherworking, hair stylist, lyric writing<br />
                     Starlight Stage Attribute: Passion, Dance<br />
                     Charm Point: Cheeky smile<br />
-                    Profile: Aria's older cousin who was in 629 long before Karen was. Following the falling out incident, Aria agreed
-                    in making a new group that would strive to not be bogged down by the bigger companies, to be free.
-                    Aria often dreams of her lover that she lost a year after they were going to get married, her lover
-                    always enjoyed her music. In his memory, she promised to carry on singing and performing until her
-                    she couldn't any more. She's extremely laid back and often has to be told off by Karen for slacking when work needed
-                    to be done for upcoming gigs. She often begins to wonder about life and why certain things are the
-                    way there are, using her wonder as inspiration for some of the lyrics that go into their music.
-                    Whilst her laid back attitude may make her seem like she doesn't care some time, deep down Aria
-                    cares the most about making their rock band a success, to push themselves to the limits and create
-                    the best music they can.
+                    Profile: Aria's older cousin who was in 629 long before Karen was. Following the falling out
+                    incident, Aria agreed in making a new group that would strive to not be bogged down by the bigger
+                    companies, to be free. Aria often dreams of her lover that she lost a year after they were going to
+                    get married, her lover always enjoyed her music. In his memory, she promised to carry on singing and
+                    performing until her she couldn't any more. She's extremely laid back and often has to be told off
+                    by Karen for slacking when work needed to be done for upcoming gigs. She often begins to wonder
+                    about life and why certain things are the way there are, using her wonder as inspiration for some of
+                    the lyrics that go into their music. Whilst her laid back attitude may make her seem like she
+                    doesn't care some time, deep down Aria cares the most about making their rock band a success, to
+                    push themselves to the limits and create the best music they can.
                 </p>
                 <p>
                     Idol Name: Lucida Reinheart<br />
                     Age: 19<br />
                     Blood Type: A+<br />
                     Image Colour: Lemonade Pink<br />
-                    Image Song: Sounds of Freedom. Lucida's wishes to be free to sing music to her hearts content, hoping that one day she
-                    recovers enough to fully sing freely again.<br />
+                    Image Song: Sounds of Freedom. Lucida's wishes to be free to sing music to her hearts content,
+                    hoping that one day she recovers enough to fully sing freely again.<br />
                     Favourite Food: Venison, Ribs, Corn<br />
                     Least Favourite Food: The food the hospital serves her<br />
                     Hobbies: Vocal training, score composing, nature walks<br />
                     Skills: Performance with paino, bass guitar and drums, vocal training<br />
                     Starlight Stage Attribute: Cute, Visual<br />
                     Charm Point: Overt shyness<br />
-                    Profile: Lucida from birth has always been physically weaker than she'd like to be. She can sometimes barely make it through a round of performances before
-                    passing out from exhaustion. She joined 629 in the hopes of improving her form. Whilst it did help,
-                    she asked if Karen and Aria would allow her to join them in their efforts on a new rock band. Whilst
-                    she was a more light hearted musician, she wanted to delve into that genre for a while, and offers
-                    her expertise in vocals and instruments as a deal. One day Lucida hopes she might be able to
-                    overcome her struggles with her body and perform to her hearts content, not bound by her illness.
-                    Often she has to sit out of performances to go to the hospital for check ups. Like Karen, Lucida
-                    just wishes that the music they make makes others happy, and that they enjoy the performances they
-                    put on. She's a bit shy due to her earlier years in life being rather hospital confined, and she's
-                    also rather cautious of any risks that Karen tries to take with their band. However, she tries her
-                    best to input her ideas and compose their music.
+                    Profile: Lucida from birth has always been physically weaker than she'd like to be. She can
+                    sometimes barely make it through a round of performances before passing out from exhaustion. She
+                    joined 629 in the hopes of improving her form. Whilst it did help, she asked if Karen and Aria would
+                    allow her to join them in their efforts on a new rock band. Whilst she was a more light hearted
+                    musician, she wanted to delve into that genre for a while, and offers her expertise in vocals and
+                    instruments as a deal. One day Lucida hopes she might be able to overcome her struggles with her
+                    body and perform to her hearts content, not bound by her illness. Often she has to sit out of
+                    performances to go to the hospital for check ups. Like Karen, Lucida just wishes that the music they
+                    make makes others happy, and that they enjoy the performances they put on. She's a bit shy due to
+                    her earlier years in life being rather hospital confined, and she's also rather cautious of any
+                    risks that Karen tries to take with their band. However, she tries her best to input her ideas and
+                    compose their music.
                 </p>
                 <hr />
                 <h2>Entries in Order of Submission</h2>
@@ -127,17 +128,16 @@ export class Bandori extends React.Component<any, any> {
                     Charm point: Cute Gestures<br />
                     SIF attribute: cool<br />
                     Mirishita attribute: (not sure)<br />
-                    Profile: Mirai always dreamed of performing on stage. She hoped to be famous
-                    and make everyone smile one day. Unfortunately she was harassed constantly for being a Trans girl.
-                    She swore that from then on, she’d keep it a secret. Slowly she withdrew from social aspects of life
-                    and focused more on reading dictionaries. She hoped to learn more words to help better explain how
-                    she feels and to help others understand. One day while out, she saw a poster for the Production
-                    Company, “CAN)(WE” looking for recruits. She decided to step out of her comfort zone and pursue her
-                    dreams. Now with support from fan, family, and friends, she is comfortable with who she is and plans
-                    on showing it! “Hey everyone! I finally know who I am, and I’m excited for you all to hear...MY:
-                    TRUTH!”
+                    Profile: Mirai always dreamed of performing on stage. She hoped to be famous and make everyone smile
+                    one day. Unfortunately she was harassed constantly for being a Trans girl. She swore that from then
+                    on, she’d keep it a secret. Slowly she withdrew from social aspects of life and focused more on
+                    reading dictionaries. She hoped to learn more words to help better explain how she feels and to help
+                    others understand. One day while out, she saw a poster for the Production Company, “CAN)(WE” looking
+                    for recruits. She decided to step out of her comfort zone and pursue her dreams. Now with support
+                    from fan, family, and friends, she is comfortable with who she is and plans on showing it! “Hey
+                    everyone! I finally know who I am, and I’m excited for you all to hear...MY: TRUTH!”
                 </p>
-                <blockquote className="twitter-tweet" data-lang="en">
+                <blockquote className="twitter-tweet tw-align-center" data-lang="en">
                     <p lang="ht" dir="ltr">
                         My idol l0l
                         <a href="https://t.co/scE9MxVYEp">pic.twitter.com/scE9MxVYEp</a>
@@ -157,9 +157,9 @@ export class Bandori extends React.Component<any, any> {
                     Sign: Taurus<br />
                     Image color: Mint green<br />
                     Image song name: HAPI TUNEZ<br />
-                    Image song description: Despite what the name says, it’s a pretty rock-ish song. In the
-                    beginning it’s cute, but then it sort of turns into full on guitar stuff and there are also rap
-                    parts. The song ends with no instrumentals and is just a final, quick rap.<br />
+                    Image song description: Despite what the name says, it’s a pretty rock-ish song. In the beginning
+                    it’s cute, but then it sort of turns into full on guitar stuff and there are also rap parts. The
+                    song ends with no instrumentals and is just a final, quick rap.<br />
                     Favorite food: Watermelons<br />
                     Least favorite food: Potatoes<br />
                     Hobbies: Making tea, gardening, and playing guitar<br />
@@ -186,21 +186,21 @@ export class Bandori extends React.Component<any, any> {
                     Astrological sign: Cancer<br />
                     Image color: Light purple<br />
                     Image song: A Starlight’s Wish Song<br />
-                    Description: A song she wrote to describe her wish to be a shining star. Named after her last name “Hoshikari” which can mean “Star hunting” as a whole or
-                    “Star light” if you seperate it (“Hoshi” meaning “star” and “Kari” from the word “Hikari” which
-                    means “Light”)<br />
+                    Description: A song she wrote to describe her wish to be a shining star. Named after her last name
+                    “Hoshikari” which can mean “Star hunting” as a whole or “Star light” if you seperate it (“Hoshi”
+                    meaning “star” and “Kari” from the word “Hikari” which means “Light”)<br />
                     Favorite foods: Crepes, shortcakes, curry<br />
                     Disliked foods: Chinese food, anything too salty<br />
                     Skills: Playing instruments<br />
                     Hobbies: Composing songs, drawing<br />
                     Charm Point: Her 2-toned hair<br />
                     Attribute: Smile<br />
-                    Profile: Miyuki was born to a rich family with a younger sister, Aki (Nicknamed
-                    Akari by her family to match with her older sister) Her family usually works all day so she normally
-                    spends time by herself, eventually learning how to play all instruments in the music room. She is
-                    caring and fun to talk to but can also act tsundere at times Apperience: Light yellow eyes, dark
-                    blue hair with a navy blue streak. She describes it as an error in her DNA. She usually wear her
-                    hair up in twintails or a ponytail
+                    Profile: Miyuki was born to a rich family with a younger sister, Aki (Nicknamed Akari by her family
+                    to match with her older sister) Her family usually works all day so she normally spends time by
+                    herself, eventually learning how to play all instruments in the music room. She is caring and fun to
+                    talk to but can also act tsundere at times Apperience: Light yellow eyes, dark blue hair with a navy
+                    blue streak. She describes it as an error in her DNA. She usually wear her hair up in twintails or a
+                    ponytail
                 </p>
                 <hr />
                 <p>
@@ -240,17 +240,24 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Neko</strong>
                 </p>
                 <p>
-                    Echo Age:16 Blood Type: O Astrological sign: Gemini Image Colour: Light Green Image Song: Moonlit
-                    Tango Favourite Foods: Everything Disliked Foods: Nothing Skills: Cooking, Piano, Singing,
-                    Gymnastics, Dance Charm Point(s): Fair Complextion and Almost white hair SIF Attribute: Pure
-                    Mirishita Attribute: Vocal + Dance Profile: Echo comes from a small town in the Mountain side. Her
-                    family had made her stay away from the city and Her dreams of becoming an idol. When she finally
-                    turned 16 her parents let her go follow her dreams and discover other life styles. She doesent have
-                    much knowledge of how life works in other places than the Mountains so she is very excited to learn!
-                    She used to dance and sing with the animals so she has what she would consider, training. Echo
-                    absolutely adores animals, especially cats! Her cat named Shi-Chan has gone with her on the trip.
-                    The animals love her back also and often help her with problems that she has.You may think she is
-                    just a simple girl who can eat a lot, but you got another thing coming!
+                    Echo Age:16 <br />
+                    Blood Type: O <br />
+                    Astrological sign: Gemini <br />
+                    Image Colour: Light Green<br />
+                    Image Song: Moonlit <br />
+                    Tango Favourite Foods: Everything<br />
+                    Disliked Foods: Nothing Skills: Cooking, Piano, Singing, Gymnastics, Dance<br />
+                    Charm Point(s): Fair Complextion and Almost white hair<br />
+                    SIF Attribute: Pure<br />
+                    Mirishita Attribute: Vocal + Dance <br />
+                    Profile: Echo comes from a small town in the Mountain side. Her family had made her stay away from
+                    the city and Her dreams of becoming an idol. When she finally turned 16 her parents let her go
+                    follow her dreams and discover other life styles. She doesent have much knowledge of how life works
+                    in other places than the Mountains so she is very excited to learn! She used to dance and sing with
+                    the animals so she has what she would consider, training. Echo absolutely adores animals, especially
+                    cats! Her cat named Shi-Chan has gone with her on the trip. The animals love her back also and often
+                    help her with problems that she has.You may think she is just a simple girl who can eat a lot, but
+                    you got another thing coming!
                 </p>
                 <hr />
                 <p>
@@ -265,23 +272,21 @@ export class Bandori extends React.Component<any, any> {
                     on their personal social media, but most idols who join this agency do so for the sake of keeping a
                     low profile anyway.
                 </p>
-                <p>Alex エレカス</p>
-                <p>Age: 24</p>
-                <p>Blood Type: O+</p>
-                <p>Astrological sign: Capricorn</p>
-                <p>Image Colour: dark blue</p>
-                <p>Image Song: Moonlight Circus</p>
-                <p>Favourite Foods: Yakimeshi, Avocado, Waffles, Milkshakes, Lemonade.</p>
-                <p>Disliked Foods: Lentils, black olives</p>
-                <p>Skills: piano, acting, maths, cooking</p>
-                <p>Hobbies: videogames, baking, collecting</p>
                 <p>
-                    Charm Points: youthful apearance, a flair for the dramatic and imposing height that catches peoples
-                    atenttions
-                </p>
-                <p>
+                    Alex エレカス<br />
+                    Age: 24<br />
+                    Blood Type: O+<br />
+                    Astrological sign: Capricorn<br />
+                    Image Colour: dark blue<br />
+                    Image Song: Moonlight Circus<br />
+                    Favourite Foods: Yakimeshi, Avocado, Waffles, Milkshakes, Lemonade.<br />
+                    Disliked Foods: Lentils, black olives<br />
+                    Skills: piano, acting, maths, cooking<br />
+                    Hobbies: videogames, baking, collecting<br />
+                    Charm Points: youthful apearance, a flair for the dramatic and imposing height that catches people’s
+                    atenttion<br />
                     Worst Qualites: Forgets about practice sometimes and has learn stuff last minute. Prone to emotional
-                    overload. A bit clumsy
+                    overload. A bit clumsy. <br />
                 </p>
                 <p>Skills: acting, piano, cooking</p>
                 <p>SIF Attribute: cool</p>
@@ -338,14 +343,18 @@ export class Bandori extends React.Component<any, any> {
                 <p>
                     <strong>Mel</strong>
                 </p>
-                <p>Idol name: Sayaka Cho Age: 17 Blood Type: O+ Astrological sign: Scorpion</p>
-                <p>Company: YAKASTARS</p>
-                <p>Image color: Blue Image song: MY 未来 (MY FUTURE) First song written by Chu</p>
-                <p>Favorite food: Katusdon, Udon, daifuku, spicy food</p>
-                <p>Disliked food: Seafood</p>
-                <p>Hobbies: sports Poetry</p>
-                <p>Skills: Singing play any instrument Cook</p>
-                <p>Charm point: Angelic voice, Bright Eyes</p>
+                <p>
+                    Idol name: Sayaka Cho<br />
+                    Age: 17 Blood Type: O+ Astrological sign: Scorpion<br />
+                    Company: YAKASTARS<br />
+                    Image color: Blue <br />
+                    Image song: MY 未来 (MY FUTURE) First song written by Cho<br />
+                    Favorite food: Katusdon, Udon, daifuku, spicy food<br />
+                    Disliked food: Seafood<br />
+                    Hobbies: sports Poetry<br />
+                    Skills: Singing play any instrument Cook<br />
+                    Charm point: Angelic voice, Bright Eyes<br />
+                </p>
                 <p>
                     <em>°•Profile°•</em>'`
                 </p>
@@ -372,7 +381,7 @@ export class Bandori extends React.Component<any, any> {
                     opportunity.
                 </p>
                 <p>Sorry if there are spelling errors, English is not my first language 💛✨💛✨</p>
-                <blockquote className="twitter-tweet" data-lang="en">
+                <blockquote className="twitter-tweet tw-align-center" data-lang="en">
                     <p lang="en" dir="ltr">
                         Drawings for a contest✨✨✨ I&#39;m tired af
                         <a href="https://t.co/VHrJc2kCKO">pic.twitter.com/VHrJc2kCKO</a>
@@ -386,31 +395,48 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Appyia Chi</strong>
                 </p>
                 <p>
-                    Idol name:Rheia Blood Type: 0+ Age:16 Astrological Sign:Cancer Image Colour: Magenta
+                    Idol name:Rheia<br />
+                    Blood Type: 0+<br />
+                    Age:16 <br />
+                    Astrological Sign:Cancer <br />
+                    Image Colour: Magenta<br />
                     Subunit/band/production company name (if applicable):She is part of the idol group 青空FLYIN' . And
-                    her subunit is 3SHINE. Image song (name and description) Favourite food: Least favourite food:
+                    her subunit is 3SHINE. Image song (name and description) <br />
+                    Favourite food:<br />
+                    Least favourite food:<br />
                     Hobbies:She really likes painting.Sometimes helps costume designs and hairstyles for their stage.She
-                    is also very good at singing.She also has an envelope collection. Skills SIF Attribute:Pure
-                    Mirishita attribute: fairy + vocal Charm point: Her voice is really sweet and you feel like you can
-                    listen to her for all day.Also her style will make you pay attention to her. Profile (personality
-                    and backstory):Rheia also wants to be an artist like her mother.But when she met everyone at
-                    青空FLYIN' she realized she also wants to be an idol with an unique style.She is very passionate
-                    about her dreams but sometimes failures makes her sad very easily.She doesnt like loud places
-                    because she says it make impossible to reach her soul.But also says their concerts are different
-                    cause she can feel everyones soul,heart to become one and make one unique wonderful voice.
+                    is also very good at singing.She also has an envelope collection. <br />
+                    SIF Attribute:Pure<br />
+                    Mirishita attribute: fairy + vocal<br />
+                    Charm point: Her voice is really sweet and you feel like you can listen to her for all day.Also her
+                    style will make you pay attention to her.<br />
+                    Profile (personality and backstory):Rheia also wants to be an artist like her mother.But when she
+                    met everyone at 青空FLYIN' she realized she also wants to be an idol with an unique style.She is
+                    very passionate about her dreams but sometimes failures makes her sad very easily.She doesnt like
+                    loud places because she says it make impossible to reach her soul.But also says their concerts are
+                    different cause she can feel everyones soul,heart to become one and make one unique wonderful voice.
                 </p>
                 <hr />
                 <p>
                     <strong>Lupin</strong>
                 </p>
                 <p>
-                    Eli Rose, 19 years, from 398PRO. Astrological sign: Virgo Image color: light azure Image song:
-                    ブルーミング・ウィンド Favorite food: pasta with cheese, apple pie Unlike food: peas Skills: melodic
-                    whistle, knitting, surfing, playing on flute Charm point: blond hair Sif attribute: pure Mirishita:
-                    Angel + vocal Profile: Eli is idol of Nature and classical music. From 14 years old wished to become
-                    idol and hardly trained for 4 years. At the age of 18 she performed on the stage on the coast in
-                    honor of the opening of a large flower shop. At the presentation was a producer who scouted her. Her
-                    parameters: 83/58/84, height: 172.
+                    Eli Rose<br />
+                    19 years<br />
+                    398PRO <br />
+                    Astrological sign: Virgo <br />
+                    Image color: light azure<br />
+                    Image song: ブルーミング・ウィンド <br />
+                    Favorite food: pasta with cheese, apple pie<br />
+                    Unlike food: peas<br />
+                    Skills: melodic whistle, knitting, surfing, playing on flute <br />
+                    Charm point: blond hair <br />
+                    Sif attribute: pure <br />
+                    Mirishita: Angel + vocal <br />
+                    Profile: Eli is idol of Nature and classical music. From 14 years old wished to become idol and
+                    hardly trained for 4 years. At the age of 18 she performed on the stage on the coast in honor of the
+                    opening of a large flower shop. At the presentation was a producer who scouted her. Her parameters:
+                    83/58/84, height: 172.
                 </p>
                 <p>
                     <a href="https://www.youtube.com/watch?feature=player_embedded&v=KYvcjzQ-gys" target="_blank">
@@ -427,17 +453,26 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Kenma</strong>
                 </p>
                 <p>
-                    Kenma Age: 16 Blood type: A Astrological sign: pisces Image colour: lavender Image song: Galaxy
-                    girls forever!! ☆ Favourite foods: sweets, salad, and lasagna Disliked foods: seafood (especially
-                    squid), tomatoes, and pickles Skills: actress, student council president Hobbies: taking care of her
-                    grandmother, student council duties, and watching youtube videos (mostly about idols) Charm point:
-                    bodacious booty SIF attribute: smile Mirishita attribute: princess + cute Profile: Kenma's parents
-                    were always very rick so the never stopped traveling, due to this Kenma has been living with her
-                    grandmother. Once Kenma was about fifteen her grandmother had gotten ill. She was in a really rough
-                    patch, but one day fate struck like lightning. She looked up to her tv screen to see the most
-                    beautiful girls all of them shining brightly. She has then worked for a whole year to get her group
-                    up and running. Her end goal is that she wants to show her grandmother one more shining preference
-                    before she passes.
+                    Kenma<br />
+                    Age: 16<br />
+                    Blood type: A<br />
+                    Astrological sign: pisces<br />
+                    Image colour: lavender<br />
+                    Image song: Galaxy girls forever!! ☆<br />
+                    Favourite foods: sweets, salad, and lasagna<br />
+                    Disliked foods: seafood (especially squid), tomatoes, and pickles <br />
+                    Skills: actress, student council president<br />
+                    Hobbies: taking care of her grandmother, student council duties, and watching youtube videos (mostly
+                    about idols) <br />
+                    Charm point: bodacious booty <br />
+                    SIF attribute: smile<br />
+                    Mirishita attribute: princess + cute<br />
+                    Profile: Kenma's parents were always very rick so the never stopped traveling, due to this Kenma has
+                    been living with her grandmother. Once Kenma was about fifteen her grandmother had gotten ill. She
+                    was in a really rough patch, but one day fate struck like lightning. She looked up to her tv screen
+                    to see the most beautiful girls all of them shining brightly. She has then worked for a whole year
+                    to get her group up and running. Her end goal is that she wants to show her grandmother one more
+                    shining preference before she passes.
                 </p>
                 <p>
                     <a href="https://www.youtube.com/playlist?list=PLGsfjH9ORCgozDZkwp87RgEEWuNkTNyg-">
@@ -451,43 +486,63 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Toki</strong>
                 </p>
                 <p>
-                    Yuki Age: 20 Blood type: B Image colour: Mint Image song: : 命燃やして恋せよ乙女 performed by Kaede
-                    Takagami, Shin Sato, Nana Abe, Miyu Mifune, and Sanae Katagiri Zodiac sign: Cancer Favourite food:
-                    Grouper Least favourite food: Almonds (She is allergic, but they taste horrible according to her
-                    judgement from a 10 year old memory.) Hobbies: Cooking, specifically fish, calligraphy, she is a
-                    traditional woman. Skills: Again, cooking, and she is quite fond of algebra, somehow. Charmpoint:
-                    Her deep frosty eyes Attribute: (SIF) Pure Attribute: (Mirishita) Angel+Fairy Profile: Yuki, meaning
-                    snow in Japanese, was named due to her baby blue eyes. She is a blunt yet charming girl, and she is
-                    more on the traditional side of most. Lecturing is quite common when it comes to her, as she seems
-                    to be quite picky, but she always ends up getting scorned by an idol older than her due to her blunt
-                    attitude. Besides her brash personality is a calm woman inside. She has a soft spot for animals and
-                    loves to care for any animals, even if her favourite food is a type of fish. She owns a cat named
-                    Snowflake whom she loves dearly, though the cat doesn't like to pay much mind. She also likes to
-                    care for the children in her production group, albeit she seems to treat them like pets, not people.
-                    Her hair is almost always in a bun, and is dyed a dark red, although her natural hair colour seems
-                    to be a deep brown. She believed red fit her better, so she decided to do it. Most of the time she
-                    is dressed basically, and most commonly is wearing a denim button-up sleeve-less shirt and a long
-                    skirt and flats. She is taught a lot of the time on what to wear by other idols due to the fact she
-                    doesn't seem to have much common fashion sense or else she would be walking in kimonos. Her skin is
-                    a slightly shaded brown, making a lot of light colours look quite nice on her, but she much prefers
-                    darker colours. [Notes: Sorry this was long! I go to town with writing.]
+                    Yuki <br />
+                    Age: 20<br />
+                    Blood type: B<br />
+                    Image colour: Mint<br />
+                    Image song: : 命燃やして恋せよ乙女 performed by Kaede Takagami, Shin Sato, Nana Abe, Miyu Mifune,
+                    and Sanae Katagiri<br />
+                    Zodiac sign: Cancer<br />
+                    Favourite food: Grouper<br />
+                    Least favourite food: Almonds (She is allergic, but they taste horrible according to her judgement
+                    from a 10 year old memory.)<br />
+                    Hobbies: Cooking, specifically fish, calligraphy, she is a traditional woman. <br />
+                    Skills: Again, cooking, and she is quite fond of algebra, somehow.<br />
+                    Charmpoint: Her deep frosty eyes<br />
+                    Attribute: (SIF) Pure <br />
+                    Attribute: (Mirishita) Angel+Fairy <br />
+                    Profile: Yuki, meaning snow in Japanese, was named due to her baby blue eyes. She is a blunt yet
+                    charming girl, and she is more on the traditional side of most. Lecturing is quite common when it
+                    comes to her, as she seems to be quite picky, but she always ends up getting scorned by an idol
+                    older than her due to her blunt attitude. Besides her brash personality is a calm woman inside. She
+                    has a soft spot for animals and loves to care for any animals, even if her favourite food is a type
+                    of fish. She owns a cat named Snowflake whom she loves dearly, though the cat doesn't like to pay
+                    much mind. She also likes to care for the children in her production group, albeit she seems to
+                    treat them like pets, not people. Her hair is almost always in a bun, and is dyed a dark red,
+                    although her natural hair colour seems to be a deep brown. She believed red fit her better, so she
+                    decided to do it. Most of the time she is dressed basically, and most commonly is wearing a denim
+                    button-up sleeve-less shirt and a long skirt and flats. She is taught a lot of the time on what to
+                    wear by other idols due to the fact she doesn't seem to have much common fashion sense or else she
+                    would be walking in kimonos. Her skin is a slightly shaded brown, making a lot of light colours look
+                    quite nice on her, but she much prefers darker colours. [Notes: Sorry this was long! I go to town
+                    with writing.]
                 </p>
                 <hr />
                 <p>
                     <strong>ShinyKyu</strong>
                 </p>
                 <p>
-                    Moriko Age: 16 Blood type: B+ Astrological sign: Libra Image color: Mint Green Image song: Ankia?!
-                    Favourite Foods: Ramen, Rice Balls, Pocky, Curry Disliked Foods: Turnips, Corn, Really sour candy
-                    Skills: cooking, gaming Hobbies; gaming, fashion, exercise Charm Point: very open minded SIF
-                    Attribute: Pure Mirishita Attribute: Fairy + Dance Profile: Moriko Ishii is a sophomore who is a
-                    little on the chubbier side but tries to be positive about herself and uses her weight as an
-                    advantage. She is the keyboardist of Hello Happy World, she seems to fit in with them because of her
-                    positive outlook and fun nature. She tends to game a lot and take her friends out for snacks but
-                    gets scolded by her senpai's. She tends to show more skin than the others to try to make a statement
-                    about weight but will never dress in anything too revealing. She tends to like colors like purples,
-                    blues, and greens. She had brown eyes and black hair which tends to go into pigtails or ponytails.
-                    She prefers to wear clothes like sweaters, shorts, and leggings.
+                    Moriko<br />
+                    Age: 16<br />
+                    Blood type: B+ <br />
+                    Astrological sign: Libra<br />
+                    Image color: Mint Green<br />
+                    Image song: Ankia?!<br />
+                    Favourite Foods: Ramen, Rice Balls, Pocky, Curry<br />
+                    Disliked Foods: Turnips, Corn, Really sour candy<br />
+                    Skills: cooking, gaming<br />
+                    Hobbies; gaming, fashion, exercise<br />
+                    Charm Point: very open minded<br />
+                    SIF Attribute: Pure<br />
+                    Mirishita Attribute: Fairy + Dance<br />
+                    Profile: Moriko Ishii is a sophomore who is a little on the chubbier side but tries to be positive
+                    about herself and uses her weight as an advantage. She is the keyboardist of Hello Happy World, she
+                    seems to fit in with them because of her positive outlook and fun nature. She tends to game a lot
+                    and take her friends out for snacks but gets scolded by her senpai's. She tends to show more skin
+                    than the others to try to make a statement about weight but will never dress in anything too
+                    revealing. She tends to like colors like purples, blues, and greens. She had brown eyes and black
+                    hair which tends to go into pigtails or ponytails. She prefers to wear clothes like sweaters,
+                    shorts, and leggings.
                 </p>
                 <p>
                     <a href="https://www.canva.com/design/DACv2QRbQoU/">Moodboard</a>
@@ -497,35 +552,55 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Marie</strong>
                 </p>
                 <p>
-                    Name: Juliet Blood type: A- Astrological sign:Aquarius Band: Flowerdance Image color: yellow Image
-                    song:Truthful(This softcore pop/rock hybrid song tells a tale of a relationship built on lies)
-                    Favourite food: sesame bread Least favourite food: duck Hobbies: gardening,tea Skills: sewing SIF
-                    attribute:Pure Charm point: voice Profile: Juliet is a meek girl that likes to keep to herself.She
-                    was scouted by the band when she was singing itn the local choir precisely because of her voice.Even
-                    though she sometimes has a hard time with big audiences,she tries her very hardest on stage.After
-                    their perfomances,she likes to go to her flower garden to relax and drink tea with her friends.
+                    Name: Juliet <br />
+                    Blood type: A-<br />
+                    Astrological sign:Aquarius<br />
+                    Band: Flowerdance<br />
+                    Image color: yellow<br />
+                    Image song:Truthful(This softcore pop/rock hybrid song tells a tale of a relationship built on lies)<br />
+                    Favourite food: sesame bread <br />
+                    Least favourite food: duck<br />
+                    Hobbies: gardening,tea<br />
+                    Skills: sewing <br />
+                    SIF attribute:Pure <br />
+                    Charm point: voice <br />
+                    Profile: Juliet is a meek girl that likes to keep to herself.She was scouted by the band when she
+                    was singing itn the local choir precisely because of her voice.Even though she sometimes has a hard
+                    time with big audiences,she tries her very hardest on stage.After their perfomances,she likes to go
+                    to her flower garden to relax and drink tea with her friends.
                 </p>
                 <hr />
                 <p>
                     <strong>Hannah</strong>
                 </p>
                 <p>
-                    Idol name: Hana Age: 18 Blood type: A- Birthday: February 15 Astrological sign: Aquarius Height:
-                    165cm Weight: 61kg Three sizes: 99-65-93 Subunit: aeternum. Image colour: deep indigo Image song:
-                    kyoumei † melody (resonant melody). It’s got a cross in it because Edge™️. It’s kind of chuuni rock
-                    and of course it has gratuitous English and Latin phrases everywhere. Favourite food: Clementines,
-                    pomegranate, garlic Least favourite food: Lettuce, tomato Hobbies: Singing, acting, giving blood,
-                    snacking, creating playlists for friends Skills: Doing winged eyeliner, coordinating outfits, making
-                    others laugh Charm point: Her shapely figure, slit in her left eyebrow, and deep voice SIF
-                    attribute: cool Deresute/mirishita attribute: cool/fairy, vocal Profile: Hana is the resident
-                    princely-type chuuni idol of 416 (Shiro) Pro—at least, on a surface level. Charismatic and funny
-                    with an overflowing androgynous charm, she serves as a role model to the younger idols. However,
-                    despite having an overwhelming confidence on stage and around other idols, Hana is nothing more than
-                    a musical-theatre-obsessed, non-binary wallflower who became an idol after the producer attended one
-                    of her shows. She refused immediately at first, thinking she would have to wear dresses and look
-                    girly on stage, but eventually accepted once the producer told her she could dress as androgynously
-                    as she wanted. She can tend to be a bit lazy, but realizes that the work pays off once she gets to
-                    see everyone’s smiles.
+                    Idol name: Hana<br />
+                    Age: 18 <br />
+                    Blood type: A- <br />
+                    Birthday: February 15 <br />
+                    Astrological sign: Aquarius <br />
+                    Height: 165cm <br />
+                    Weight: 61kg <br />
+                    Three sizes: 99-65-93<br />
+                    Subunit: aeternum.<br />
+                    Image colour: deep indigo<br />
+                    Image song: kyoumei † melody (resonant melody). It’s got a cross in it because Edge™️. It’s kind of
+                    chuuni rock and of course it has gratuitous English and Latin phrases everywhere.<br />
+                    Favourite food: Clementines, pomegranate, garlic <br />
+                    Least favourite food: Lettuce, tomato <br />
+                    Hobbies: Singing, acting, giving blood, snacking, creating playlists for friends<br />
+                    Skills: Doing winged eyeliner, coordinating outfits, making others laugh<br />
+                    Charm point: Her shapely figure, slit in her left eyebrow, and deep voice<br />
+                    SIF attribute: cool <br />
+                    Deresute/mirishita attribute: cool/fairy, vocal <br />
+                    Profile: Hana is the resident princely-type chuuni idol of 416 (Shiro) Pro—at least, on a surface
+                    level. Charismatic and funny with an overflowing androgynous charm, she serves as a role model to
+                    the younger idols. However, despite having an overwhelming confidence on stage and around other
+                    idols, Hana is nothing more than a musical-theatre-obsessed, non-binary wallflower who became an
+                    idol after the producer attended one of her shows. She refused immediately at first, thinking she
+                    would have to wear dresses and look girly on stage, but eventually accepted once the producer told
+                    her she could dress as androgynously as she wanted. She can tend to be a bit lazy, but realizes that
+                    the work pays off once she gets to see everyone’s smiles.
                 </p>
                 <p>
                     <a href="https://www.youtube.com/watch?feature=player_embedded&v=OwuG8FFwvjg" target="_blank">
@@ -543,21 +618,19 @@ export class Bandori extends React.Component<any, any> {
                 <hr />
                 <p>
                     <strong>Crystal</strong>
+                    <br />
                     <em>Note: Did not enter to win the account</em>
                 </p>
                 <p>
                     Most of the info I put of the images in the first link below~ But a few other things I forgot to add
                     were:
                 </p>
-                <ul>
-                    <li>Very clumsy, seemingly ditsy at times</li>
-                    <li>
-                        Becoming an idol is what's made Crystal (yes, it's an idolsona lol) open up a bit more instead
-                        of being just the &quot;single-minded timid, smart girl&quot; she comes off as during school
-                    </li>
-                </ul>
+                Very clumsy, seemingly ditsy at times<br />
+                Becoming an idol is what's made Crystal (yes, it's an idolsona lol) open up a bit more instead of being
+                just the &quot;single-minded timid, smart girl&quot; she comes off as during school
+                <br />
                 <p>(I didn't have time to make this as good as I wanted, it's kinda a mess. Sorry!)</p>
-                <blockquote className="twitter-tweet" data-lang="en">
+                <blockquote className="twitter-tweet tw-align-center" data-lang="en">
                     <p lang="en" dir="ltr">
                         I tried to make an idolsona for
                         <a href="https://twitter.com/akikkyu?ref_src=twsrc%5Etfw">@akikkyu</a>
@@ -585,19 +658,28 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Ariel</strong>
                 </p>
                 <p>
-                    Idol name: Ari Kirishima/切島螘 Sub-unit/main unit name: Undecided at the moment Age: 15 (1st year)
-                    Blood type: Never had a blood test, and avoids them at all costs Astrological sign: Sagittarius
-                    (27th November) Image colour: Red Image logo/item: Coffee cup Image song: ❤Forgettable❤ Favourite
-                    foods: Curry, cinnamon donuts, coffee Disliked foods: Lemonade, sushi Skills: Reading,
-                    comprehension, origami Hobbies: Eating at cafes, idol stuff, photography Charm point: Silky hair
-                    SIF/Bandori attribute: Cool Profile: Very charming at first glance. Seems very mature on the
-                    outside, but actually quite emotionally unstable. She gets flustered very easily, and finds it very
-                    hard to take a compliment. She can get very absorbed in anything she enjoys, so absorbed that
-                    everything else around her is a blur. This can be a good thing within school idols, getting absorbed
-                    in the rush of the performance and becoming an idol with a lot of personality, showing her true self
-                    for what she is. Ari's a very level-headed individual who can solve a conflict easily, but has no
-                    sense of organisation. She's not very good at managing things, and tends to let important things
-                    slip by. She'd rather let someone else take the lead, and just follow the instructions.
+                    Idol name: Ari Kirishima/切島螘 <br />
+                    Sub-unit/main unit name: Undecided at the moment <br />
+                    Age: 15 (1st year)<br />
+                    Blood type: Never had a blood test, and avoids them at all costs<br />
+                    Astrological sign: Sagittarius (27th November) <br />
+                    Image colour: Red <br />
+                    Image logo/item: Coffee cup <br />
+                    Image song: ❤Forgettable❤ <br />
+                    Favourite foods: Curry, cinnamon donuts, coffee <br />
+                    Disliked foods: Lemonade, sushi <br />
+                    Skills: Reading, comprehension, origami <br />
+                    Hobbies: Eating at cafes, idol stuff, photography <br />
+                    Charm point: Silky hair<br />
+                    SIF/Bandori attribute: Cool <br />
+                    Profile: Very charming at first glance. Seems very mature on the outside, but actually quite
+                    emotionally unstable. She gets flustered very easily, and finds it very hard to take a compliment.
+                    She can get very absorbed in anything she enjoys, so absorbed that everything else around her is a
+                    blur. This can be a good thing within school idols, getting absorbed in the rush of the performance
+                    and becoming an idol with a lot of personality, showing her true self for what she is. Ari's a very
+                    level-headed individual who can solve a conflict easily, but has no sense of organisation. She's not
+                    very good at managing things, and tends to let important things slip by. She'd rather let someone
+                    else take the lead, and just follow the instructions.
                 </p>
                 <p>
                     <img
@@ -617,16 +699,24 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Greenblink41</strong>
                 </p>
                 <p>
-                    Idol name: Tomo Karo Age: 38 Astrological sign: Sagittarius Production company: KiMaZu Image color:
-                    blood red Image song: JUDGEMENT Favorite food: pizza, ramen Least favorite food: mushrooms (the
-                    regular kind) Hobbies: karaoke, beating up bad people Skills: people skills, business experience,
-                    curbstomping Charm point: Tattoos Profile: after being an orphan for the first 16 years of his life,
-                    Tomo got taken in by the head of the White Dragon yakuza clan. Having fought his way to the top, he
-                    got betrayed by one of his brothers who set him up to fail a very important mission. Because of the
-                    clans code he would've been killed then and there, but due to the heads respect for him, the worst
-                    punishment Tomo received was getting banished from the city. Since that day Tomo has been striving
-                    to preserve justice, trying to help out people wherever he can. The reason he became an idol is to
-                    inspire others to seek their own sense of justice and live an honest life.
+                    Idol name: Tomo Karo <br />
+                    Age: 38<br />
+                    Astrological sign: Sagittarius<br />
+                    Production company: KiMaZu<br />
+                    Image color: blood red<br />
+                    Image song: JUDGEMENT<br />
+                    Favorite food: pizza, ramen<br />
+                    Least favorite food: mushrooms (the regular kind)<br />
+                    Hobbies: karaoke, beating up bad people<br />
+                    Skills: people skills, business experience, curbstomping<br />
+                    Charm point: Tattoos<br />
+                    Profile: after being an orphan for the first 16 years of his life, Tomo got taken in by the head of
+                    the White Dragon yakuza clan. Having fought his way to the top, he got betrayed by one of his
+                    brothers who set him up to fail a very important mission. Because of the clans code he would've been
+                    killed then and there, but due to the heads respect for him, the worst punishment Tomo received was
+                    getting banished from the city. Since that day Tomo has been striving to preserve justice, trying to
+                    help out people wherever he can. The reason he became an idol is to inspire others to seek their own
+                    sense of justice and live an honest life.
                 </p>
                 <p>
                     Due to his nature, Tomo has no problems taking care of perverts creeping on unwilling females,
@@ -638,6 +728,7 @@ export class Bandori extends React.Component<any, any> {
                 <hr />
                 <p>
                     <strong>Finley</strong>
+                    <br />
                     <em>Note: Did not enter to win the account</em>
                 </p>
                 <p>
@@ -655,22 +746,32 @@ export class Bandori extends React.Component<any, any> {
                     <strong>Blake</strong>
                 </p>
                 <p>
-                    Yamazaki Kiyoshi (やまざき きよし) Age: 19 Blood type: A+ Birthday: April 15 Star Sign: Aries Eye
-                    color: Green Natural hair color: Blonde, but they constantly dye it Group name: Quiet⭐Power Image
-                    color: Powder Blue Image Song: Watashi no kokoro no yūrei (A Ghost in My Heart) Favorite foods:
-                    Watermelon, cheese puffs, and steak Disliked foods: Liver, fish, and freeze-dried raspberries
-                    Hobbies: Sewing, building pillow forts, and eating Charm point: Their ability to look like any
-                    gender SIF attribute: Cool Profile: Yamazaki Kiyoshi is the oldest of 7 kids at the age of 19. When
-                    they were 14, they had deemed themselves the title of being genderfluid. They constantly got made
-                    fun of at school, but salvation came when they met 3 other people who wanted to form an idol group.
-                    Kiyoshi and their friends soon became known as Quiet⭐Power and have been known for their pop rock
-                    songs. Kiyoshi has recently been picking up popularity for being the first sucessful genderfluid
-                    idol. They're very laid back and can be considered the &quot;voice of reasoning&quot; in the group.
-                    There are occasionally dissagreements within the group, and Kiyoshi seems to always be the one to
-                    put an end to them. Kiyoshi seems to be a person with very little emotions, but the moment they step
-                    onto a stage, they become a completely different person. They have said once in an interview,
-                    &quot;It doesn't matter how I could be feeling prior to the event, what matters is that I help put
-                    on the best show for our fans.
+                    Yamazaki Kiyoshi (やまざき きよし) <br />
+                    Age: 19<br />
+                    Blood type: A+<br />
+                    Birthday: April 15<br />
+                    Star Sign: Aries<br />
+                    Eye color: Green<br />
+                    Natural hair color: Blonde, but they constantly dye it<br />
+                    Group name: Quiet⭐Power<br />
+                    Image color: Powder Blue<br />
+                    Image Song: Watashi no kokoro no yūrei (A Ghost in My Heart)<br />
+                    Favorite foods: Watermelon, cheese puffs, and steak<br />
+                    Disliked foods: Liver, fish, and freeze-dried raspberrie<br />
+                    Hobbies: Sewing, building pillow forts, and eating<br />
+                    Charm point: Their ability to look like any gender<br />
+                    SIF attribute: Cool<br />
+                    Profile: Yamazaki Kiyoshi is the oldest of 7 kids at the age of 19. When they were 14, they had
+                    deemed themselves the title of being genderfluid. They constantly got made fun of at school, but
+                    salvation came when they met 3 other people who wanted to form an idol group. Kiyoshi and their
+                    friends soon became known as Quiet⭐Power and have been known for their pop rock songs. Kiyoshi has
+                    recently been picking up popularity for being the first sucessful genderfluid idol. They're very
+                    laid back and can be considered the &quot;voice of reasoning&quot; in the group. There are
+                    occasionally dissagreements within the group, and Kiyoshi seems to always be the one to put an end
+                    to them. Kiyoshi seems to be a person with very little emotions, but the moment they step onto a
+                    stage, they become a completely different person. They have said once in an interview, &quot;It
+                    doesn't matter how I could be feeling prior to the event, what matters is that I help put on the
+                    best show for our fans.
                 </p>
                 <p>
                     <img src="https://i.imgur.com/JgeGDNY.jpg" alt="alt text" title="Drawing of Kiyoshi" />
