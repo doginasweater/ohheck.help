@@ -11,8 +11,7 @@ interface ISingleIdolProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class SingleIdol extends React.Component<ISingleIdolProps & IReduxProps, any> {
+class SingleIdol extends React.Component<ISingleIdolProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
@@ -110,3 +109,5 @@ export default class SingleIdol extends React.Component<ISingleIdolProps & IRedu
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(SingleIdol);

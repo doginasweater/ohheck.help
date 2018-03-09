@@ -1,15 +1,14 @@
+import { Icon } from 'components/common';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IReduxProps, IAdminStore } from 'types/redux';
+import { IAdminStore, IReduxProps } from 'types/redux';
 import { Editor } from '..';
-import { Icon } from 'components/common';
 
-interface CommentsProps {
-    admin: IAdminStore
+interface ICommentsProps {
+    admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export class CommentsSettings extends React.Component<CommentsProps & IReduxProps, any> {
+class CommentsSettingsInner extends React.Component<ICommentsProps & IReduxProps, any> {
     constructor(props) {
         super(props);
 
@@ -18,17 +17,17 @@ export class CommentsSettings extends React.Component<CommentsProps & IReduxProp
         };
     }
 
-    handleChange = (event: React.FormEvent<HTMLTextAreaElement>): void => {
+    public handleChange = (event: React.FormEvent<HTMLTextAreaElement>): void => {
         this.setState({
             commentsblurb: event.currentTarget.value
         });
     }
 
-    save = (event: React.FormEvent<HTMLButtonElement>): void => {
+    public save = (event: React.FormEvent<HTMLButtonElement>): void => {
         event.preventDefault();
     }
 
-    render() {
+    public render() {
         return (
             <div>
                 <fieldset>
@@ -70,3 +69,5 @@ export class CommentsSettings extends React.Component<CommentsProps & IReduxProp
         );
     }
 }
+
+export const CommentsSettings = connect((state: any) => ({ admin: state.admin }))(CommentsSettingsInner);

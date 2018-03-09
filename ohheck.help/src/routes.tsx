@@ -1,9 +1,9 @@
-﻿import * as React from 'react';
+﻿import { Admin } from 'components/admin';
+import { Aki, Bandori, Home, Icon } from 'components/common';
+import { Form, Thanks } from 'components/survey';
+import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link, Route } from 'react-router-dom';
-import { Aki, Home, Icon } from 'components/common';
-import { Admin } from 'components/admin';
-import { Form, Thanks } from 'components/survey';
 import './scss/app.scss';
 
 export const Routes = <div className="main pure-g">
@@ -22,6 +22,7 @@ export const Routes = <div className="main pure-g">
     <Route path="/dashboard" component={Admin} />
     <Route path="/survey/:id" component={Form} />
     <Route path="/aki" component={Aki} />
+    <Route path="/bandori" component={Bandori} />
 
     <footer className="pure-u-1">
         <div className="pull-right small">

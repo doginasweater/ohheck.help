@@ -1,22 +1,21 @@
-﻿import * as React from 'react';
+﻿import { setNotification, subunitFetch } from 'actions/admin';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { Subunit, Group, Notification } from 'types/admin';
-import { Idol } from 'types/commontypes';
 import { Link } from 'react-router-dom';
+import { Group, Notification, Subunit } from 'types/admin';
+import { Idol } from 'types/commontypes';
 import { IAdminStore, IReduxProps } from 'types/redux';
-import { setNotification, subunitFetch } from 'actions/admin';
 
-interface SingleSubunitProps {
+interface ISingleSubunitProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class SingleSubunit extends React.Component<SingleSubunitProps & IReduxProps, any> {
+class SingleSubunit extends React.Component<ISingleSubunitProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const id = this.props.match.params.id;
         const { dispatch } = this.props;
 
@@ -25,7 +24,6 @@ export default class SingleSubunit extends React.Component<SingleSubunitProps & 
 
             return;
         }
-
 
         if (!this.props.admin.fullidols) {
             dispatch(subunitFetch(Number(id)));
@@ -40,9 +38,9 @@ export default class SingleSubunit extends React.Component<SingleSubunitProps & 
         }
     }
 
-    renderIdols = (idols: Idol[]) => {
+    public renderIdols = (idols: Idol[]) => {
         if (!idols) {
-            return [<div></div>];
+            return [<div key={0} />];
         }
 
         return idols.map((item: Idol, index: number) =>
@@ -57,7 +55,7 @@ export default class SingleSubunit extends React.Component<SingleSubunitProps & 
         );
     }
 
-    render() {
+    public render() {
         if (this.props.admin.subunitloading || !this.props.admin.fullsubunits) {
             return (
                 <div className="pure-u-1">
@@ -84,3 +82,5 @@ export default class SingleSubunit extends React.Component<SingleSubunitProps & 
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(SingleSubunit);

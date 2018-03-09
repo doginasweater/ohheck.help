@@ -12,10 +12,9 @@ interface IFormProps extends IReduxProps {
     form: ISurveyStore;
 }
 
-@connect(state => ({ form: state.survey }))
-export default class Form extends React.Component<IFormProps, any> {
-    constructor() {
-        super();
+class Form extends React.Component<IFormProps, any> {
+    constructor(props) {
+        super(props);
     }
 
     public componentDidMount() {
@@ -164,3 +163,5 @@ export default class Form extends React.Component<IFormProps, any> {
         );
     }
 }
+
+export default connect((state: any) => ({ form: state.survey }))(Form);

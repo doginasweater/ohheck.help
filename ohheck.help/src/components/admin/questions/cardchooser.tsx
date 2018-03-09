@@ -1,13 +1,13 @@
-﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { Question, Group, Subunit, Answer } from 'types/admin';
+﻿import { newCardsFetch, newSelectCard, newSetCardFilter, newUnselectCard } from 'actions/surveymgmt';
 import { Icon } from 'components/common';
-import { IReduxProps, IAdminStore, ISurveyMgmt } from 'types/redux';
-import { newSetCardFilter, newCardsFetch, newSelectCard, newUnselectCard } from 'actions/surveymgmt';
-import { ChooserList } from './chooserlist';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Answer, Group, Question, Subunit } from 'types/admin';
 import { Card, Idol } from 'types/commontypes';
+import { IAdminStore, IReduxProps, ISurveyMgmt } from 'types/redux';
+import { ChooserList } from './chooserlist';
 
-interface CardChooserProps {
+interface ICardChooserProps {
     question: Question;
     save: (question: Question, index: number) => void;
     index: number;
@@ -15,12 +15,12 @@ interface CardChooserProps {
     mgmt: ISurveyMgmt;
 }
 
-class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, any> {
+class CardChooserInner extends React.Component<ICardChooserProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
 
-    choose = (id: number, dir: string) => {
+    public choose = (id: number, dir: string) => {
         const { dispatch } = this.props;
 
         if (dir === 'left') {
@@ -30,7 +30,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         }
     }
 
-    handleSelect = (event: React.FormEvent<HTMLSelectElement>): void => {
+    public handleSelect = (event: React.FormEvent<HTMLSelectElement>): void => {
         event.preventDefault();
 
         const { dispatch } = this.props;
@@ -50,16 +50,18 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
             case 'tag':
                 name = 'tag';
                 break;
+            default:
+                throw new Error('Type error');
         }
 
         dispatch(newSetCardFilter(event.currentTarget.value, name));
         dispatch(newCardsFetch(Number(event.currentTarget.value), name));
     }
 
-    renderOptions = (items: (Group | Subunit | Idol)[]): JSX.Element[] =>
-        items.map((item, index) => <option value={item.id} key={index}>{item.name}</option>);
+    public renderOptions = (items: (Group | Subunit | Idol)[]): JSX.Element[] =>
+        items.map((item, index) => <option value={item.id} key={index}>{item.name}</option>)
 
-    myVal = (type: string): string => {
+    public myVal = (type: string): string => {
         const { cardfilter, cardfiltertype } = this.props.mgmt;
 
         if (type === cardfiltertype) {
@@ -69,7 +71,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         }
     }
 
-    filterVal = (): string => {
+    public filterVal = (): string => {
         const { groupslight, subunitslight, idolslight } = this.props.admin;
         const { cardfilter, cardfiltertype } = this.props.mgmt;
         const { dispatch } = this.props;
@@ -93,7 +95,7 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
         }
     }
 
-    render() {
+    public render() {
         const { groupslight, subunitslight, idolslight } = this.props.admin;
 
         return (
@@ -145,10 +147,10 @@ class CardChooserInner extends React.Component<CardChooserProps & IReduxProps, a
     }
 }
 
-type OwnProps = Pick<CardChooserProps, 'question' | 'save' | 'index'>;
+type OwnProps = Pick<ICardChooserProps, 'question' | 'save' | 'index'>;
 
 const CardChooser = connect(
-    (state, ownProps: OwnProps) => ({ admin: state.admin, mgmt: state.surveymgmt })
+    (state: any, ownProps: OwnProps) => ({ admin: state.admin, mgmt: state.surveymgmt })
 )(CardChooserInner);
 
 export default CardChooser;

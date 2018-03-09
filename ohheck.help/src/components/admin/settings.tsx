@@ -11,8 +11,7 @@ interface ISettingsProps extends IReduxProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class Settings extends React.Component<ISettingsProps, any> {
+class Settings extends React.Component<ISettingsProps, any> {
     constructor(props) {
         super(props);
 
@@ -57,3 +56,5 @@ export default class Settings extends React.Component<ISettingsProps, any> {
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(Settings);

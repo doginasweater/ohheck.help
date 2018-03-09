@@ -1,27 +1,26 @@
-﻿import * as React from 'react';
+﻿import { cardsFetch } from 'actions/admin';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card } from 'types/commontypes';
-import { IReduxProps, IAdminStore } from 'types/redux';
-import { cardsFetch } from 'actions/admin';
+import { IAdminStore, IReduxProps } from 'types/redux';
 
-interface AllCardsProps {
+interface IAllCardsProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class AllCards extends React.Component<AllCardsProps & IReduxProps, any> {
+class AllCards extends React.Component<IAllCardsProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { skip, take } = this.props.match.params;
 
         this.handleUrl(skip, take);
     }
 
-    shouldComponentUpdate(nextProps: AllCardsProps & IReduxProps): boolean {
+    public shouldComponentUpdate(nextProps: IAllCardsProps & IReduxProps): boolean {
         const { skip, take } = this.props.match.params;
         const nextSkip = nextProps.match.params.skip;
         const nextTake = nextProps.match.params.take;
@@ -37,13 +36,13 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
         }
     }
 
-    handleUrl = (skip: number, take: number) => {
+    public handleUrl = (skip: number, take: number) => {
         const { dispatch } = this.props;
 
         dispatch(cardsFetch(skip, take));
     }
 
-    renderCards = (cards: Card[]): JSX.Element[] => cards.map(
+    public renderCards = (cards: Card[]): JSX.Element[] => cards.map(
         (item: Card, index: number) =>
             <div className="pure-u-1-4" key={index}>
                 <Link to={`/dashboard/cards/${item.id}`}>
@@ -52,7 +51,7 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
             </div>
     )
 
-    renderPagination = (): JSX.Element[] => {
+    public renderPagination = (): JSX.Element[] => {
         const { skip, take } = this.props.admin;
 
         const prevSkip = Number(skip) - Number(take);
@@ -68,12 +67,12 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
                 <Link to={`/dashboard/cards/${nextSkip}/${take}`}>Next {take} &gt;</Link>
             </div>;
 
-        let pagination: JSX.Element[] = [];
+        const pagination: JSX.Element[] = [];
 
         if (prevSkip > 0) {
             pagination.push(prev);
         } else {
-            pagination.push(<div className="pure-u-1-2" key={2}></div>);
+            pagination.push(<div className="pure-u-1-2" key={2} />);
         }
 
         pagination.push(next);
@@ -81,7 +80,7 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
         return pagination;
     }
 
-    render() {
+    public render() {
         if (this.props.admin.cardsloading) {
             return (
                 <div className="pure-u-1">
@@ -109,3 +108,5 @@ export default class AllCards extends React.Component<AllCardsProps & IReduxProp
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(AllCards);

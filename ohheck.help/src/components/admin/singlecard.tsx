@@ -1,22 +1,21 @@
-﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { Card } from 'types/commontypes';
-import { IReduxProps, IAdminStore } from 'types/redux';
-import { cardFetch, setNotification } from 'actions/admin';
-import { Notification } from 'types/admin';
+﻿import { cardFetch, setNotification } from 'actions/admin';
 import * as moment from 'moment';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Notification } from 'types/admin';
+import { Card } from 'types/commontypes';
+import { IAdminStore, IReduxProps } from 'types/redux';
 
-interface SingleCardProps {
+interface ISingleCardProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class SingleCard extends React.Component<SingleCardProps & IReduxProps, any> {
+class SingleCard extends React.Component<ISingleCardProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const id = this.props.match.params.id;
         const { dispatch } = this.props;
 
@@ -25,7 +24,6 @@ export default class SingleCard extends React.Component<SingleCardProps & IRedux
 
             return;
         }
-
 
         if (!this.props.admin.fullcards) {
             dispatch(cardFetch(Number(id)));
@@ -40,7 +38,7 @@ export default class SingleCard extends React.Component<SingleCardProps & IRedux
         }
     }
 
-    render() {
+    public render() {
         if (this.props.admin.cardloading || !this.props.admin.fullcards) {
             return (
                 <div className="pure-u-1">
@@ -73,10 +71,10 @@ export default class SingleCard extends React.Component<SingleCardProps & IRedux
                     <b>Game ID</b>: {card.gameid}
                 </div>
                 <div className="pure-u-1-4">
-                    <b>Idlz</b>: {card.isidol ? "Yes" : "No"}
+                    <b>Idlz</b>: {card.isidol ? 'Yes' : 'No'}
                 </div>
                 <div className="pure-u-1-4">
-                    <b>Promo</b>: {card.ispromo ? "Yes" : "No"}
+                    <b>Promo</b>: {card.ispromo ? 'Yes' : 'No'}
                 </div>
                 <div className="pure-u-1-4">
                     <b>Last Modified</b>: {moment(card.modified).format('lll')}
@@ -88,3 +86,5 @@ export default class SingleCard extends React.Component<SingleCardProps & IRedux
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(SingleCard);

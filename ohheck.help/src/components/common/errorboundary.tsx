@@ -44,6 +44,6 @@ class ErrorBoundaryInner extends React.Component<IErrorBoundaryProps & IReduxPro
 type OwnProps = Pick<IErrorBoundaryProps, 'isAdmin'>;
 
 export const ErrorBoundary = connect(
-    (state, ownProps: OwnProps) =>
+    (state: any, ownProps: OwnProps) =>
         ownProps.isAdmin ? { admin: state.admin } : { survey: state.survey }
 )(ErrorBoundaryInner);

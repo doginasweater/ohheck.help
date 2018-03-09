@@ -1,12 +1,13 @@
-﻿import * as React from 'react';
+﻿import { editSurvey, editSurveyStop, surveyFetch } from 'actions/surveymgmt';
+import { MDown, Questions } from 'components/common';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { Survey, Question } from 'types/admin';
-import { surveyFetch, editSurvey, editSurveyStop } from 'actions/surveymgmt';
-import { Questions, MDown } from 'components/common';
+import { Question, Survey } from 'types/admin';
 
-let ReactMarkdown: any = require('react-markdown');
+// tslint:disable-next-line:no-var-requires
+const ReactMarkdown: any = require('react-markdown');
 
-interface SurveyViewState {
+interface ISurveyViewState {
     survey: Survey;
     loading: boolean;
     choices: any;
@@ -14,11 +15,7 @@ interface SurveyViewState {
     editable: boolean;
 }
 
-@connect(state => ({
-    admin: state.admin,
-    surveymgmt: state.surveymgmt
-}))
-export default class SurveyView extends React.Component<any, SurveyViewState> {
+class SurveyView extends React.Component<any, ISurveyViewState> {
     constructor(props) {
         super(props);
 
@@ -31,13 +28,13 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         };
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         dispatch(surveyFetch(this.props.match.params.id));
     }
 
-    handleClick = id => {
+    public handleClick = id => {
         this.setState({
             cards: {
                 ...this.state.cards,
@@ -46,7 +43,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         });
     }
 
-    handleChange = event => {
+    public handleChange = event => {
         this.setState({
             choices: {
                 ...this.state.choices,
@@ -55,11 +52,11 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         });
     }
 
-    handleCheckbox = (questionid: string, answerid: string, value: boolean): void => {
-
+    public handleCheckbox = (questionid: string, answerid: string, value: boolean): void => {
+        return;
     }
 
-    toggleEdit = event => {
+    public toggleEdit = event => {
         event.preventDefault();
 
         const { dispatch } = this.props;
@@ -71,7 +68,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         }
     }
 
-    render() {
+    public render() {
         if (this.props.surveymgmt.surveyloading) {
             return (
                 <div>Loading...</div>
@@ -98,7 +95,7 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
                         <b>Slug (url)</b>: <span contentEditable={this.state.editable}>{survey.slug}</span>
                     </div>
                     <div className="pure-u-1-3">
-                        <b>Currently Active</b>: {survey.active ? "Yes" : "No"}
+                        <b>Currently Active</b>: {survey.active ? 'Yes' : 'No'}
                     </div>
                     <div className="pure-u-1-3">
                         <b>Created</b> {survey.created} <b>by</b> {survey.createdby}
@@ -128,3 +125,8 @@ export default class SurveyView extends React.Component<any, SurveyViewState> {
         );
     }
 }
+
+export default connect((state: any) => ({
+    admin: state.admin,
+    surveymgmt: state.surveymgmt
+}))(SurveyView);

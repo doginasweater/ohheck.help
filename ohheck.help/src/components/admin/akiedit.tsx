@@ -9,8 +9,7 @@ interface IAkiEditProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class AkiEdit extends React.Component<IAkiEditProps & IReduxProps, any> {
+class AkiEdit extends React.Component<IAkiEditProps & IReduxProps, any> {
     constructor(props) {
         super(props);
 
@@ -79,3 +78,5 @@ export default class AkiEdit extends React.Component<IAkiEditProps & IReduxProps
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(AkiEdit);

@@ -1,17 +1,16 @@
-﻿import * as React from 'react';
+﻿import { idolsFetch } from 'actions/admin';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Subunit, Group } from 'types/admin';
+import { Group, Subunit } from 'types/admin';
 import { Idol } from 'types/commontypes';
-import { idolsFetch } from 'actions/admin';
 
-@connect(state => ({ admin: state.admin }))
-export default class Idols extends React.Component<any, any> {
+class Idols extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         if (!this.props.admin.idols) {
@@ -19,7 +18,7 @@ export default class Idols extends React.Component<any, any> {
         }
     }
 
-    renderIdols = idols => idols.map((item: Idol, index: number) =>
+    public renderIdols = idols => idols.map((item: Idol, index: number) =>
         <div key={index} className="pure-u-1-3 some-space">
             <div className="idol-box">
                 <Link to={{
@@ -27,15 +26,15 @@ export default class Idols extends React.Component<any, any> {
                     state: item
                 }}>
                     <b>Name</b>: {item.name}<br />
-                    <b>Group</b>: {item.group ? item.group.name : "None"}<br />
-                    <b>Subunit</b>: {item.subunit ? item.subunit.name : "None"}<br />
+                    <b>Group</b>: {item.group ? item.group.name : 'None'}<br />
+                    <b>Subunit</b>: {item.subunit ? item.subunit.name : 'None'}<br />
                     <b>Number of cards</b>: {item.cards ? item.cards.length : 0}<br />
                 </Link>
             </div>
         </div>
     )
 
-    render() {
+    public render() {
         if (this.props.admin.idolsloading) {
             return (
                 <div>
@@ -55,3 +54,5 @@ export default class Idols extends React.Component<any, any> {
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(Idols);

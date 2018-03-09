@@ -8,8 +8,7 @@ interface IAkiProps {
     survey: ISurveyStore;
 }
 
-@connect(state => ({ survey: state.survey }))
-export class Aki extends React.Component<IAkiProps & IReduxProps, any> {
+export class AkiInner extends React.Component<IAkiProps & IReduxProps, any> {
     constructor(props: IAkiProps & IReduxProps) {
         super(props);
     }
@@ -20,11 +19,7 @@ export class Aki extends React.Component<IAkiProps & IReduxProps, any> {
 
     public render() {
         if (this.props.survey.loading) {
-            return (
-                <div className="pure-u-1">
-                    loading...
-                </div>
-            );
+            return <div className="pure-u-1">loading...</div>;
         }
 
         if (this.props.survey.error) {
@@ -42,3 +37,5 @@ export class Aki extends React.Component<IAkiProps & IReduxProps, any> {
         );
     }
 }
+
+export const Aki = connect((state: any) => ({ survey: state.survey }))(AkiInner);

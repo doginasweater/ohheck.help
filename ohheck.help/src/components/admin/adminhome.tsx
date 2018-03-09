@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { Survey } from 'types/admin';
 
-@connect(state => ({ admin: state.admin }))
-export default class AdminHome extends React.Component<any, any> {
+class AdminHome extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
@@ -21,26 +20,31 @@ export default class AdminHome extends React.Component<any, any> {
 
     public renderBody = () => {
         if (this.props.admin.surveys) {
-            return this.props.admin.surveys.map((item: Survey, index: number) =>
-                <tr key={index}>
-                    <td>{item.name}</td>
-                    <td>{item.title}</td>
-                    <td>{item.active ? <Icon icon="check" /> : <Icon icon="highlight_off" />}</td>
-                    <td>{item.slug}</td>
-                    <td>
-                        <Link to={`/dashboard/responses/${item.id}`}>
-                            Responses
-                        </Link> |&nbsp;
-                        <Link to={`/dashboard/bycard/${item.id}`}>
-                            Responses By Card
-                        </Link>
-                    </td>
-                    <td>
-                        <Link to={`/dashboard/survey/${item.id}`}>
-                            View Survey
-                        </Link>
-                    </td>
-                </tr>
+            return this.props.admin.surveys.map(
+                (item: Survey, index: number) => (
+                    <tr key={index}>
+                        <td>{item.name}</td>
+                        <td>{item.title}</td>
+                        <td>
+                            {item.active ? (<Icon icon="check" />) : (<Icon icon="highlight_off" />)}
+                        </td>
+                        <td>{item.slug}</td>
+                        <td>
+                            <Link to={`/dashboard/responses/${item.id}`}>
+                                Responses
+                            </Link>{' '}
+                            |&nbsp;
+                            <Link to={`/dashboard/bycard/${item.id}`}>
+                                Responses By Card
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to={`/dashboard/survey/${item.id}`}>
+                                View Survey
+                            </Link>
+                        </td>
+                    </tr>
+                )
             );
         } else {
             return (
@@ -68,12 +72,12 @@ export default class AdminHome extends React.Component<any, any> {
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {this.renderBody()}
-                        </tbody>
+                        <tbody>{this.renderBody()}</tbody>
                     </table>
                 </div>
             </div>
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(AdminHome);

@@ -1,23 +1,22 @@
 ﻿import * as React from 'react';
-import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link, Route } from 'react-router-dom';
+import { Question } from 'types/admin/question';
+import { Survey } from 'types/admin/survey';
+import { IAdminStore, IReduxProps } from 'types/redux';
 import { responsesFetch, surveysFetch } from '../../actions/admin';
 import { Response, ResponseAnswer } from '../../types/admin';
-import { IAdminStore, IReduxProps } from 'types/redux';
-import { Survey } from 'types/admin/survey';
-import { Question } from 'types/admin/question';
 
 interface IResponsesProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class Responses extends React.Component<IResponsesProps & IReduxProps, any> {
+class Responses extends React.Component<IResponsesProps & IReduxProps, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         if (!this.props.admin.surveys || this.props.admin.surveys.length === 0) {
@@ -27,7 +26,7 @@ export default class Responses extends React.Component<IResponsesProps & IReduxP
         dispatch(responsesFetch(this.props.match.params.id));
     }
 
-    getAnswer = (q: ResponseAnswer) => {
+    public getAnswer = (q: ResponseAnswer) => {
         switch (q.type) {
             case 'Cards':
                 return q.cards;
@@ -44,21 +43,21 @@ export default class Responses extends React.Component<IResponsesProps & IReduxP
         }
     }
 
-    renderList = list =>
+    public renderList = list =>
         list.map((item: Response, index) =>
             <tr key={index}>
                 <td>{item.submitted}</td>
-                {item.questions.map((item: ResponseAnswer, i: number) =>
-                    <td key={item.id}>{this.getAnswer(item)}</td>
+                {item.questions.map((j: ResponseAnswer, i: number) =>
+                    <td key={j.id}>{this.getAnswer(j)}</td>
                 )}
             </tr>
-        );
+        )
 
-    renderHeading = (survey: Survey): JSX.Element[] => survey.questions.map((item: Question, index: number) =>
+    public renderHeading = (survey: Survey): JSX.Element[] => survey.questions.map((item: Question, index: number) =>
         <th key={index}>{item.text ? item.text : 'Cards'}</th>
-    );
+    )
 
-    render() {
+    public render() {
         if (this.props.admin.responsesloading || this.props.admin.surveysloading) {
             return (
                 <div className="pure-u-1 slide-in">
@@ -67,7 +66,7 @@ export default class Responses extends React.Component<IResponsesProps & IReduxP
                         Loading...
                     </div>
                 </div>
-            )
+            );
         }
 
         if (!this.props.admin.responsesloading && !this.props.admin.responses || !this.props.admin.surveys) {
@@ -116,3 +115,5 @@ export default class Responses extends React.Component<IResponsesProps & IReduxP
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(Responses);

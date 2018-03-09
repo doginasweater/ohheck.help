@@ -60,7 +60,9 @@
         "jsx-no-lambda": false,
         "jsx-boolean-value": false,
         "no-console": false,
-        "jsx-wrap-multiline": false
+        "jsx-wrap-multiline": false,
+        "jsx-no-multiline-js": false,
+        "jsx-alignment": false
     },
     "rulesDirectory": []
 }

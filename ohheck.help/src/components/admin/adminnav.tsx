@@ -1,22 +1,21 @@
-﻿import * as React from 'react';
-import { Link } from 'react-router-dom';
+﻿import { logout } from 'actions/admin';
 import { Icon } from 'components/common';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { logout } from 'actions/admin';
+import { Link } from 'react-router-dom';
 
-@connect(state => ({ admin: state.admin }))
-export default class AdminNav extends React.Component<any, any> {
+class AdminNav extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
 
-    logout = event => {
+    public logout = event => {
         const { dispatch } = this.props;
 
         dispatch(logout());
     }
 
-    render() {
+    public render() {
         return (
             <div className="pure-u-1-4 slide-in-container">
                 <h3>menu</h3>
@@ -82,6 +81,8 @@ export default class AdminNav extends React.Component<any, any> {
                     </li>
                 </ul>
             </div>
-        )
+        );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(AdminNav);

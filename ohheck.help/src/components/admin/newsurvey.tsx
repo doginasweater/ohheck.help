@@ -15,11 +15,7 @@ interface INewSurveyProps extends IReduxProps {
     surveymgmt: ISurveyMgmt;
 }
 
-@connect(state => ({
-    admin: state.admin,
-    surveymgmt: state.surveymgmt
-}))
-export default class NewSurvey extends React.Component<INewSurveyProps, any> {
+class NewSurvey extends React.Component<INewSurveyProps, any> {
     constructor(props) {
         super(props);
     }
@@ -350,3 +346,8 @@ export default class NewSurvey extends React.Component<INewSurveyProps, any> {
         );
     }
 }
+
+export default connect((state: any) => ({
+    admin: state.admin,
+    surveymgmt: state.surveymgmt
+}))(NewSurvey);

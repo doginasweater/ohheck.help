@@ -12,8 +12,7 @@ interface IAdminProps {
     admin: IAdminStore;
 }
 
-@connect(state => ({ admin: state.admin }))
-export default class Admin extends React.Component<IAdminProps & IReduxProps, any> {
+class Admin extends React.Component<IAdminProps & IReduxProps, any> {
     constructor(props: IAdminProps & IReduxProps) {
         super(props);
     }
@@ -84,7 +83,7 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
                     <a.AdminNav />
                     <div className="pure-u-3-4 slide-in-container">
                         <ErrorBoundary isAdmin={true}>
-                            <Route exact path="/dashboard" component={a.AdminHome} />
+                            <Route exact={true} path="/dashboard" component={a.AdminHome} />
 
                             <Route path="/dashboard/responses/:id" component={a.Responses} />
                             <Route exact path="/dashboard/responses" render={() => <h3>Please go back and select a survey.</h3>} />
@@ -131,3 +130,5 @@ export default class Admin extends React.Component<IAdminProps & IReduxProps, an
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(Admin);

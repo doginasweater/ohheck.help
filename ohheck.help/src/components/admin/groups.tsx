@@ -1,17 +1,16 @@
-﻿import * as React from 'react';
+﻿import { groupsFetch } from 'actions/admin';
+import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Group, Subunit } from 'types/admin';
 import { Idol } from 'types/commontypes';
-import { Link } from 'react-router-dom';
-import { groupsFetch } from 'actions/admin';
 
-@connect(state => ({ admin: state.admin }))
-export default class Groups extends React.Component<any, any> {
+class Groups extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         if (!this.props.admin.groups) {
@@ -19,32 +18,28 @@ export default class Groups extends React.Component<any, any> {
         }
     }
 
-    renderList = groups => groups && groups.map(
-        (item: Group, index: number) =>
+    public renderGroup = list =>
+        list.map((item, index) => (
+            <div key={index}>
+                <Link to={{ pathname: `/dashboard/subunits/${item.id}`, state: item }}>
+                    {item.name || 'None'}
+                </Link>
+            </div>
+        ))
+
+    public renderList = groups =>
+        groups &&
+        groups.map((item: Group, index: number) => (
             <tr key={index}>
-                <td>{item.name || "None"}</td>
+                <td>{item.name || 'None'}</td>
+                <td>{this.renderGroup(item.subunits)}</td>
                 <td>
-                    {item.subunits.map((innerItem: Subunit, innerIndex: number) =>
-                        <div key={innerIndex}>
-                            <Link to={{ pathname: `/dashboard/subunits/${innerItem.id}`, state: innerItem }}>
-                                {innerItem.name || "None"}
-                            </Link>
-                        </div>
-                    )}
-                </td>
-                <td>
-                    {item.idols.map((innerItem: Idol, innerIndex: number) =>
-                        <div key={innerIndex} className="pure-u-1-3">
-                            <Link to={{ pathname: `/dashboard/idols/${innerItem.id}`, state: innerItem }}>
-                                {innerItem.name}
-                            </Link>
-                        </div>
-                    )}
+                    {this.renderGroup(item.idols)}
                 </td>
             </tr>
-    );
+        ))
 
-    render() {
+    public render() {
         if (this.props.admin.groupsloading) {
             return (
                 <div className="pure-u-1">
@@ -65,11 +60,11 @@ export default class Groups extends React.Component<any, any> {
                             <th>Idols</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {this.renderList(this.props.admin.groups)}
-                    </tbody>
+                    <tbody>{this.renderList(this.props.admin.groups)}</tbody>
                 </table>
             </div>
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(Groups);

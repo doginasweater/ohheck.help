@@ -1,17 +1,16 @@
-﻿import * as React from 'react';
+﻿import { subunitsFetch } from 'actions/admin';
+import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Subunit } from 'types/admin';
 import { Idol } from 'types/commontypes';
-import { Link } from 'react-router-dom';
-import { subunitsFetch } from 'actions/admin';
 
-@connect(state => ({ admin: state.admin }))
-export default class Subunits extends React.Component<any, any> {
+class Subunits extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const { dispatch } = this.props;
 
         if (!this.props.admin.subunits) {
@@ -19,12 +18,12 @@ export default class Subunits extends React.Component<any, any> {
         }
     }
 
-    renderList = subunits => subunits.map(
+    public renderList = subunits => subunits.map(
         (item: Subunit, index: number) =>
             <tr key={index}>
                 <td>
                     <Link to={`/dashboard/subunits/${item.id}`}>
-                        { item.name }
+                        {item.name}
                     </Link>
                 </td>
                 <td>
@@ -34,12 +33,12 @@ export default class Subunits extends React.Component<any, any> {
                                 {innerItem.name}
                             </Link>
                         </div>
-                    ) || "none yet"}
+                    ) || 'none yet'}
                 </td>
             </tr>
-    );
+    )
 
-    render() {
+    public render() {
         if (this.props.admin.subunitsloading) {
             return (
                 <div className="pure-u-1">
@@ -67,3 +66,5 @@ export default class Subunits extends React.Component<any, any> {
         );
     }
 }
+
+export default connect((state: any) => ({ admin: state.admin }))(Subunits);

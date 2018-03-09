@@ -8,9 +8,8 @@ interface IDevTestsState {
     num: number;
 }
 
-@connect(state => ({ admin: state.admin }))
-export class DevTests extends React.Component<IAdminStore & IReduxProps, IDevTestsState> {
-    constructor(props: IAdminStore & IReduxProps) {
+class DevTestsInner extends React.Component<IAdminStore & IReduxProps, any> {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -47,3 +46,5 @@ export class DevTests extends React.Component<IAdminStore & IReduxProps, IDevTes
         );
     }
 }
+
+export const DevTests = connect((state: any) => ({ admin: state.admin }))(DevTestsInner);

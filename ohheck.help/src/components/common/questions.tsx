@@ -1,9 +1,9 @@
-﻿import * as React from 'react';
-import { Survey, Question } from 'types/admin';
-import { SingleLineText, MultilineText, SelectBox, PublicCards, RadioButtons, Checkboxes } from 'components/survey';
-import { Cards } from 'components/common';
+﻿import { Cards } from 'components/common';
+import { Checkboxes, MultilineText, PublicCards, RadioButtons, SelectBox, SingleLineText } from 'components/survey';
+import * as React from 'react';
+import { Question, Survey } from 'types/admin';
 
-interface QuestionsProps {
+interface IQuestionsProps {
     questions: Question[];
     ispublic: boolean;
     choices?: any;
@@ -13,12 +13,12 @@ interface QuestionsProps {
     handleClick: (id: number) => void;
 }
 
-export class Questions extends React.Component<QuestionsProps, any> {
+export class Questions extends React.Component<IQuestionsProps, any> {
     constructor(props) {
         super(props);
     }
 
-    renderQuestions = (): JSX.Element[] => this.props.questions.map((item: Question, index: number) => {
+    public renderQuestions = (): JSX.Element[] => this.props.questions.map((item: Question, index: number) => {
         switch (item.type) {
             case 'SingleLineText':
                 return <SingleLineText
@@ -65,9 +65,9 @@ export class Questions extends React.Component<QuestionsProps, any> {
 
                 return <div>Unknown question type</div>;
         }
-    });
+    })
 
-    render() {
+    public render() {
         return (
             <div>
                 {this.renderQuestions()}
