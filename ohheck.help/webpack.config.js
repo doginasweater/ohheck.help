@@ -1,7 +1,6 @@
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const path = require('path');
 const webpack = require('webpack');
-const WebpackShellPlugin = require('webpack-shell-plugin');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');

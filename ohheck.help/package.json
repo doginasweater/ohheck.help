@@ -40,8 +40,8 @@
         "webpack-merge": "^4.1.2"
     },
     "scripts": {
-        "prod": "webpack --env.production",
-        "vendor": "webpack --config webpack.config.vendor.js",
+        "prod": "yarn webpack --env.production",
+        "vendor": "yarn webpack --config webpack.config.vendor.js",
         "lint": "tslint -p . -c tslint.json"
     }
 }
