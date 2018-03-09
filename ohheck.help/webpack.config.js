@@ -1,10 +1,15 @@
-const webpack = require('webpack');
-const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 const path = require('path');
+const webpack = require('webpack');
+const WebpackShellPlugin = require('webpack-shell-plugin');
+const merge = require('webpack-merge');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = env => {
-    return [{
-        stats: { modules: false },
+    const isDev = !(env && env.production);
+
+    const shared = () => ({
         entry: {
             main: ['./src/index.tsx']
         },
@@ -38,7 +43,6 @@ module.exports = env => {
                 }
             ]
         },
-        devtool: 'inline-source-map',
         plugins: [
             new CheckerPlugin(),
             new webpack.DllReferencePlugin({
@@ -46,5 +50,48 @@ module.exports = env => {
                 manifest: require('./wwwroot/js/vendor-manifest.json')
             })
         ]
-    }];
+    });
+
+    const dev = () => ({
+        devtool: 'inline-source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.(scss|css)$/,
+                    use: ['style-loader', 'css-loader', 'sass-loader']
+                }
+            ]
+        }
+    });
+
+    const prod = () => ({
+        devtool: 'source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.(scss|css)$/,
+                    use: ExtractTextPlugin.extract({ 
+                        fallback: 'style-loader', 
+                        use: ['css-loader', 'sass-loader']
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new UglifyJSPlugin(),
+            new ExtractTextPlugin('../styles/styles.css'),
+            new WebpackShellPlugin({
+                onBuildStart: [
+                    'yarn webpack -p --config webpack.config.vendor.js',
+                    'yarn run csharp-models-to-typescript --config=tstranslate.json'
+                ]
+            }),
+            new webpack.DllReferencePlugin({
+                context: __dirname,
+                manifest: require('./wwwroot/js/vendor-manifest.json')
+            })
+        ]
+    });
+
+    return isDev ? merge(shared(), dev()) : merge(shared(), prod());
 };
