@@ -8,6 +8,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = env => {
     const isDev = !(env && env.production);
 
+    console.log(`Executing ${isDev ? 'DEVELOPMENT' : 'PRODUCTION'} build`);
+
     const shared = () => ({
         entry: {
             main: ['./src/index.tsx']
