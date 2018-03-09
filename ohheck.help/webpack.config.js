@@ -79,12 +79,6 @@ module.exports = env => {
         plugins: [
             new UglifyJSPlugin(),
             new ExtractTextPlugin('../styles/styles.css'),
-            new WebpackShellPlugin({
-                onBuildStart: [
-                    'yarn webpack -p --config webpack.config.vendor.js',
-                    'yarn run csharp-models-to-typescript --config=tstranslate.json'
-                ]
-            }),
             new webpack.DllReferencePlugin({
                 context: __dirname,
                 manifest: require('./wwwroot/js/vendor-manifest.json')
