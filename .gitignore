@@ -256,4 +256,5 @@ db/
 *.db
 bundle.js
 vendor.js
-*.css
+**/*.css
+**/*.map

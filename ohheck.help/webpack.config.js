@@ -23,7 +23,7 @@ module.exports = env => {
                 epics: path.resolve(__dirname, 'src/epics/'),
                 reducers: path.resolve(__dirname, 'src/reducers/'),
                 store: path.resolve(__dirname, 'src/store/'),
-                types: path.resolve(__dirname, 'src/types/'),
+                types: path.resolve(__dirname, 'src/types/')
             }
         },
         output: {
@@ -33,14 +33,14 @@ module.exports = env => {
         },
         module: {
             rules: [
-                { test: /\.ts(x?)?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
+                { 
+                    test: /\.ts(x?)?$/, 
+                    include: /src/, 
+                    use: 'awesome-typescript-loader?silent=true' 
+                },
                 {
-                    test: /\.(scss|css)$/,
-                    use: [
-                        { loader: 'style-loader' },
-                        { loader: 'css-loader' },
-                        { loader: 'sass-loader' }
-                    ]
+                    test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+                    use: 'file-loader'
                 }
             ]
         },
@@ -50,7 +50,8 @@ module.exports = env => {
                 context: __dirname,
                 manifest: require('./wwwroot/js/vendor-manifest.json')
             })
-        ]
+        ],
+        stats: { modules: false }
     });
 
     const dev = () => ({
@@ -71,8 +72,8 @@ module.exports = env => {
             rules: [
                 {
                     test: /\.(scss|css)$/,
-                    use: ExtractTextPlugin.extract({ 
-                        fallback: 'style-loader', 
+                    use: ExtractTextPlugin.extract({
+                        fallback: 'style-loader',
                         use: ['css-loader', 'sass-loader']
                     })
                 }
