@@ -256,3 +256,4 @@ db/
 *.db
 bundle.js
 vendor.js
+*.css
