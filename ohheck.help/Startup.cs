@@ -111,6 +111,13 @@ namespace ohheck.help {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             loggerFactory.AddConsole();
 
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+                var heck = serviceScope.ServiceProvider.GetService<HeckingContext>();
+                var users = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                heck.Database.Migrate();
+                users.Database.Migrate();
+            }
+
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
